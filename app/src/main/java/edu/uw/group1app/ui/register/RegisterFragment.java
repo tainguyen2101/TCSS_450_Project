@@ -1,4 +1,4 @@
-package edu.uw.group1app.ui;
+package edu.uw.group1app.ui.register;
 
 import android.os.Bundle;
 
