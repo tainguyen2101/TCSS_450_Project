@@ -1,6 +1,10 @@
 package edu.uw.group1app.ui.signin;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -8,27 +12,35 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import edu.uw.group1app.R;
+
 import edu.uw.group1app.databinding.FragmentSignInBinding;
+import edu.uw.group1app.ui.utils.PasswordValidator;
+
+import static edu.uw.group1app.ui.utils.PasswordValidator.checkExcludeWhiteSpace;
+import static edu.uw.group1app.ui.utils.PasswordValidator.checkPwdLength;
+import static edu.uw.group1app.ui.utils.PasswordValidator.checkPwdSpecialChar;
 
 /**
  * A simple {@link Fragment} subclass.
-
  */
 public class SignInFragment extends Fragment {
 
-
-
     private FragmentSignInBinding binding;
     private SignInViewModel mSignInModel;
+
+    private PasswordValidator mEmailValidator = checkPwdLength(2)
+            .and(checkExcludeWhiteSpace())
+            .and(checkPwdSpecialChar("@"));
+
+    private PasswordValidator mPassWordValidator = checkPwdLength(1)
+            .and(checkExcludeWhiteSpace());
+
+    public SignInFragment() {
+        // Required empty public constructor
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,25 +52,21 @@ public class SignInFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        binding = FragmentSignInBinding.inflate(inflater);
         // Inflate the layout for this fragment
-
-        binding = FragmentSignInBinding.inflate(inflater, container, false);
         return binding.getRoot();
-
-
-
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
 
         binding.buttonRegister.setOnClickListener(button ->
                 Navigation.findNavController(getView()).navigate(
                         SignInFragmentDirections.actionSignInFragmentToRegisterFragment()
                 ));
-        binding.buttonSignin.setOnClickListener(this::handleSignIn);
+        binding.buttonSignin.setOnClickListener(this::attemptSignIn);
+
         mSignInModel.addResponseObserver(
                 getViewLifecycleOwner(),
                 this::observeResponse);
@@ -68,64 +76,59 @@ public class SignInFragment extends Fragment {
         binding.editTextPassword.setText(args.getPassword().equals("default") ? "" : args.getPassword());
     }
 
-    private void handleSignIn(final View button) {
-        String email = binding.editTextEmail.getText().toString();
-        String password = binding.editTextPassword.getText().toString();
-
-        if (email.isEmpty()){
-            binding.editTextEmail.setError("Email was left blank");
-        }
-
-        if (password.isEmpty()){
-            binding.editTextPassword.setError("Password was left blank");
-        }
-
-
-        if(!email.isEmpty() && !email.contains("@")){
-            binding.editTextEmail.setError("Email needs a '@'");
-        }
-
-        if(!email.isEmpty()&& !password.isEmpty() && email.contains("@")){
-            verifyAuthWithServer();
-        }
+    private void attemptSignIn(final View button) {
+        validateEmail();
     }
 
+    private void validateEmail() {
+        mEmailValidator.processResult(
+                mEmailValidator.apply(binding.editTextEmail.getText().toString().trim()),
+                this::validatePassword,
+                result -> binding.editTextEmail.setError("Please enter a valid Email address."));
+    }
 
-
-
-    private void navigateToSuccess(final String email, final String jwt) {
-        Navigation.findNavController(getView())
-                .navigate(SignInFragmentDirections
-                        .actionSignInFragmentToMainActivity(email, jwt));
-        getActivity().finish();
+    private void validatePassword() {
+        mPassWordValidator.processResult(
+                mPassWordValidator.apply(binding.editTextPassword.getText().toString()),
+                this::verifyAuthWithServer,
+                result -> binding.editTextPassword.setError("Please enter a valid Password."));
     }
 
     private void verifyAuthWithServer() {
-        mSignInModel.connect(
-                binding.editTextEmail.getText().toString(),
+        mSignInModel.connect(binding.editTextEmail.getText().toString(),
                 binding.editTextPassword.getText().toString());
-        //This is an Asynchronous call. No statements after should rely on the
-        //result of connect().
-
-
     }
 
+    /**
+     * Helper to abstract the navigation to the Activity past Authentication.
+     * @param email users email
+     * @param jwt the JSON Web Token supplied by the server
+     */
+    private void navigateToSuccess(final String email, final String jwt) {
+        Navigation.findNavController(getView())
+                .navigate(SignInFragmentDirections.actionSignInFragmentToMainActivity(email, jwt));
+        getActivity().finish();
+    }
+
+    /**
+     * An observer on the HTTP Response from the web server. This observer should be
+     * attached to SignInViewModel.
+     *
+     * @param response the Response from the server
+     */
     private void observeResponse(final JSONObject response) {
         if (response.length() > 0) {
             if (response.has("code")) {
                 try {
-                    binding.editTextEmail.setError(
-                            "Error Authenticating: " +
-                                    response.getJSONObject("data").getString("message"));
+                    binding.editTextEmail.setError("Error Authenticating: " +
+                            response.getJSONObject("data").getString("message"));
                 } catch (JSONException e) {
                     Log.e("JSON Parse Error", e.getMessage());
                 }
             } else {
                 try {
-                    navigateToSuccess(
-                            binding.editTextEmail.getText().toString(),
-                            response.getString("token")
-                    );
+                    navigateToSuccess(binding.editTextEmail.getText().toString(),
+                            response.getString("token"));
                 } catch (JSONException e) {
                     Log.e("JSON Parse Error", e.getMessage());
                 }
@@ -133,7 +136,5 @@ public class SignInFragment extends Fragment {
         } else {
             Log.d("JSON Response", "No Response");
         }
-
-
     }
 }

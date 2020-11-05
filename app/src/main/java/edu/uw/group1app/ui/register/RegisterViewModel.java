@@ -64,7 +64,7 @@ public class RegisterViewModel extends AndroidViewModel {
                         final String email,
                         final String password) {
 
-        String url = "https://cfb3-lab4-backend-2020sp.herokuapp.com/auth";
+        String url = "https://tng2101-lab4-backend.herokuapp.com/auth";
         JSONObject body = new JSONObject();
         try {
             body.put("first", first);
