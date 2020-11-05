@@ -17,6 +17,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import edu.uw.group1app.model.UserInfoViewModel;
 
+/**
+ * Main Activity class
+ */
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -46,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Prevent back button press once logged in
+     */
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -53,10 +59,11 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    @Override
+    // Add a Option Menu
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.bottom_nav_menu, menu);
         return true;
-    }
+    }*/
 
 }
