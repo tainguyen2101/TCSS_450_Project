@@ -1,18 +1,10 @@
 package edu.uw.group1app.ui.register;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import edu.uw.group1app.R;
-import edu.uw.group1app.databinding.FragmentRegisterBinding;
-import edu.uw.group1app.ui.utils.PasswordValidator;
-
-import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,13 +12,11 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import edu.uw.group1app.databinding.FragmentRegisterBinding;
+import edu.uw.group1app.ui.utils.PasswordValidator;
 
 import static edu.uw.group1app.ui.utils.PasswordValidator.checkClientPredicate;
 import static edu.uw.group1app.ui.utils.PasswordValidator.checkExcludeWhiteSpace;
@@ -143,21 +133,19 @@ public class RegisterFragment extends Fragment {
                 binding.registerLastNameBox.getText().toString(),
                 binding.registerEmailBox.getText().toString(),
                 binding.registerPwBox.getText().toString());
-//        This is an Asynchronous call. No statements after should rely on the
-//        result of connect().
 
     }
-//TODO: Add navigation functionality
-//    private void navigateToLogin() {
-//        RegisterFragmentDirections.ActionRegisterFragmentToLoginFragment directions =
-//                RegisterFragmentDirections.actionRegisterFragmentToLoginFragment();
-//
-//        directions.setEmail(binding.registerEmailBox.getText().toString());
-//        directions.setPassword(binding.registerPwBox.getText().toString());
-//
-//        Navigation.findNavController(getView()).navigate(directions);
-//
-//    }
+
+    private void navigateToLogin() {
+        RegisterFragmentDirections.ActionRegisterFragmentToSignInFragment directions =
+                RegisterFragmentDirections.actionRegisterFragmentToSignInFragment();
+
+        directions.setEmail(binding.registerEmailBox.getText().toString());
+        directions.setPassword(binding.registerPwBox.getText().toString());
+
+        Navigation.findNavController(getView()).navigate(directions);
+
+    }
 
     /**
      * An observer on the HTTP Response from the web server. This observer should be
@@ -177,7 +165,7 @@ public class RegisterFragment extends Fragment {
                 }
             } else {
                 //TODO: Add navigation functionality
-                //navigateToLogin();
+                navigateToLogin();
             }
         } else {
             Log.d("JSON Response", "No Response");

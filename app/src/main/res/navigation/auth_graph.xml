@@ -3,20 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/auth_graph"
-<<<<<<< HEAD
-    app:startDestination="@id/registerFragment">
-
-    <fragment
-        android:id="@+id/registerFragment"
-        android:name="edu.uw.group1app.ui.register.RegisterFragment"
-        android:label="fragment_register"
-        tools:layout="@layout/fragment_register" />
-    <activity
-        android:id="@+id/authenticationActivity"
-        android:name="edu.uw.group1app.AuthenticationActivity"
-        android:label="activity_authentication"
-        tools:layout="@layout/activity_authentication" />
-=======
     app:startDestination="@id/signInFragment">
 
     <fragment
@@ -52,21 +38,14 @@
             android:name="jwt"
             app:argType="string" />
     </activity>
-    <fragment
-        android:id="@+id/registerFragment"
-        android:name="edu.uw.group1app.ui.register.RegisterFragment"
-        android:label="RegisterFragment"
-        tools:layout="@layout/fragment_register">
-
-        <action
-            android:id="@+id/action_registerFragment_to_signInFragment"
-            app:destination="@id/signInFragment" />
-    </fragment>
 
     <fragment
         android:id="@+id/registerFragment"
         android:name="edu.uw.group1app.ui.register.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" />
->>>>>>> origin/master
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_registerFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
 </navigation>

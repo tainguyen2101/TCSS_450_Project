@@ -63,6 +63,7 @@ public class RegisterViewModel extends AndroidViewModel {
                         final String last,
                         final String email,
                         final String password) {
+
         String url = "https://cfb3-lab4-backend-2020sp.herokuapp.com/auth";
         JSONObject body = new JSONObject();
         try {

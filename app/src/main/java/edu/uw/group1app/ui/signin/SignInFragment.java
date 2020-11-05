@@ -54,8 +54,8 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
 
 
-        binding.buttonRegister1.setOnClickListener(this);
-        binding.buttonSignin1.setOnClickListener(this);
+        binding.buttonRegister.setOnClickListener(this);
+        binding.buttonSignin.setOnClickListener(this);
         mSignInModel.addResponseObserver(
                 getViewLifecycleOwner(),
                 this::observeResponse);
@@ -73,7 +73,7 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         String password = binding.editTextPassword.getText().toString();
 
 
-        if (v == binding.buttonSignin1) {
+        if (v == binding.buttonSignin) {
 
             if (email.isEmpty()){
                 binding.editTextEmail.setError("Email was left blank");
@@ -90,45 +90,22 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
 
             if(!email.isEmpty()&& !password.isEmpty() && email.contains("@")){
                 verifyAuthWithServer();
-
             }
 
 
         }
 
-        if(v == binding.buttonSignin1){
-            Navigation.findNavController(getView()).
-                    navigate(R.id.action_signInFragment_to_mainActivity);
-        }
-
-        if(v == binding.buttonRegister1){
+        if(v == binding.buttonRegister){
             Navigation.findNavController(getView()).
                     navigate(R.id.action_signInFragment_to_registerFragment);
         }
     }
 
 
-
-    private void signIn(String email){
-        Log.d("SignInFragment", "SignIn()");
-        FragmentSignInBinding binding = FragmentSignInBinding.bind(getView());
-
-        Navigation.findNavController(getView()).navigate(
-                SignInFragmentDirections
-                        .actionSignInFragmentToMainActivity(
-                                binding.editTextEmail.getText().toString(),""
-                        ));
-
-        getActivity().finish();
-
-    }
-
     private void navigateToSuccess(final String email, final String jwt) {
         Navigation.findNavController(getView())
                 .navigate(SignInFragmentDirections
                         .actionSignInFragmentToMainActivity(email, jwt));
-
-        getActivity().finish();
     }
 
     private void verifyAuthWithServer() {
