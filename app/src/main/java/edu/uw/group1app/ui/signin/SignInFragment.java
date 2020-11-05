@@ -23,7 +23,7 @@ import edu.uw.group1app.databinding.FragmentSignInBinding;
  * A simple {@link Fragment} subclass.
 
  */
-public class SignInFragment extends Fragment implements View.OnClickListener {
+public class SignInFragment extends Fragment {
 
 
 
@@ -54,8 +54,11 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
 
 
-        binding.buttonRegister.setOnClickListener(this);
-        binding.buttonSignin.setOnClickListener(this);
+        binding.buttonRegister.setOnClickListener(button ->
+                Navigation.findNavController(getView()).navigate(
+                        SignInFragmentDirections.actionSignInFragmentToRegisterFragment()
+                ));
+        binding.buttonSignin.setOnClickListener(this::handleSignIn);
         mSignInModel.addResponseObserver(
                 getViewLifecycleOwner(),
                 this::observeResponse);
@@ -65,47 +68,36 @@ public class SignInFragment extends Fragment implements View.OnClickListener {
         binding.editTextPassword.setText(args.getPassword().equals("default") ? "" : args.getPassword());
     }
 
-
-    @Override
-    public void onClick(View v) {
-
+    private void handleSignIn(final View button) {
         String email = binding.editTextEmail.getText().toString();
         String password = binding.editTextPassword.getText().toString();
 
-
-        if (v == binding.buttonSignin) {
-
-            if (email.isEmpty()){
-                binding.editTextEmail.setError("Email was left blank");
-            }
-
-            if (password.isEmpty()){
-                binding.editTextPassword.setError("Password was left blank");
-            }
-
-
-            if(!email.isEmpty() && !email.contains("@")){
-                binding.editTextEmail.setError("Email needs a '@'");
-            }
-
-            if(!email.isEmpty()&& !password.isEmpty() && email.contains("@")){
-                verifyAuthWithServer();
-            }
-
-
+        if (email.isEmpty()){
+            binding.editTextEmail.setError("Email was left blank");
         }
 
-        if(v == binding.buttonRegister){
-            Navigation.findNavController(getView()).
-                    navigate(R.id.action_signInFragment_to_registerFragment);
+        if (password.isEmpty()){
+            binding.editTextPassword.setError("Password was left blank");
+        }
+
+
+        if(!email.isEmpty() && !email.contains("@")){
+            binding.editTextEmail.setError("Email needs a '@'");
+        }
+
+        if(!email.isEmpty()&& !password.isEmpty() && email.contains("@")){
+            verifyAuthWithServer();
         }
     }
+
+
 
 
     private void navigateToSuccess(final String email, final String jwt) {
         Navigation.findNavController(getView())
                 .navigate(SignInFragmentDirections
                         .actionSignInFragmentToMainActivity(email, jwt));
+        getActivity().finish();
     }
 
     private void verifyAuthWithServer() {
