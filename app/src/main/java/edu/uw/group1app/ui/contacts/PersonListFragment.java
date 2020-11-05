@@ -36,7 +36,7 @@ public class PersonListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         FragmentPersonListBinding binding = FragmentPersonListBinding.bind(getView());
-        mDummyContact = Person.createContactList(20);
+        mDummyContact = Person.createContactList(5);
         binding.listRoot.setAdapter(new PersonRecycleViewAdapter(mDummyContact));
     }
 }

@@ -23,7 +23,10 @@ public class Person {
     public static ArrayList<Person> createContactList (int size) {
         ArrayList<Person> contacts = new ArrayList<Person>();
         for (int i = 1; i < size; i++) {
-            contacts.add(new Person("Ford", "12345"));
+            contacts.add(new Person("Ford", "123-456-7890"));
+            contacts.add(new Person("Jared", "000-000-0000"));
+            contacts.add(new Person("Jason", "111-111-1111"));
+            contacts.add(new Person("Ivan", "222-222-2222"));
         }
         return contacts;
     }

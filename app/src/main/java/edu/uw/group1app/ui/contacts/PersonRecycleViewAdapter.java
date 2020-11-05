@@ -56,6 +56,8 @@ public class PersonRecycleViewAdapter extends RecyclerView.Adapter<PersonRecycle
             super(v);
             nameTextView = v.findViewById(R.id.contact_name);
             phoneTextView = v.findViewById(R.id.contact_number);
+            phoneTextView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_contacts_recents_24,
+                    0,0,0);
         }
     }
 }
