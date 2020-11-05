@@ -8,4 +8,15 @@
     <string name="title_home">Home</string>
     <string name="title_weather">Weather</string>
     <string name="title_chat">Chat</string>
+
+    <!--String values for register-->
+    <string name="email_hint">Email address</string>
+    <string name="pw_hint">Password</string>
+    <string name="pw_confirm_hint">Confirm Password</string>
+    <string name="login_label">Login</string>
+    <string name="reg_button_label">Register</string>
+    <string name="reg_label">Don\&apos;t have an account?</string>
+    <string name="fn_hint">First name</string>
+    <string name="ln_hint">Last name</string>
+    <string name="username_hint">Username</string>
 </resources>
