@@ -19,7 +19,10 @@ import edu.uw.group1app.databinding.FragmentPersonListBinding;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * This class generate a Fragment that contains list of contacts
+ * For now it is use for Recents, All, Favorite
+ * @author Ford Nguyen
+ * @version 1.0
  */
 public class PersonListFragment extends Fragment {
 
@@ -36,7 +39,10 @@ public class PersonListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         FragmentPersonListBinding binding = FragmentPersonListBinding.bind(getView());
+
+        //Generate 5 sets of fake data
         mDummyContact = Person.createContactList(5);
+
         binding.listRoot.setAdapter(new PersonRecycleViewAdapter(mDummyContact));
     }
 }

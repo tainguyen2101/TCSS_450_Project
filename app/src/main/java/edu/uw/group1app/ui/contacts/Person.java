@@ -2,6 +2,12 @@ package edu.uw.group1app.ui.contacts;
 
 import java.util.ArrayList;
 
+
+/**
+ * Person object class that holds information of contact
+ * @author Ford Nguyen
+ * @version 1.0
+ */
 public class Person {
 
     public Person(final String name, final String number) {

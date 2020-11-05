@@ -13,6 +13,11 @@ import java.util.List;
 
 import edu.uw.group1app.R;
 
+/**
+ * Person List Fragment Recycle View Adapter
+ * @author Ford Nguyen
+ * @version 1.0
+ */
 public class PersonRecycleViewAdapter extends RecyclerView.Adapter<PersonRecycleViewAdapter.PersonViewHolder> {
 
     private List<Person> mContact;
