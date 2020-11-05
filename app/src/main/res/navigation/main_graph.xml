@@ -2,8 +2,8 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_graph"
-    app:startDestination="@id/navigation_contacts">
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/navigation_home">
     <fragment
         android:id="@+id/navigation_contacts"
         android:name="edu.uw.group1app.ui.contacts.ContactsFragment"

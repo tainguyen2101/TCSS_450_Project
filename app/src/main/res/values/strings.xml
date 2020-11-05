@@ -8,7 +8,11 @@
     <string name="title_home">Home</string>
     <string name="title_weather">Weather</string>
     <string name="title_chat">Chat</string>
-
+    <!--Strings for sign in -->
+    <string name="editText_sign_in_email">Email</string>
+    <string name="editText_sign_in_password">Password</string>
+    <string name="button_sign_in_signin">Sign In</string>
+    <string name="button_sign_in_register">Register</string>
     <!--String values for register-->
     <string name="email_hint">Email address</string>
     <string name="pw_hint">Password</string>

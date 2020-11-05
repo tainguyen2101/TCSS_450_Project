@@ -1,6 +1,7 @@
 package edu.uw.group1app;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -10,6 +11,8 @@ import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import edu.uw.group1app.model.UserInfoViewModel;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -18,6 +21,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+       /* MainActivityArgs args = MainActivityArgs.fromBundle(getIntent().getExtras());
+        String email = args.getEmail();
+        String jwt = args.getJwt();
+
+        new ViewModelProvider(this, new UserInfoViewModel.UserInfoViewModelFactory(email,jwt))
+                .get(UserInfoViewModel.class);*/
 
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
@@ -29,5 +39,6 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+
     }
 }
