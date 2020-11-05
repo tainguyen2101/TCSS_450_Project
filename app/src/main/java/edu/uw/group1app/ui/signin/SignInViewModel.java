@@ -66,7 +66,8 @@ public class SignInViewModel extends AndroidViewModel {
 
     public void connect(final String email, final String password) {
         //TODO must use our web service
-        String url = "https://mobileapp-group-backend.herokuapp.com/auth";
+        //String url = "https://mobileapp-group-backend.herokuapp.com/auth";
+        String url = "https://cfb3-lab4-backend-2020sp.herokuapp.com/auth";
 
         Request request = new JsonObjectRequest(
                 Request.Method.GET,

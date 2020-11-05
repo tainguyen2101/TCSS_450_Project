@@ -69,23 +69,28 @@ public class SignInFragment extends Fragment {
     }
 
     private void handleSignIn(final View button) {
+
+        boolean error = false;
         String email = binding.editTextEmail.getText().toString();
         String password = binding.editTextPassword.getText().toString();
 
         if (email.isEmpty()){
+            error = true;
             binding.editTextEmail.setError("Email was left blank");
         }
 
         if (password.isEmpty()){
+            error = true;
             binding.editTextPassword.setError("Password was left blank");
         }
 
 
         if(!email.isEmpty() && !email.contains("@")){
+            error= true;
             binding.editTextEmail.setError("Email needs a '@'");
         }
 
-        if(!email.isEmpty()&& !password.isEmpty() && email.contains("@")){
+        if(!error){
             verifyAuthWithServer();
         }
     }
