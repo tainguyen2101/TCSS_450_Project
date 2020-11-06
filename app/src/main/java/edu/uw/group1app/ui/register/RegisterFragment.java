@@ -28,18 +28,19 @@ import static edu.uw.group1app.ui.utils.PasswordValidator.checkPwdUpperCase;
 
 /**
  * A simple {@link Fragment} subclass.
+ * @author D. Jared Idler (idledj)
  */
 public class RegisterFragment extends Fragment {
 
     private FragmentRegisterBinding binding;
-
+    /**View model for preservation of data through life cycles*/
     private RegisterViewModel mRegisterModel;
+    /**Input validation helpers*/
     private PasswordValidator mNameValidator = checkPwdLength(1);
     private PasswordValidator mUserValidator = checkPwdLength(1);
     private PasswordValidator mEmailValidator = checkPwdLength(2)
             .and(checkExcludeWhiteSpace())
             .and(checkPwdSpecialChar("@"));
-
     private PasswordValidator mPassWordValidator =
             checkClientPredicate(pwd -> pwd.equals(binding.registerPwBox.getText().toString()))
                     .and(checkPwdLength(7))
@@ -74,11 +75,11 @@ public class RegisterFragment extends Fragment {
         mRegisterModel.addResponseObserver(getViewLifecycleOwner(),
                 this::observeResponse);
     }
-
+    /**helper to call when button clicked*/
     private void attemptRegister(final View button) {
         validateFirst();
     }
-
+    /**Helper method to validate input*/
     private void validateFirst() {
         mNameValidator.processResult(
                //need to add additional fields to register page
@@ -86,28 +87,28 @@ public class RegisterFragment extends Fragment {
                 this::validateLast,
                 result -> binding.registerFirstNameBox.setError("Please enter a first name."));
     }
-
+    /**Helper method to validate input*/
     private void validateLast() {
         mNameValidator.processResult(
                 mNameValidator.apply(binding.registerLastNameBox.getText().toString().trim()),
                 this::validateEmail,
                 result -> binding.registerLastNameBox.setError("Please enter a last name."));
     }
-
+    /**Helper method to validate input*/
     private void validateUser() {
         mUserValidator.processResult(mUserValidator.apply(
                 binding.registerUsernameBox.getText().toString().trim()), this:: validateEmail,
                 result -> binding.registerUsernameBox.setError("Please enter a username"));
 
     }
-
+    /**Helper method to validate input*/
     private void validateEmail() {
         mEmailValidator.processResult(
                 mEmailValidator.apply(binding.registerEmailBox.getText().toString().trim()),
                 this::validatePasswordsMatch,
                 result -> binding.registerEmailBox.setError("Please enter a valid Email address."));
     }
-
+    /**Helper method to verify matching passwords*/
     private void validatePasswordsMatch() {
         PasswordValidator matchValidator =
                 checkClientPredicate(
@@ -118,16 +119,16 @@ public class RegisterFragment extends Fragment {
                 this::validatePassword,
                 result -> binding.registerPwBox.setError("Passwords must match."));
     }
-
+    /**Helper method to validate input*/
     private void validatePassword() {
         mPassWordValidator.processResult(
                 mPassWordValidator.apply(binding.registerPwBox.getText().toString()),
                 this::verifyAuthWithServer,
                 result -> binding.registerPwBox.setError("Please enter a valid Password."));
     }
-
+    /**asynchronous call to verify authentication with web service*/
     private void verifyAuthWithServer() {
-        //TODO: Add personal info fields
+
         mRegisterModel.connect(
                 binding.registerFirstNameBox.getText().toString(),
                 binding.registerLastNameBox.getText().toString(),
@@ -135,7 +136,7 @@ public class RegisterFragment extends Fragment {
                 binding.registerPwBox.getText().toString());
 
     }
-
+    /**Helper for navigation across nav map*/
     private void navigateToLogin() {
         RegisterFragmentDirections.ActionRegisterFragmentToSignInFragment directions =
                 RegisterFragmentDirections.actionRegisterFragmentToSignInFragment();
@@ -164,7 +165,6 @@ public class RegisterFragment extends Fragment {
                     Log.e("JSON Parse Error", e.getMessage());
                 }
             } else {
-                //TODO: Add navigation functionality
                 navigateToLogin();
             }
         } else {

@@ -26,7 +26,9 @@ import edu.uw.group1app.ui.home.HomeFragment;
  * @version 1.0
  */
 public class ContactsFragment extends Fragment {
+    /**layout component*/
     TabLayout tabLayout;
+    /**View component*/
     ViewPager viewPager;
 
     public ContactsFragment() {

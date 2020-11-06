@@ -24,11 +24,15 @@ import java.util.Map;
 import java.util.Objects;
 
 import edu.uw.group1app.io.RequestQueueSingleton;
-
+/**
+ * A simple {@link androidx.lifecycle.ViewModel} class to accompany Sign in
+ * @author Ivan
+ */
 public class SignInViewModel extends AndroidViewModel {
-
+    /**Live data object*/
     private MutableLiveData<JSONObject> mResponse;
-
+    /**constructor
+     * @param application Application to attach to*/
     public SignInViewModel(@NonNull Application application) {
         super(application);
         mResponse = new MutableLiveData<>();
@@ -39,7 +43,8 @@ public class SignInViewModel extends AndroidViewModel {
                                     @NonNull Observer<? super JSONObject> observer) {
         mResponse.observe(owner, observer);
     }
-
+    /**Helper to handle errors
+     * @param error VolleyError error passed from web service*/
     private void handleError(final VolleyError error) {
         if (Objects.isNull(error.networkResponse)) {
             try {
@@ -63,7 +68,9 @@ public class SignInViewModel extends AndroidViewModel {
             }
         }
     }
-
+    /**Connect to web service
+     * @param email String email argument passed to attempt authentication
+     * @param password String password argument passed to attempt authentication */
     public void connect(final String email, final String password) {
         //TODO must use our web service
         String url = "https://mobileapp-group-backend.herokuapp.com/auth";

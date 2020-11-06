@@ -22,7 +22,7 @@ public class Person {
     public String getNumber() {
         return mNumber;
     }
-
+    /**"Contact info" for Person objects*/
     private final String mName;
     private final String mNumber;
 

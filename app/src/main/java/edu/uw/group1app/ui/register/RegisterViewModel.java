@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
@@ -20,9 +21,12 @@ import org.json.JSONObject;
 
 import java.nio.charset.Charset;
 import java.util.Objects;
-
+/**
+ * A simple {@link androidx.lifecycle.ViewModel} class to accompany Register
+ * @author D. Jared Idler (idledj)
+ */
 public class RegisterViewModel extends AndroidViewModel {
-
+    /**Live data from web service*/
     private MutableLiveData<JSONObject> mResponse;
 
     public RegisterViewModel(@NonNull Application application) {
@@ -59,6 +63,11 @@ public class RegisterViewModel extends AndroidViewModel {
             }
         }
     }
+    /**Connect to web service with input
+     * @param first String user input first name
+     * @param last String user input last name
+     * @param email String user input email address
+     * @param password String user input password*/
     public void connect(final String first,
                         final String last,
                         final String email,

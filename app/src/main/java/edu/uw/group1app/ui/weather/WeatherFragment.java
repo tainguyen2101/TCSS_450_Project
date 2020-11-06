@@ -12,8 +12,7 @@ import edu.uw.group1app.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link WeatherFragment#newInstance} factory method to
- * create an instance of this fragment.
+
  */
 public class WeatherFragment extends Fragment {
 

@@ -12,17 +12,16 @@ import edu.uw.group1app.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ChatFragment#newInstance} factory method to
- * create an instance of this fragment.
  */
 public class ChatFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    /** the fragment initialization parameters, e.g. ARG_ITEM_NUMBER*/
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
+    /**Parameters */
     private String mParam1;
     private String mParam2;
 

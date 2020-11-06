@@ -25,6 +25,7 @@ import static edu.uw.group1app.ui.utils.PasswordValidator.checkPwdSpecialChar;
 
 /**
  * A simple {@link Fragment} subclass.
+ * @author Ivan
  */
 public class SignInFragment extends Fragment {
 
@@ -75,25 +76,25 @@ public class SignInFragment extends Fragment {
         binding.editTextEmail.setText(args.getEmail().equals("default") ? "" : args.getEmail());
         binding.editTextPassword.setText(args.getPassword().equals("default") ? "" : args.getPassword());
     }
-
+    /**Helper to begin validation call chain*/
     private void attemptSignIn(final View button) {
         validateEmail();
     }
-
+    /**helper to validate email input*/
     private void validateEmail() {
         mEmailValidator.processResult(
                 mEmailValidator.apply(binding.editTextEmail.getText().toString().trim()),
                 this::validatePassword,
                 result -> binding.editTextEmail.setError("Please enter a valid Email address."));
     }
-
+    /**helper to validate password input*/
     private void validatePassword() {
         mPassWordValidator.processResult(
                 mPassWordValidator.apply(binding.editTextPassword.getText().toString()),
                 this::verifyAuthWithServer,
                 result -> binding.editTextPassword.setError("Please enter a valid Password."));
     }
-
+    /**authenticate with web service*/
     private void verifyAuthWithServer() {
         mSignInModel.connect(binding.editTextEmail.getText().toString(),
                 binding.editTextPassword.getText().toString());
