@@ -2,58 +2,43 @@ package edu.uw.group1app.ui.chat;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import edu.uw.group1app.R;
+import edu.uw.group1app.databinding.FragmentChatBinding;
+import edu.uw.group1app.model.UserInfoViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ChatFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    /** the fragment initialization parameters, e.g. ARG_ITEM_NUMBER*/
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    /**Parameters */
-    private String mParam1;
-    private String mParam2;
+    //The chat ID for "global" chat
+    private static final int HARD_CODED_CHAT_ID = 1;
+    private ChatSendViewModel mSendModel;
+    private ChatViewModel mChatModel;
+    private UserInfoViewModel mUserModel;
 
     public ChatFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ChatFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ChatFragment newInstance(String param1, String param2) {
-        ChatFragment fragment = new ChatFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        ViewModelProvider provider = new ViewModelProvider(getActivity());
+        mUserModel = provider.get(UserInfoViewModel.class);
+        mChatModel = provider.get(ChatViewModel.class);
+        mChatModel.getFirstMessages(HARD_CODED_CHAT_ID, mUserModel.getJwt());
+        mSendModel = provider.get(ChatSendViewModel.class);
     }
 
     @Override
@@ -61,5 +46,54 @@ public class ChatFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_chat, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        FragmentChatBinding binding = FragmentChatBinding.bind(getView());
+
+        //SetRefreshing shows the internal Swiper view progress bar. Show this until messages load
+        binding.swipeContainer.setRefreshing(true);
+
+        final RecyclerView rv = binding.recyclerMessages;
+        //Set the Adapter to hold a reference to the list FOR THIS chat ID that the ViewModel
+        //holds.
+        rv.setAdapter(new ChatRecylerViewAdapter(
+                mChatModel.getMessageListByChatId(HARD_CODED_CHAT_ID),
+                mUserModel.getEmail()));
+
+
+        //When the user scrolls to the top of the RV, the swiper list will "refresh"
+        //The user is out of messages, go out to the service and get more
+        binding.swipeContainer.setOnRefreshListener(() -> {
+            mChatModel.getNextMessages(HARD_CODED_CHAT_ID, mUserModel.getJwt());
+        });
+
+        mChatModel.addMessageObserver(HARD_CODED_CHAT_ID, getViewLifecycleOwner(),
+                list -> {
+                    /*
+                     * This solution needs work on the scroll position. As a group,
+                     * you will need to come up with some solution to manage the
+                     * recyclerview scroll position. You also should consider a
+                     * solution for when the keyboard is on the screen.
+                     */
+                    //inform the RV that the underlying list has (possibly) changed
+                    rv.getAdapter().notifyDataSetChanged();
+                    rv.scrollToPosition(rv.getAdapter().getItemCount() - 1);
+                    binding.swipeContainer.setRefreshing(false);
+                });
+
+        //Send button was clicked. Send the message via the SendViewModel
+        binding.buttonSend.setOnClickListener(button -> {
+            mSendModel.sendMessage(HARD_CODED_CHAT_ID,
+                    mUserModel.getJwt(),
+                    binding.editMessage.getText().toString());
+        });
+        //when we get the response back from the server, clear the edittext
+        mSendModel.addResponseObserver(getViewLifecycleOwner(), response ->
+                binding.editMessage.setText(""));
+
     }
 }

@@ -23,4 +23,7 @@
     <string name="fn_hint">First name</string>
     <string name="ln_hint">Last name</string>
     <string name="username_hint">Username</string>
+
+
+    <string name="base_url">https://gyubeom-lab4-backend.herokuapp.com/</string>
 </resources>
