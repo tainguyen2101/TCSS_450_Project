@@ -164,6 +164,8 @@ public class PushyTokenViewModel extends AndroidViewModel {
             } catch (JSONException e) {
                 Log.e("JSON PARSE", "JSON Parse Error in handleError");
             }
+
+            
         }
     }
 }
