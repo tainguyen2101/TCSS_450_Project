@@ -73,8 +73,8 @@ public class SignInFragment extends Fragment {
                 this::observeResponse);
 
         SignInFragmentArgs args = SignInFragmentArgs.fromBundle(getArguments());
-        binding.editTextEmail.setText(args.getEmail().equals("default") ? "" : args.getEmail());
-        binding.editTextPassword.setText(args.getPassword().equals("default") ? "" : args.getPassword());
+        binding.editTextEmail.setText(args.getEmail().equals("default") ? "test12345@uw.edu" : args.getEmail());
+        binding.editTextPassword.setText(args.getPassword().equals("default") ? "Test1234@" : args.getPassword());
     }
     /**Helper to begin validation call chain*/
     private void attemptSignIn(final View button) {
