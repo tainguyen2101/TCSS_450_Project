@@ -58,9 +58,9 @@ public class ContactsFragment extends Fragment {
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager(), 1);
         // add your fragments
-        adapter.addFrag(new PersonListFragment(), "Recents");
-        adapter.addFrag(new PersonListFragment(), "All");
-        adapter.addFrag(new PersonListFragment(), "Favorite");
+        adapter.addFrag(new HomeFragment(), "Recents");
+        adapter.addFrag(new ContactListFragment(), "All");
+        adapter.addFrag(new HomeFragment(), "Favorite");
 
         viewPager.setAdapter(adapter);
 
