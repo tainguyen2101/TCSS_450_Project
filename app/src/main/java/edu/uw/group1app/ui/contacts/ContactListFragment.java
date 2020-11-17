@@ -38,8 +38,8 @@ public class ContactListFragment extends Fragment {
         mModel = new ViewModelProvider(getActivity()).get(ContactListViewModel.class);
 
         UserInfoViewModel model = new ViewModelProvider(getActivity()).get(UserInfoViewModel.class);
-        Log.i("CONTACT", model.getJwt());
-        mModel.connectGet(model.getJwt());
+        Log.i("CONTACT", model.getmJwt());
+        mModel.connectGet(model.getmJwt());
     }
 
     @Override

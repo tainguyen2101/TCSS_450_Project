@@ -82,7 +82,7 @@ public class RegisterFragment extends Fragment {
     /**Helper method to validate input*/
     private void validateFirst() {
         mNameValidator.processResult(
-               //need to add additional fields to register page
+                //need to add additional fields to register page
                 mNameValidator.apply(binding.registerFirstNameBox.getText().toString().trim()),
                 this::validateLast,
                 result -> binding.registerFirstNameBox.setError("Please enter a first name."));

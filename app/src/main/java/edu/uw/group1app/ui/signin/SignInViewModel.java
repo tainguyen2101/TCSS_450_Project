@@ -23,16 +23,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import edu.uw.group1app.R;
 import edu.uw.group1app.io.RequestQueueSingleton;
 /**
  * A simple {@link androidx.lifecycle.ViewModel} class to accompany Sign in
  * @author Ivan
  */
 public class SignInViewModel extends AndroidViewModel {
-    /**Live data object*/
+
     private MutableLiveData<JSONObject> mResponse;
-    /**constructor
-     * @param application Application to attach to*/
+
     public SignInViewModel(@NonNull Application application) {
         super(application);
         mResponse = new MutableLiveData<>();
@@ -43,37 +43,11 @@ public class SignInViewModel extends AndroidViewModel {
                                     @NonNull Observer<? super JSONObject> observer) {
         mResponse.observe(owner, observer);
     }
-    /**Helper to handle errors
-     * @param error VolleyError error passed from web service*/
-    private void handleError(final VolleyError error) {
-        if (Objects.isNull(error.networkResponse)) {
-            try {
-                mResponse.setValue(new JSONObject("{" +
-                        "error:\"" + error.getMessage() +
-                        "\"}"));
-            } catch (JSONException e) {
-                Log.e("JSON PARSE", "JSON Parse Error in handleError");
-            }
-        }
-        else {
-            String data = new String(error.networkResponse.data, Charset.defaultCharset())
-                    .replace('\"', '\'');
-            try {
-                JSONObject response = new JSONObject();
-                response.put("code", error.networkResponse.statusCode);
-                response.put("data", new JSONObject(data));
-                mResponse.setValue(response);
-            } catch (JSONException e) {
-                Log.e("JSON PARSE", "JSON Parse Error in handleError");
-            }
-        }
-    }
-    /**Connect to web service
-     * @param email String email argument passed to attempt authentication
-     * @param password String password argument passed to attempt authentication */
+
+
     public void connect(final String email, final String password) {
-        //TODO must use our web service
-        String url = "https://mobileapp-group-backend.herokuapp.com/auth";
+        String url = getApplication().getResources().getString(R.string.base_url) +
+                "auth";
 
         Request request = new JsonObjectRequest(
                 Request.Method.GET,
@@ -81,6 +55,7 @@ public class SignInViewModel extends AndroidViewModel {
                 null, //no body for this get request
                 mResponse::setValue,
                 this::handleError) {
+
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
@@ -93,6 +68,7 @@ public class SignInViewModel extends AndroidViewModel {
                 return headers;
             }
         };
+
         request.setRetryPolicy(new DefaultRetryPolicy(
                 10_000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
@@ -100,5 +76,30 @@ public class SignInViewModel extends AndroidViewModel {
         //Instantiate the RequestQueue and add the request to the queue
         RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
                 .addToRequestQueue(request);
+
+        //code here will run
+    }
+
+
+    private void handleError(final VolleyError error) {
+        if (Objects.isNull(error.networkResponse)) {
+            try {
+                mResponse.setValue(new JSONObject("{" +
+                        "error:\"" + error.getMessage() +
+                        "\"}"));
+            } catch (JSONException e) {
+                Log.e("JSON PARSE", "JSON Parse Error in handleError");
+            }
+        } else {
+            String data = new String(error.networkResponse.data, Charset.defaultCharset());
+            try {
+                mResponse.setValue(new JSONObject("{" +
+                        "code:" + error.networkResponse.statusCode +
+                        ", data:" + data +
+                        "}"));
+            } catch (JSONException e) {
+                Log.e("JSON PARSE", "JSON Parse Error in handleError");
+            }
+        }
     }
 }
