@@ -1,0 +1,125 @@
+package edu.uw.group1app.ui.chat;
+
+import android.app.AlertDialog;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.RecyclerView;
+
+import org.json.JSONException;
+
+import java.util.List;
+
+import edu.uw.group1app.R;
+import edu.uw.group1app.databinding.FragmentChatListBinding;
+import edu.uw.group1app.databinding.FragmentChatListCardBinding;
+
+public class ChatListRecyclerViewAdapter extends RecyclerView.Adapter<ChatListRecyclerViewAdapter.ChatListViewHolder> {
+
+    /**
+     * The fragment that built this recycler view and will contain the delete method.
+     */
+    private final ChatListFragment mParent;
+
+    /**
+     * List of Chat rooms.
+     */
+    List<ChatRoom> mChatRooms;
+
+    /**
+     * Constructor that builds the recycler view adapter from
+     *  a list of Chat rooms.
+     * @param chats List of chat rooms.
+     */
+    public ChatListRecyclerViewAdapter(List<ChatRoom> chats, ChatListFragment parent) {
+        this.mChatRooms = chats;
+        this.mParent = parent;
+    }
+
+    @NonNull
+    @Override
+    public ChatListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+        return new ChatListViewHolder(LayoutInflater
+                .from(parent.getContext()).inflate(R.layout.fragment_chat_list, parent, false));
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ChatListViewHolder holder, int position) {
+
+        try {
+            holder.setChatRoom(mChatRooms.get(position));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return mChatRooms.size();
+    }
+
+    public class ChatListViewHolder extends RecyclerView.ViewHolder {
+
+        public final View mView;
+
+        public FragmentChatListCardBinding binding;
+
+        Observer<List<String>> mObserver;
+
+
+        public ChatListViewHolder(View view) {
+            super(view);
+            mView = view;
+            binding = FragmentChatListCardBinding.bind(view);
+        }
+
+        void setChatRoom(final ChatRoom chatRoom) throws JSONException {
+            //binding.buttonDelete.setOnClickListener(view -> deleteChat(this, chatRoom));
+            binding.buttonGoTo.setOnClickListener(view -> Navigation.findNavController(mView).navigate(ChatListFragmentDirections.actionNavigationChatToChatFragment(chatRoom)));
+
+            LiveData<List<String>> liveData = chatRoom.getLiveEmailList();
+            Observer<List<String>> observer = strings -> {
+                //String emails = String.join(", ", strings);
+                String emails = "";
+                binding.chatRoomTextView.setText("Chat Room : #: " + emails);
+            };
+
+            if (mObserver != null){
+                liveData.removeObserver(mObserver);
+            }
+            liveData.observe(mParent, observer);
+            mObserver = observer;
+            String emails = "";
+            binding.chatRoomTextView.setText("Chat Room: #: " + emails);
+        }
+    }
+
+    /*private void deleteChat(final ChatListViewHolder view, final ChatRoom chatRoom) {
+        Log.d("ChatListRecycle", "Pop up dialog");
+        AlertDialog.Builder builder = new AlertDialog.Builder(mParent.getActivity());
+        builder.setTitle(R.string.dialog_chatListRecycler_title);
+        builder.setMessage(R.string.dialog_chatListRecycler_message);
+        builder.setPositiveButton(R.string.dialog_chatListRecycler_positive, (dialog, which) -> {
+            mChatRooms.remove(chatRoom);
+            notifyItemRemoved(view.getLayoutPosition());
+            final int chatId = chatRoom.getChatId();
+            mParent.deleteChat(chatId);
+            Log.d("ChatListRecycle", "Removed chatroom with ID: " + chatId);
+        });
+        builder.setNegativeButton(R.string.dialog_chatListRecycler_negative, null);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }*/
+
+    public void setChatRooms(List<ChatRoom> rooms){
+        mChatRooms = rooms;
+        notifyDataSetChanged();
+    }
+}

@@ -6,12 +6,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import edu.uw.group1app.MainActivity;
 import edu.uw.group1app.R;
 import edu.uw.group1app.databinding.FragmentChatBinding;
 import edu.uw.group1app.model.UserInfoViewModel;
@@ -20,13 +23,18 @@ import edu.uw.group1app.model.UserInfoViewModel;
  * A simple {@link Fragment} subclass.
  */
 public class ChatFragment extends Fragment {
-
     //The chat ID for "global" chat
-    private static final int HARD_CODED_CHAT_ID = 1;
-    private ChatSendViewModel mSendModel;
+    // private static final int HARD_CODED_CHAT_ID = 1;
+
     private ChatViewModel mChatModel;
     private UserInfoViewModel mUserModel;
+    private ChatSendViewModel mSendModel;
+    private int mChatID;
+    private String mTitle;
 
+    /**
+     * an empty constructor.
+     */
     public ChatFragment() {
         // Required empty public constructor
     }
@@ -35,9 +43,13 @@ public class ChatFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ViewModelProvider provider = new ViewModelProvider(getActivity());
+        ChatFragmentArgs args = ChatFragmentArgs.fromBundle(getArguments());
+        mChatID = args.getChatroom().getChatId();
+        //mTitle = args.getChatroom().ge;
+        Log.i("CHAT", String.valueOf(mChatID));
         mUserModel = provider.get(UserInfoViewModel.class);
         mChatModel = provider.get(ChatViewModel.class);
-        mChatModel.getFirstMessages(HARD_CODED_CHAT_ID, mUserModel.getmJwt());
+        mChatModel.getFirstMessages(mChatID, mUserModel.getmJwt());
         mSendModel = provider.get(ChatSendViewModel.class);
     }
 
@@ -54,6 +66,7 @@ public class ChatFragment extends Fragment {
 
         FragmentChatBinding binding = FragmentChatBinding.bind(getView());
 
+
         //SetRefreshing shows the internal Swiper view progress bar. Show this until messages load
         binding.swipeContainer.setRefreshing(true);
 
@@ -61,17 +74,17 @@ public class ChatFragment extends Fragment {
         //Set the Adapter to hold a reference to the list FOR THIS chat ID that the ViewModel
         //holds.
         rv.setAdapter(new ChatRecylerViewAdapter(
-                mChatModel.getMessageListByChatId(HARD_CODED_CHAT_ID),
+                mChatModel.getMessageListByChatId(mChatID),
                 mUserModel.getEmail()));
 
 
         //When the user scrolls to the top of the RV, the swiper list will "refresh"
         //The user is out of messages, go out to the service and get more
         binding.swipeContainer.setOnRefreshListener(() -> {
-            mChatModel.getNextMessages(HARD_CODED_CHAT_ID, mUserModel.getmJwt());
+            mChatModel.getNextMessages(mChatID, mUserModel.getmJwt());
         });
 
-        mChatModel.addMessageObserver(HARD_CODED_CHAT_ID, getViewLifecycleOwner(),
+        mChatModel.addMessageObserver(mChatID, getViewLifecycleOwner(),
                 list -> {
                     /*
                      * This solution needs work on the scroll position. As a group,
@@ -86,11 +99,19 @@ public class ChatFragment extends Fragment {
                 });
 
         //Send button was clicked. Send the message via the SendViewModel
+        //Error produced from here
         binding.buttonSend.setOnClickListener(button -> {
-            mSendModel.sendMessage(HARD_CODED_CHAT_ID,
+            mSendModel.sendMessage(mChatID,
                     mUserModel.getmJwt(),
                     binding.editMessage.getText().toString());
         });
+
+        /*binding.buttonAddMembers.setOnClickListener(button-> {
+            Navigation.findNavController(getView())
+                    .navigate(ChatFragmentDirections
+                            .actionChatFragmentToAddContactToChatFragment(mTitle, mChatID));
+        });*/
+
         //when we get the response back from the server, clear the edittext
         mSendModel.addResponseObserver(getViewLifecycleOwner(), response ->
                 binding.editMessage.setText(""));

@@ -28,7 +28,6 @@ public class DeleteContactDialog extends DialogFragment {
 
     private UserInfoViewModel mUserModel;
     private ContactListViewModel mContactModel;
-    private final int mMemberID;
     private final FragmentManager mFragMan;
     private final ContactRecyclerViewAdapter.ContactViewHolder mUpdater;
 
@@ -39,7 +38,6 @@ public class DeleteContactDialog extends DialogFragment {
      */
     public DeleteContactDialog(int memberID, FragmentManager fm,
                                ContactRecyclerViewAdapter.ContactViewHolder updater) {
-        this.mMemberID = memberID;
         this.mFragMan = fm;
         mUpdater = updater;
     }
@@ -75,7 +73,7 @@ public class DeleteContactDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_delete_contact_dialog, null);
         builder.setView(view)
                 .setNegativeButton("Yes", (dialogInterface, i) -> {
-                    mContactModel.deleteContact(mUserModel.getmJwt(), mMemberID);
+                    mContactModel.deleteContact(mUserModel.getmJwt(), mUserModel.getmMeberId());
                     mUpdater.deleteContact();
                 })
                 .setPositiveButton("Cancel", (dialogInterface, i) -> {

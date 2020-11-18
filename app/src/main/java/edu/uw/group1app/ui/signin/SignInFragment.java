@@ -130,7 +130,7 @@ public class SignInFragment extends Fragment {
      * @param email users email
      * @param jwt the JSON Web Token supplied by the server
      */
-    private void navigateToSuccess(final String email, final String jwt) {
+    private void navigateToSuccess(final String email, final String jwt, final int memberid, final String username) {
         if (binding.switchSignin.isChecked()) {
             SharedPreferences prefs =
                     getActivity().getSharedPreferences(
@@ -138,11 +138,13 @@ public class SignInFragment extends Fragment {
                             Context.MODE_PRIVATE);
             //Store the credentials in SharedPrefs
             prefs.edit().putString(getString(R.string.keys_prefs_jwt), jwt).apply();
+            prefs.edit().putString(getString(R.string.keys_prefs_email), email).apply();
+            prefs.edit().putInt(getString(R.string.keys_prefs_memberid), memberid).apply();
         }
 
         Navigation.findNavController(getView())
                 .navigate(SignInFragmentDirections
-                        .actionSignInFragmentToMainActivity(email, jwt));
+                        .actionSignInFragmentToMainActivity(email, jwt, memberid, username));
         //Remove THIS activity from the Task list. Pops off the backstack
         getActivity().finish();
     }
@@ -168,9 +170,10 @@ public class SignInFragment extends Fragment {
                     mUserViewModel = new ViewModelProvider(getActivity(),
                             new UserInfoViewModel.UserInfoViewModelFactory(
                                     binding.editTextEmail.getText().toString(),
-                                    response.getString("token")
+                                    response.getString("token"),
+                                    0,
+                                   ""
                             )).get(UserInfoViewModel.class);
-
                     sendPushyToken();
                 } catch (JSONException e) {
                     Log.e("JSON Parse Error", e.getMessage());
@@ -204,7 +207,9 @@ public class SignInFragment extends Fragment {
             } else {
                 navigateToSuccess(
                         binding.editTextEmail.getText().toString(),
-                        mUserViewModel.getmJwt()
+                        mUserViewModel.getmJwt(),
+                        mUserViewModel.getmMeberId(),
+                        mUserViewModel.getmUserName()
                 );
             }
         }
@@ -226,7 +231,9 @@ public class SignInFragment extends Fragment {
             // created on the web service.
             if(!jwt.isExpired(0)) {
                 String email = jwt.getClaim("email").asString();
-                navigateToSuccess(email, token);
+                int memberid = jwt.getClaim("memberid").asInt();
+                String username = jwt.getClaim("username").asString();
+                navigateToSuccess(email, token, memberid, username);
                 return;
             }
         }

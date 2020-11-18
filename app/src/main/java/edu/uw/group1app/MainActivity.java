@@ -1,34 +1,24 @@
 package edu.uw.group1app;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.PopupMenu;
 
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import edu.uw.group1app.databinding.ActivityMainBinding;
 import edu.uw.group1app.model.NewMessageCountViewModel;
@@ -38,8 +28,6 @@ import edu.uw.group1app.services.PushReceiver;
 import edu.uw.group1app.ui.chat.ChatMessage;
 import edu.uw.group1app.ui.chat.ChatViewModel;
 import edu.uw.group1app.ui.contacts.ContactListViewModel;
-import edu.uw.group1app.ui.contacts.ContactRecyclerViewAdapter;
-import edu.uw.group1app.ui.contacts.DeleteContactDialog;
 
 /**
  * Main Activity class
@@ -79,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //If the user is not on the chat screen, update the
                 // NewMessageCountView Model
-                if (nd.getId() != R.id.navigation_chat) {
+                if (nd.getId() != R.id.chatFragment) {
                     mNewMessageModel.increment();
                 }
                 //Inform the view model holding chatroom messages of the new
@@ -119,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
         mNewMessageModel = new ViewModelProvider(this).get(NewMessageCountViewModel.class);
         new ViewModelProvider(this,
-                new UserInfoViewModel.UserInfoViewModelFactory(args.getEmail(), args.getJwt())
+                new UserInfoViewModel.UserInfoViewModelFactory(args.getEmail(), args.getJwt(), args.getMemberid(), args.getUsername())
                 ).get(UserInfoViewModel.class);
 
 
@@ -134,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-            if (destination.getId() == R.id.navigation_chat) {
+            if (destination.getId() == R.id.chatFragment) {
                 //When the user navigates to the chats page, reset the new message count.
                 //This will need some extra logic for your project as it should have
                 //multiple chat rooms.
@@ -143,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mNewMessageModel.addMessageCountObserver(this, count -> {
-            BadgeDrawable badge = binding.navView.getOrCreateBadge(R.id.navigation_chat);
+            BadgeDrawable badge = binding.navView.getOrCreateBadge(R.id.chatFragment);
             badge.setMaxCharacterCount(2);
             if (count > 0) {
                 //new messages! update and show the notification badge.
