@@ -20,10 +20,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Contact List View Model that connect to the back-end to pull user contacts from server
+ * @author Ford Nguyen
+ * @version 1.0
+ */
 public class ContactListViewModel extends AndroidViewModel {
 
     private MutableLiveData<List<Contact>> mContactList;
@@ -51,6 +57,10 @@ public class ContactListViewModel extends AndroidViewModel {
         mContactList.observe(owner, observer);
     }
 
+    /**
+     * connect to the webservice and get contact list
+     * @param jwt authorization token
+     */
     public void connectGet(String jwt) {
         String url = "https://mobileapp-group-backend.herokuapp.com/contact";
         Request request = new JsonObjectRequest(
@@ -74,6 +84,34 @@ public class ContactListViewModel extends AndroidViewModel {
         //Instantiate the RequestQueue and add the request to the queue
         Volley.newRequestQueue(getApplication().getApplicationContext())
                 .add(request);
+    }
+
+    /**
+     * connect to the webservice and request for a contact deletion
+     * @param jwt JWT authorization token
+     * @param memberID to be deleted
+     */
+    public void deleteContact(String jwt, final int memberID) {
+        String url = "https://mobileapp-group-backend.herokuapp.com/contact/contact/" + memberID;
+        Request request = new JsonObjectRequest(
+                Request.Method.DELETE,
+                url,
+                null,
+                mResponse::setValue,
+                this::handleError) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", jwt);
+                return headers;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                10_000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        ));
+        Volley.newRequestQueue(getApplication().getApplicationContext()).add(request);
     }
 
 
@@ -106,6 +144,10 @@ public class ContactListViewModel extends AndroidViewModel {
         mContactList.setValue(temp);
     }
 
+    /**
+     * handle a failure connection to the back-end
+     * @param error the error.
+     */
     private void handleError(final VolleyError error) {
         Log.e("CONNECTION ERROR", "No contacts");
     }

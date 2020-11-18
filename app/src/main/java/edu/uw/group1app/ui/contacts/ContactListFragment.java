@@ -9,12 +9,14 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 
 import edu.uw.group1app.R;
-import edu.uw.group1app.databinding.FragmentPersonListBinding;
+import edu.uw.group1app.databinding.FragmentContactListBinding;
 import edu.uw.group1app.model.UserInfoViewModel;
 
 
@@ -22,7 +24,7 @@ import edu.uw.group1app.model.UserInfoViewModel;
  * This class generate a Fragment that contains list of contacts
  * For now it is use for Recents, All, Favorite
  * @author Ford Nguyen
- * @version 1.0
+ * @version 2.0
  */
 public class ContactListFragment extends Fragment {
 
@@ -46,19 +48,20 @@ public class ContactListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_person_list, container, false);
+        return inflater.inflate(R.layout.fragment_contact_list, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        FragmentPersonListBinding binding = FragmentPersonListBinding.bind(getView());
+        FragmentContactListBinding binding = FragmentContactListBinding.bind(getView());
 
         mModel.addContactListObserver(getViewLifecycleOwner(), contactList -> {
             binding.listRoot.setAdapter(
-                    new ContactRecyclerViewAdapter(contactList)
+                    new ContactRecyclerViewAdapter(contactList, this.getContext(),
+                            getChildFragmentManager())
             );
         });
-
     }
+
 }

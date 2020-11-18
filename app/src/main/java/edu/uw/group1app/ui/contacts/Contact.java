@@ -17,7 +17,7 @@ public class Contact {
     private final int mMemberID;
 
     /**
-     *
+     * Constructor for Contact
      * @param email email address
      * @param fName first name
      * @param lName last name

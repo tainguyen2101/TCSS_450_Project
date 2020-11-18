@@ -2,15 +2,19 @@ package edu.uw.group1app;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -18,9 +22,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.PopupMenu;
 
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import edu.uw.group1app.databinding.ActivityMainBinding;
 import edu.uw.group1app.model.NewMessageCountViewModel;
@@ -29,6 +37,9 @@ import edu.uw.group1app.model.UserInfoViewModel;
 import edu.uw.group1app.services.PushReceiver;
 import edu.uw.group1app.ui.chat.ChatMessage;
 import edu.uw.group1app.ui.chat.ChatViewModel;
+import edu.uw.group1app.ui.contacts.ContactListViewModel;
+import edu.uw.group1app.ui.contacts.ContactRecyclerViewAdapter;
+import edu.uw.group1app.ui.contacts.DeleteContactDialog;
 
 /**
  * Main Activity class
@@ -42,6 +53,10 @@ public class MainActivity extends AppCompatActivity {
     private MainPushMessageReceiver mPushMessageReceiver;
 
     private NewMessageCountViewModel mNewMessageModel;
+
+    private ContactListViewModel mContactViewModel;
+
+
     /**
      * A BroadcastReceiver that listens for messages sent from PushReceiver
      */
@@ -99,6 +114,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         MainActivityArgs args = MainActivityArgs.fromBundle(getIntent().getExtras());
+
+        mContactViewModel = new ViewModelProvider(this).get(ContactListViewModel.class);
 
         mNewMessageModel = new ViewModelProvider(this).get(NewMessageCountViewModel.class);
         new ViewModelProvider(this,
@@ -187,10 +204,4 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    // Add a Option Menu
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.bottom_nav_menu, menu);
-        return true;
-    }*/
 }
