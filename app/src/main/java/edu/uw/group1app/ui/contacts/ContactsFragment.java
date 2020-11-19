@@ -61,7 +61,7 @@ public class ContactsFragment extends Fragment {
         // add fragments
         adapter.addFrag(new ContactRequestListFragment(), "Request");
         adapter.addFrag(new ContactListFragment(), "All");
-        adapter.addFrag(new HomeFragment(), "Favorite");
+        adapter.addFrag(new ContactFavoriteListFragment(), "Favorite");
 
         viewPager.setAdapter(adapter);
         //Set homepage to ALL

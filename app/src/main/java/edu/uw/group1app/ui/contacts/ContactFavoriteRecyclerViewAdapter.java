@@ -23,8 +23,8 @@ import edu.uw.group1app.R;
  * @author Ford Nguyen
  * @version 1.0
  */
-public class ContactRecyclerViewAdapter extends
-        RecyclerView.Adapter<ContactRecyclerViewAdapter.ContactViewHolder> {
+public class ContactFavoriteRecyclerViewAdapter extends
+        RecyclerView.Adapter<ContactFavoriteRecyclerViewAdapter.ContactViewHolder> {
 
     private List<Contact> mContacts;
 
@@ -32,7 +32,7 @@ public class ContactRecyclerViewAdapter extends
 
     private final FragmentManager mFragMan;
 
-    public ContactRecyclerViewAdapter(List<Contact> contacts, Context context, FragmentManager fm) {
+    public ContactFavoriteRecyclerViewAdapter(List<Contact> contacts, Context context, FragmentManager fm) {
         this.mContacts = contacts;
         mContext = context;
         this.mFragMan = fm;
@@ -40,11 +40,11 @@ public class ContactRecyclerViewAdapter extends
 
     @NonNull
     @Override
-    public ContactRecyclerViewAdapter.ContactViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ContactFavoriteRecyclerViewAdapter.ContactViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
-        View contactView = inflater.inflate(R.layout.contact_item, parent, false);
+        View contactView = inflater.inflate(R.layout.favorite_item, parent, false);
         ContactViewHolder viewHolder = new ContactViewHolder(contactView);
         return viewHolder;
     }
@@ -53,6 +53,7 @@ public class ContactRecyclerViewAdapter extends
     @Override
     public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
         holder.setContact(mContacts.get(position));
+
     }
 
     @Override
@@ -63,29 +64,16 @@ public class ContactRecyclerViewAdapter extends
     public class ContactViewHolder extends RecyclerView.ViewHolder {
         private TextView nameTextView;
         private TextView usernameTextView;
-        private ImageButton moreButtonView;
         private Contact mContact;
         private final View mView;
 
         public ContactViewHolder(View v) {
             super(v);
             mView = v;
-            nameTextView = v.findViewById(R.id.contact_name);
-            usernameTextView = v.findViewById(R.id.contact_username);
-            moreButtonView = v.findViewById(R.id.contact_more_button);
+            nameTextView = v.findViewById(R.id.favorite_name);
+            usernameTextView = v.findViewById(R.id.favorite_username);
         }
 
-        private void deleteDialog() {
-            DeleteContactDialog dialog = new DeleteContactDialog(mContact.getMemberID(), mFragMan,
-                    this);
-            dialog.show(mFragMan, "yes/no?");
-        }
-
-        private void FavorDialog() {
-            FavorContactDialog dialog = new FavorContactDialog(mContact.getMemberID(), mFragMan,
-                    this);
-            dialog.show(mFragMan, "yes/no");
-        }
 
 
         /**
@@ -98,30 +86,9 @@ public class ContactRecyclerViewAdapter extends
             mContact = contact;
             nameTextView.setText(contact.getFirstName() + " " + contact.getLastName());
             usernameTextView.setText(contact.getUsername());
-            moreButtonView.setOnClickListener(v -> {
-                PopupMenu popupMenu = new PopupMenu(mContext, v);
-                popupMenu.getMenuInflater().inflate(R.menu.pop_up_menu, popupMenu.getMenu());
-                popupMenu.setForceShowIcon(true);
-                popupMenu.setOnMenuItemClickListener(item -> {
-                    switch (item.getItemId()) {
-                        case R.id.favorite_pop_menu:
-                            FavorDialog();
-                            return true;
-                        case R.id.delete_pop_menu:
-                            deleteDialog();
-                            return true;
-                        default:
-                            return false;
-                    }
-                });
-                popupMenu.show();
-            });
         }
 
-        public void deleteContact(){
-            mContacts.remove(mContact);
-            notifyDataSetChanged();
-        }
+
 
     }
 }
