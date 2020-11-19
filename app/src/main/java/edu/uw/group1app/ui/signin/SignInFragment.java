@@ -173,8 +173,8 @@ public class SignInFragment extends Fragment {
                             new UserInfoViewModel.UserInfoViewModelFactory(
                                     binding.editTextEmail.getText().toString(),
                                     response.getString("token"),
-                                    0,
-                                   ""
+                                    response.getInt("memberid"),
+                                   response.getString("username")
                             )).get(UserInfoViewModel.class);
                     sendPushyToken();
                 } catch (JSONException e) {
@@ -216,7 +216,7 @@ public class SignInFragment extends Fragment {
             }
         }
     }
-    /*@Override
+    @Override
     public void onStart() {
         super.onStart();
 
@@ -239,6 +239,6 @@ public class SignInFragment extends Fragment {
                 return;
             }
         }
-    }*/
+    }
 }
 
