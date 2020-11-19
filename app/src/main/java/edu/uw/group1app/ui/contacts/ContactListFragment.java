@@ -1,19 +1,25 @@
 package edu.uw.group1app.ui.contacts;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import edu.uw.group1app.R;
 import edu.uw.group1app.databinding.FragmentContactListBinding;
@@ -28,6 +34,9 @@ import edu.uw.group1app.model.UserInfoViewModel;
 public class ContactListFragment extends Fragment {
 
     private ContactListViewModel mModel;
+
+    private String m_Text;
+
 
     public ContactListFragment() {
         // empty constructor
@@ -53,6 +62,25 @@ public class ContactListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         FragmentContactListBinding binding = FragmentContactListBinding.bind(getView());
+
+        FloatingActionButton fab = view.findViewById(R.id.contact_add_float_button);
+
+        fab.setOnClickListener(v -> {
+            // TODO: Navigate to a page for user to add friend
+            AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
+            builder.setTitle("Who would like to be friend with?");
+
+            // Set up the input
+            final EditText input = new EditText(this.getContext());
+            // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+            input.setInputType(InputType.TYPE_CLASS_TEXT);
+            builder.setView(input);
+
+            // Set up the buttons
+            builder.setPositiveButton("OK", (dialog, which) -> m_Text = input.getText().toString());
+            builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+            builder.show();
+        });
 
         mModel.addContactListObserver(getViewLifecycleOwner(), contactList -> {
             binding.listRoot.setAdapter(

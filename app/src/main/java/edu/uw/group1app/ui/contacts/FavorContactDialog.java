@@ -7,22 +7,22 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import edu.uw.group1app.R;
 import edu.uw.group1app.databinding.FragmentContactListBinding;
 import edu.uw.group1app.model.UserInfoViewModel;
 
 /**
- * Delete Contact Dialog to prompt user if they want to delete a contact
- * @author Ford Nguyen
- * @version 1.0
+ * A simple {@link Fragment} subclass.
  */
-public class DeleteContactDialog extends DialogFragment {
+public class FavorContactDialog extends DialogFragment {
 
     private UserInfoViewModel mUserModel;
     private ContactListViewModel mContactModel;
@@ -33,7 +33,7 @@ public class DeleteContactDialog extends DialogFragment {
      * Constructor
      * @param fm the fragment manager
      */
-    public DeleteContactDialog(int memberID, FragmentManager fm,
+    public FavorContactDialog(FragmentManager fm,
                                ContactRecyclerViewAdapter.ContactViewHolder updater) {
         this.mFragMan = fm;
         mUpdater = updater;
@@ -67,11 +67,10 @@ public class DeleteContactDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.fragment_delete_contact_dialog, null);
+        View view = inflater.inflate(R.layout.fragment_favor_contact_dialog, null);
         builder.setView(view)
                 .setNegativeButton("Yes", (dialogInterface, i) -> {
-                    mContactModel.deleteContact(mUserModel.getmJwt(), mUserModel.getmMeberId());
-                    mUpdater.deleteContact();
+                    mContactModel.addFavorite(mUserModel.getmJwt(), mUserModel.getmMeberId());
                 })
                 .setPositiveButton("Cancel", (dialogInterface, i) -> {
                 });

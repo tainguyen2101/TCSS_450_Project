@@ -1,7 +1,5 @@
 package edu.uw.group1app.ui.contacts;
 
-import android.app.AlertDialog;
-import android.app.Application;
 import android.content.Context;
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -18,7 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import edu.uw.group1app.MainActivity;
 import edu.uw.group1app.R;
 
 /**
@@ -85,6 +82,12 @@ public class ContactRecyclerViewAdapter extends
             dialog.show(mFragMan, "yes/no?");
         }
 
+        private void FavorDialog() {
+            FavorContactDialog dialog = new FavorContactDialog(mFragMan, this);
+            dialog.show(mFragMan, "yes/no");
+        }
+
+
         /**
          * Sets the contact name and username
          * Sets the More Button Popup Menu with its behavior
@@ -102,6 +105,7 @@ public class ContactRecyclerViewAdapter extends
                 popupMenu.setOnMenuItemClickListener(item -> {
                     switch (item.getItemId()) {
                         case R.id.favorite_pop_menu:
+                            FavorDialog();
                             return true;
                         case R.id.delete_pop_menu:
                             deleteDialog();

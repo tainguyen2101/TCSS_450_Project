@@ -37,4 +37,5 @@
 
 
     <string name="base_url">https://mobileapp-group-backend.herokuapp.com/</string>
+    <string name="favor_contact_dialog">Favorite?</string>
 </resources>

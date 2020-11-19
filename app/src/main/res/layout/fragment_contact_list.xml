@@ -27,7 +27,9 @@
         android:layout_marginBottom="29dp"
         app:backgroundTint="@color/color_primary"
         app:tint="@android:color/white"
-        android:src="@drawable/ic_contact_add_24" />
+        android:src="@drawable/ic_contact_add_24"
+        tools:ignore="ContentDescription"
+        android:contentDescription="TODO" />
 
 
 </RelativeLayout>
