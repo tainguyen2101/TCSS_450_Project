@@ -57,13 +57,15 @@ public class ContactsFragment extends Fragment {
         tabLayout.setupWithViewPager(viewPager);
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager(), 1);
-        // add your fragments
-        adapter.addFrag(new HomeFragment(), "Recents");
+
+        // add fragments
+        adapter.addFrag(new ContactRequestListFragment(), "Request");
         adapter.addFrag(new ContactListFragment(), "All");
         adapter.addFrag(new HomeFragment(), "Favorite");
 
         viewPager.setAdapter(adapter);
-
+        //Set homepage to ALL
+        viewPager.setCurrentItem(1);
 
     }
 }
@@ -90,10 +92,6 @@ class ViewPagerAdapter extends FragmentStatePagerAdapter {
         return mFragmentTitleList.get(position);
     }
 
-    public void addFrag(Fragment fragment) {
-        mFragmentList.add(fragment);
-        mFragmentTitleList.add("");
-    }
 
     public void addFrag(Fragment fragment, String title) {
         mFragmentList.add(fragment);

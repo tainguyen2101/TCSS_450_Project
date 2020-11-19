@@ -22,7 +22,9 @@ import edu.uw.group1app.databinding.FragmentContactListBinding;
 import edu.uw.group1app.model.UserInfoViewModel;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Delete Contact Dialog to prompt user if they want to delete a contact
+ * @author Ford Nguyen
+ * @version 1.0
  */
 public class DeleteContactDialog extends DialogFragment {
 
@@ -32,7 +34,7 @@ public class DeleteContactDialog extends DialogFragment {
     private final ContactRecyclerViewAdapter.ContactViewHolder mUpdater;
 
     /**
-     * DElete contact dialog contructor given a in and a Fragment manger
+     * Constructor
      * @param memberID the int representing member id
      * @param fm the fragment manager
      */

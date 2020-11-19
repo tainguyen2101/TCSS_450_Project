@@ -19,6 +19,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 
+import java.util.Objects;
+
 import edu.uw.group1app.R;
 import edu.uw.group1app.databinding.FragmentSignInBinding;
 import edu.uw.group1app.model.PushyTokenViewModel;
@@ -133,7 +135,7 @@ public class SignInFragment extends Fragment {
     private void navigateToSuccess(final String email, final String jwt, final int memberid, final String username) {
         if (binding.switchSignin.isChecked()) {
             SharedPreferences prefs =
-                    getActivity().getSharedPreferences(
+                    requireActivity().getSharedPreferences(
                             getString(R.string.keys_shared_prefs),
                             Context.MODE_PRIVATE);
             //Store the credentials in SharedPrefs
@@ -214,7 +216,7 @@ public class SignInFragment extends Fragment {
             }
         }
     }
-    @Override
+    /*@Override
     public void onStart() {
         super.onStart();
 
@@ -237,6 +239,6 @@ public class SignInFragment extends Fragment {
                 return;
             }
         }
-    }
+    }*/
 }
 

@@ -7,36 +7,31 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 import edu.uw.group1app.R;
-import edu.uw.group1app.databinding.FragmentContactListBinding;
+import edu.uw.group1app.databinding.FragmentContactRequestListBinding;
 import edu.uw.group1app.model.UserInfoViewModel;
 
-
 /**
- * This class generate a Fragment that contains list of contacts
+ * This class generate a Fragment that contains list of friend request
  * @author Ford Nguyen
- * @version 2.0
+ * @version 1.0
  */
-public class ContactListFragment extends Fragment {
+public class ContactRequestListFragment extends Fragment {
 
-    private ContactListViewModel mModel;
+    private ContactRequestViewModel mModel;
 
-    public ContactListFragment() {
+    public ContactRequestListFragment() {
         // empty constructor
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mModel = new ViewModelProvider(getActivity()).get(ContactListViewModel.class);
+        mModel = new ViewModelProvider(getActivity()).get(ContactRequestViewModel.class);
 
         UserInfoViewModel model = new ViewModelProvider(getActivity()).get(UserInfoViewModel.class);
         mModel.connectGet(model.getmJwt());
@@ -46,20 +41,16 @@ public class ContactListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_contact_list, container, false);
+        return inflater.inflate(R.layout.fragment_contact_request_list, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        FragmentContactListBinding binding = FragmentContactListBinding.bind(getView());
+        FragmentContactRequestListBinding binding = FragmentContactRequestListBinding.bind(getView());
 
-        mModel.addContactListObserver(getViewLifecycleOwner(), contactList -> {
-            binding.listRoot.setAdapter(
-                    new ContactRecyclerViewAdapter(contactList, this.getContext(),
-                            getChildFragmentManager())
-            );
+        mModel.addRequestListObserver(getViewLifecycleOwner(), requestList -> {
+            binding.listRoot.setAdapter(new ContactRequestRecyclerViewAdapter(requestList));
         });
     }
-
 }

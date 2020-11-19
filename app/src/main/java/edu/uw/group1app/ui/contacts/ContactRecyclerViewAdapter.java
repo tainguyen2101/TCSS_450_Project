@@ -3,6 +3,7 @@ package edu.uw.group1app.ui.contacts;
 import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -50,6 +52,7 @@ public class ContactRecyclerViewAdapter extends
         return viewHolder;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
         holder.setContact(mContacts.get(position));
@@ -62,11 +65,11 @@ public class ContactRecyclerViewAdapter extends
     }
 
     public class ContactViewHolder extends RecyclerView.ViewHolder {
-        public TextView nameTextView;
-        public TextView usernameTextView;
-        public ImageButton moreButtonView;
-        public Contact mContact;
-        public final View mView;
+        private TextView nameTextView;
+        private TextView usernameTextView;
+        private ImageButton moreButtonView;
+        private Contact mContact;
+        private final View mView;
 
         public ContactViewHolder(View v) {
             super(v);
@@ -83,17 +86,19 @@ public class ContactRecyclerViewAdapter extends
         }
 
         /**
-         * Sets the contact.
-         *
+         * Sets the contact name and username
+         * Sets the More Button Popup Menu with its behavior
          * @param contact the contact
          */
-        void setContact(final Contact contact) {
+        @RequiresApi(api = Build.VERSION_CODES.Q)
+        private void setContact(final Contact contact) {
             mContact = contact;
             nameTextView.setText(contact.getFirstName() + " " + contact.getLastName());
             usernameTextView.setText(contact.getUsername());
             moreButtonView.setOnClickListener(v -> {
                 PopupMenu popupMenu = new PopupMenu(mContext, v);
                 popupMenu.getMenuInflater().inflate(R.menu.pop_up_menu, popupMenu.getMenu());
+                popupMenu.setForceShowIcon(true);
                 popupMenu.setOnMenuItemClickListener(item -> {
                     switch (item.getItemId()) {
                         case R.id.favorite_pop_menu:

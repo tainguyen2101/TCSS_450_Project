@@ -27,6 +27,9 @@ import java.util.Map;
 
 /**
  * Contact List View Model that connect to the back-end to pull user contacts from server
+ * if verified on the back-end contacts table is 1
+ * user has accept the friend request hence should be in the contact list
+ *
  * @author Ford Nguyen
  * @version 1.0
  */

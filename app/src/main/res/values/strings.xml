@@ -32,6 +32,9 @@
 
     <string name="delete_contact_dialog">Are you sure you want to delete this entry?</string>
 
+    <string name="delete_popup_menu">Delete</string>
+    <string name="favorite_popup_menu">Favorite</string>
+
 
     <string name="base_url">https://mobileapp-group-backend.herokuapp.com/</string>
 </resources>

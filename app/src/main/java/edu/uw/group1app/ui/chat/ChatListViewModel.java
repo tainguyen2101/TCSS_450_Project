@@ -123,7 +123,7 @@ public class ChatListViewModel extends AndroidViewModel {
     }
 
     public void connectDeleteChat(final int chatId) {
-        Log.d("ChatListViewModel DELETE", "Request to delete chat: " + chatId + " for email: " + uiv.getEmail());
+        Log.d("ChatListViewModel DELETE", "FriendRequest to delete chat: " + chatId + " for email: " + uiv.getEmail());
         String url = getApplication().getResources().getString(R.string.base_url) + "chats"
                 + "?chatId=" + chatId
                 + "&email=" + uiv.getEmail();
