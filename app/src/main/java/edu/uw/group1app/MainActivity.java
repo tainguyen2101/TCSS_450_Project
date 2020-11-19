@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     private MainPushMessageReceiver mPushMessageReceiver;
 
-    private NewMessageCountViewModel mNewMessageModel;
+    //private NewMessageCountViewModel mNewMessageModel;
 
     private ContactListViewModel mContactViewModel;
 
@@ -61,23 +61,23 @@ public class MainActivity extends AppCompatActivity {
                             MainActivity.this, R.id.nav_host_fragment);
             NavDestination nd = nc.getCurrentDestination();
 
-            if (intent.hasExtra("chatMessage")) {
+            /*if (intent.hasExtra("chatMessage")) {
 
                 ChatMessage cm = (ChatMessage) intent.getSerializableExtra("chatMessage");
 
                 //If the user is not on the chat screen, update the
                 // NewMessageCountView Model
-                if (nd.getId() != R.id.chatFragment) {
+                /*if (nd.getId() != R.id.chatFragment) {
                     mNewMessageModel.increment();
                 }
                 //Inform the view model holding chatroom messages of the new
                 //message.
-                mModel.addMessage(intent.getIntExtra("chatid", -1), cm);
-            }
+                mModel.addMessage(intent.getIntExtra("chatid", -1), cm);*/
+            //}
         }
     }
 
-    @Override
+    /*@Override
     public void onResume() {
         super.onResume();
         if (mPushMessageReceiver == null) {
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         }
         IntentFilter iFilter = new IntentFilter(PushReceiver.RECEIVED_NEW_MESSAGE);
         registerReceiver(mPushMessageReceiver, iFilter);
-    }
+    }*/
 
     @Override
     public void onPause() {
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
         mContactViewModel = new ViewModelProvider(this).get(ContactListViewModel.class);
 
-        mNewMessageModel = new ViewModelProvider(this).get(NewMessageCountViewModel.class);
+        //mNewMessageModel = new ViewModelProvider(this).get(NewMessageCountViewModel.class);
         new ViewModelProvider(this,
                 new UserInfoViewModel.UserInfoViewModelFactory(args.getEmail(), args.getJwt(), args.getMemberid(), args.getUsername())
                 ).get(UserInfoViewModel.class);
@@ -122,16 +122,16 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-            if (destination.getId() == R.id.chatFragment) {
+            if (destination.getId() == R.id.navigation_chat) {
                 //When the user navigates to the chats page, reset the new message count.
                 //This will need some extra logic for your project as it should have
                 //multiple chat rooms.
-                mNewMessageModel.reset();
+                //mNewMessageModel.reset();
             }
         });
 
-        mNewMessageModel.addMessageCountObserver(this, count -> {
-            BadgeDrawable badge = binding.navView.getOrCreateBadge(R.id.chatFragment);
+        /*mNewMessageModel.addMessageCountObserver(this, count -> {
+            BadgeDrawable badge = binding.navView.getOrCreateBadge(R.id.navigation_chat);
             badge.setMaxCharacterCount(2);
             if (count > 0) {
                 //new messages! update and show the notification badge.
@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity {
                 badge.clearNumber();
                 badge.setVisible(false);
             }
-        });
+        });*/
     }
 
     /**

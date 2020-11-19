@@ -56,7 +56,6 @@ public class ContactRecyclerViewAdapter extends
     @Override
     public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
         holder.setContact(mContacts.get(position));
-
     }
 
     @Override

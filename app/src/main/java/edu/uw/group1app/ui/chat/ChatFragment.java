@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import edu.uw.group1app.MainActivity;
 import edu.uw.group1app.R;
@@ -43,8 +44,9 @@ public class ChatFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ViewModelProvider provider = new ViewModelProvider(getActivity());
-        ChatFragmentArgs args = ChatFragmentArgs.fromBundle(getArguments());
-        mChatID = args.getChatroom().getChatId();
+        //ChatFragmentArgs args = ChatFragmentArgs.fromBundle(getArguments());
+        mChatID = 1;
+        //getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         //mTitle = args.getChatroom().ge;
         Log.i("CHAT", String.valueOf(mChatID));
         mUserModel = provider.get(UserInfoViewModel.class);

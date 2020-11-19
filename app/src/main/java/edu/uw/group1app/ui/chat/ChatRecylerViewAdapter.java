@@ -25,9 +25,8 @@ public class ChatRecylerViewAdapter extends RecyclerView.Adapter<ChatRecylerView
     private final String mEmail;
     public ChatRecylerViewAdapter(List<ChatMessage> messages, String email) {
         this.mMessages = messages;
-        mEmail = email;
+        this.mEmail = email;
     }
-
 
     @NonNull
     @Override
