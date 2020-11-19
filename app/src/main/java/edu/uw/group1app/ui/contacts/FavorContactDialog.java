@@ -20,21 +20,23 @@ import edu.uw.group1app.databinding.FragmentContactListBinding;
 import edu.uw.group1app.model.UserInfoViewModel;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Favorite Contact Dialog to prompt user if they want to favorite a contact
  */
 public class FavorContactDialog extends DialogFragment {
 
     private UserInfoViewModel mUserModel;
     private ContactListViewModel mContactModel;
     private final FragmentManager mFragMan;
+    private int mMemberID;
     private final ContactRecyclerViewAdapter.ContactViewHolder mUpdater;
 
     /**
      * Constructor
      * @param fm the fragment manager
      */
-    public FavorContactDialog(FragmentManager fm,
+    public FavorContactDialog(final int memberID, FragmentManager fm,
                                ContactRecyclerViewAdapter.ContactViewHolder updater) {
+        this.mMemberID = memberID;
         this.mFragMan = fm;
         mUpdater = updater;
     }
@@ -70,7 +72,7 @@ public class FavorContactDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.fragment_favor_contact_dialog, null);
         builder.setView(view)
                 .setNegativeButton("Yes", (dialogInterface, i) -> {
-                    mContactModel.addFavorite(mUserModel.getmJwt(), mUserModel.getmMeberId());
+                    mContactModel.addFavorite(mUserModel.getmJwt(), mMemberID);
                 })
                 .setPositiveButton("Cancel", (dialogInterface, i) -> {
                 });
