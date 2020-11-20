@@ -93,7 +93,9 @@ public class ContactRequestViewModel extends AndroidViewModel {
 
                 String username = request.getString("username");
 
-                FriendRequest entry = new FriendRequest(username);
+                int memberID = request.getInt("memberid");
+
+                FriendRequest entry = new FriendRequest(username, memberID);
 
                 temp.add(entry);
             }

@@ -21,7 +21,7 @@ import edu.uw.group1app.R;
 /**
  * Contact List Fragment Recycle View Adapter
  * @author Ford Nguyen
- * @version 1.0
+ * @version 2.0
  */
 public class ContactRecyclerViewAdapter extends
         RecyclerView.Adapter<ContactRecyclerViewAdapter.ContactViewHolder> {

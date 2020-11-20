@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import edu.uw.group1app.R;
 import edu.uw.group1app.databinding.FragmentContactRequestListBinding;
@@ -50,7 +51,9 @@ public class ContactRequestListFragment extends Fragment {
         FragmentContactRequestListBinding binding = FragmentContactRequestListBinding.bind(getView());
 
         mModel.addRequestListObserver(getViewLifecycleOwner(), requestList -> {
-            binding.listRoot.setAdapter(new ContactRequestRecyclerViewAdapter(requestList));
+            binding.listRoot.setAdapter(new ContactRequestRecyclerViewAdapter(requestList, this.getContext()));
         });
+
+
     }
 }

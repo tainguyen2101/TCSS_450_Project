@@ -1,6 +1,7 @@
 package edu.uw.group1app.ui.contacts;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,19 +9,36 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import edu.uw.group1app.R;
+import edu.uw.group1app.model.UserInfoViewModel;
 
 public class ContactRequestRecyclerViewAdapter extends
         RecyclerView.Adapter<ContactRequestRecyclerViewAdapter.RequestViewHolder> {
 
     private List<FriendRequest> mFriendRequest;
 
-    public ContactRequestRecyclerViewAdapter(List<FriendRequest> requests) {
+    private ContactListViewModel mViewModel;
+
+    private UserInfoViewModel mInfoModel;
+
+    private Context mContext;
+
+    public ContactRequestRecyclerViewAdapter(List<FriendRequest> requests, Context context) {
         this.mFriendRequest = requests;
+        mContext = context;
+
+        mInfoModel = new ViewModelProvider((FragmentActivity) mContext)
+                .get(UserInfoViewModel.class);
+
+        mViewModel = new ViewModelProvider((FragmentActivity) mContext)
+                .get(ContactListViewModel.class);
     }
 
     @NonNull
@@ -29,12 +47,14 @@ public class ContactRequestRecyclerViewAdapter extends
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
+
         View contactView = inflater.inflate(R.layout.fragment_contact_request_card,
                 parent, false);
         ContactRequestRecyclerViewAdapter.RequestViewHolder viewHolder = new
                 ContactRequestRecyclerViewAdapter.RequestViewHolder(contactView);
         return viewHolder;
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull RequestViewHolder holder, int position) {
@@ -66,11 +86,11 @@ public class ContactRequestRecyclerViewAdapter extends
 
             //Accept button on click listener
             acceptImageButton.setOnClickListener(v -> {
-                // TODO: Accept request send a signal to back-end to change verified to 1
 
-
+                mViewModel.acceptRequest(mInfoModel.getmJwt(), mRequest.getMemberID());
                 // Notify change to data set
-                //notifyDataSetChanged();
+                mFriendRequest.remove(mRequest);
+                notifyDataSetChanged();
             });
         }
     }

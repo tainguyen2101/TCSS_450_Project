@@ -35,6 +35,8 @@ public class ContactListFragment extends Fragment {
 
     private ContactListViewModel mModel;
 
+    private UserInfoViewModel mInfoModel;
+
     private String m_Text;
 
 
@@ -47,8 +49,8 @@ public class ContactListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mModel = new ViewModelProvider(getActivity()).get(ContactListViewModel.class);
 
-        UserInfoViewModel model = new ViewModelProvider(getActivity()).get(UserInfoViewModel.class);
-        mModel.connectGet(model.getmJwt());
+        mInfoModel = new ViewModelProvider(getActivity()).get(UserInfoViewModel.class);
+        mModel.connectGet(mInfoModel.getmJwt());
     }
 
     @Override
@@ -67,17 +69,21 @@ public class ContactListFragment extends Fragment {
 
         fab.setOnClickListener(v -> {
             // TODO: Navigate to a page for user to add friend
+
+            StringBuilder strBuilder = new StringBuilder();
             AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
             builder.setTitle("Who would like to be friend with?");
 
             // Set up the input
             final EditText input = new EditText(this.getContext());
+            input.setHint("Username");
             // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
             input.setInputType(InputType.TYPE_CLASS_TEXT);
             builder.setView(input);
 
             // Set up the buttons
-            builder.setPositiveButton("OK", (dialog, which) -> m_Text = input.getText().toString());
+            builder.setPositiveButton("OK", (dialog, which) ->
+                    mModel.addFriend(mInfoModel.getmJwt(), input.getText().toString()));
             builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
             builder.show();
         });

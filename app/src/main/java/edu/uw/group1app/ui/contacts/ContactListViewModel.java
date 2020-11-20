@@ -161,7 +161,71 @@ public class ContactListViewModel extends AndroidViewModel {
     public void addFavorite(final String jwt, final int memberID) {
         String url = "https://mobileapp-group-backend.herokuapp.com/contact/favorite/" + memberID;
 
+
+        Request request = new JsonObjectRequest(
+                Request.Method.POST,
+                url,
+                null,
+                mResponse::setValue,
+                this::handleError
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", jwt);
+                return headers;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                10_000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        //Instantiate the RequestQueue and add the request to the queue
+        Volley.newRequestQueue(getApplication().getApplicationContext())
+                .add(request);
+    }
+
+    /**
+     * Aceept friend request
+     * @param jwt JWT
+     * @param memberID to accept
+     */
+    public void acceptRequest(final String jwt, final int memberID) {
+        String url = "https://mobileapp-group-backend.herokuapp.com/contact/request/" + memberID;
+
+        Request request = new JsonObjectRequest(
+                Request.Method.POST,
+                url,
+                null,
+                mResponse::setValue,
+                this::handleError
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", jwt);
+                return headers;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                10_000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        //Instantiate the RequestQueue and add the request to the queue
+        Volley.newRequestQueue(getApplication().getApplicationContext())
+                .add(request);
+    }
+
+    public void addFriend(final String jwt, final String username) {
+
+        String url = "https://mobileapp-group-backend.herokuapp.com/contact/add";
+
         JSONObject body = new JSONObject();
+        try {
+            body.put("userName", username);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         Request request = new JsonObjectRequest(
                 Request.Method.POST,
@@ -184,6 +248,7 @@ public class ContactListViewModel extends AndroidViewModel {
         //Instantiate the RequestQueue and add the request to the queue
         Volley.newRequestQueue(getApplication().getApplicationContext())
                 .add(request);
+
     }
 
 
