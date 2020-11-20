@@ -1,20 +1,13 @@
 package edu.uw.group1app.ui.chat;
 
-import android.app.AlertDialog;
-import android.content.Context;
 import android.os.Build;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,34 +16,31 @@ import org.json.JSONException;
 import java.util.List;
 
 import edu.uw.group1app.R;
-import edu.uw.group1app.ui.contacts.ContactRecyclerViewAdapter;
+import edu.uw.group1app.databinding.FragmentChatListCardBinding;
 
 
 public class ChatListRecyclerViewAdapter extends RecyclerView.Adapter<ChatListRecyclerViewAdapter.ChatListViewHolder> {
 
     private List<ChatRoom> mChatRooms;
-    private Context mContext;
-    private final FragmentManager mFragMan;
+    private final ChatListFragment mParent;
+    //private final FragmentManager mFragMan;
+    //private final ChatListFragment mParent;
 
     /**
      * Constructor that builds the recycler view adapter from
      */
-    public ChatListRecyclerViewAdapter(List<ChatRoom> chatrooms,  Context context, FragmentManager fm) {
-        this.mChatRooms = chatrooms;
-        this.mContext = context;
-        this.mFragMan = fm;
+    public ChatListRecyclerViewAdapter(List<ChatRoom> chats, ChatListFragment parent) {
+        this.mChatRooms = chats;
+        this.mParent = parent;
+        //this.mFragMan = fm;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @NonNull
     @Override
     public ChatListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(context);
-
-        View chatListView = inflater.inflate(R.layout.fragment_chat_list_card, parent, false);
-        ChatListViewHolder viewHolder = new ChatListViewHolder(chatListView);
-        return viewHolder;
+        return new ChatListViewHolder(LayoutInflater
+                .from(parent.getContext()).inflate(R.layout.fragment_chat_list_card, parent, false));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
@@ -71,20 +61,37 @@ public class ChatListRecyclerViewAdapter extends RecyclerView.Adapter<ChatListRe
     public class ChatListViewHolder extends RecyclerView.ViewHolder {
 
         private TextView nameTextView;
-        private ImageButton moreButtonView;
         private ChatRoom mChatRoom;
         private final View mView;
+        private FragmentChatListCardBinding binding;
 
         public ChatListViewHolder(View v) {
             super(v);
             mView = v;
-            nameTextView = v.findViewById(R.id.chatRoom_Title);
-            moreButtonView = v.findViewById(R.id.button_add_chat);
+            nameTextView = v.findViewById(R.id.text_chatRoom_title);
+            binding = FragmentChatListCardBinding.bind(mView);
         }
 
         void setChatRoom(final ChatRoom chatRoom) throws JSONException {
+            binding.buttonDelete.setOnClickListener(button -> deletChat());
+            binding.buttonEnter.setOnClickListener(view ->
+                    Navigation.findNavController(mView)
+                            .navigate(ChatListFragmentDirections
+                                    .actionNavigationChatToChatFragment(chatRoom.getmChatId()
+                                            , chatRoom.getmChatRoomName())));
             mChatRoom = chatRoom;
-            nameTextView.setText(chatRoom.getmChatRoomName() + " " + chatRoom.getmChatId());
+            nameTextView.setText(mChatRoom.getmChatRoomName() + " " + mChatRoom.getmChatId());
         }
+
+        void deletChat() {
+            mChatRooms.remove(mChatRoom);
+            mParent.deleteChat(mChatRoom.getmChatId());
+            notifyDataSetChanged();
+        }
+    }
+
+    public void setChatRooms(List<ChatRoom> rooms){
+        mChatRooms = rooms;
+        notifyDataSetChanged();
     }
 }

@@ -40,6 +40,7 @@ public class ChatListFragment extends Fragment {
         mChatListModel = new ViewModelProvider(getActivity()).get(ChatListViewModel.class);
         mUserInfoViewmodel = new ViewModelProvider(getActivity()).get(UserInfoViewModel.class);
         mChatListModel.connectGet(mUserInfoViewmodel.getmJwt());
+        mChatListModel.setUserInfoViewModel(mUserInfoViewmodel);
     }
 
     @Override
@@ -52,21 +53,25 @@ public class ChatListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentChatListBinding.bind(getView());
-        binding.buttonAddChat.setOnClickListener(button -> handleCreateChatRoom());
+        binding.buttonAddChat.setOnClickListener(button -> createChatRoom());
+        chatListRecyclerViewAdapter = new ChatListRecyclerViewAdapter(new ArrayList<>(), this);
+        binding.listChatRoot.setAdapter(chatListRecyclerViewAdapter);
         mChatListModel.addChatListObserver(getViewLifecycleOwner(), chatRoomList -> {
-            binding.listChatRoot.setAdapter(
-                    new ChatListRecyclerViewAdapter(chatRoomList, this.getContext(),
-                            getChildFragmentManager())
-            );
+            chatListRecyclerViewAdapter.setChatRooms(chatRoomList);
         });
     }
 
-    private void handleCreateChatRoom(){
+    private void createChatRoom(){
         String title = binding.textChatTitle.getText().toString().trim();
         if(title.length() < 2){
             binding.textChatTitle.setError("Please enter a valid chat room name");
         }else{
             mChatListModel.addChat(mUserInfoViewmodel.getmJwt(), title);
+            //mChatListModel.putMembers(mUserInfoViewmodel.getmJwt(), 11);
         }
+    }
+
+    public void deleteChat(final int chatId) {
+        mChatListModel.deleteChat(chatId);
     }
 }

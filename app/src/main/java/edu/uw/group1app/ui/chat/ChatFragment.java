@@ -44,10 +44,10 @@ public class ChatFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ViewModelProvider provider = new ViewModelProvider(getActivity());
-        //ChatFragmentArgs args = ChatFragmentArgs.fromBundle(getArguments());
-        mChatID = 1;
+        ChatFragmentArgs args = ChatFragmentArgs.fromBundle(getArguments());
+        mChatID = args.getChatid();
+        mTitle = args.getChattitle();
         //getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        //mTitle = args.getChatroom().ge;
         Log.i("CHAT", String.valueOf(mChatID));
         mUserModel = provider.get(UserInfoViewModel.class);
         mChatModel = provider.get(ChatViewModel.class);
@@ -107,12 +107,6 @@ public class ChatFragment extends Fragment {
                     mUserModel.getmJwt(),
                     binding.editMessage.getText().toString());
         });
-
-        /*binding.buttonAddMembers.setOnClickListener(button-> {
-            Navigation.findNavController(getView())
-                    .navigate(ChatFragmentDirections
-                            .actionChatFragmentToAddContactToChatFragment(mTitle, mChatID));
-        });*/
 
         //when we get the response back from the server, clear the edittext
         mSendModel.addResponseObserver(getViewLifecycleOwner(), response ->

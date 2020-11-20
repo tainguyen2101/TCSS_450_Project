@@ -171,8 +171,8 @@ public class SignInFragment extends Fragment {
                             new UserInfoViewModel.UserInfoViewModelFactory(
                                     binding.editTextEmail.getText().toString(),
                                     response.getString("token"),
-                                    0,
-                                   ""
+                                    response.getInt("memberid"),
+                                    response.getString("username")
                             )).get(UserInfoViewModel.class);
                     sendPushyToken();
                 } catch (JSONException e) {

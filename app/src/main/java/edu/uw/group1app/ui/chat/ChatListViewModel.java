@@ -42,6 +42,10 @@ public class ChatListViewModel extends AndroidViewModel {
         mResponse.setValue(new JSONObject());
     }
 
+    public void setUserInfoViewModel(UserInfoViewModel theUserInfoViewModel) {
+        userInfoViewModel = theUserInfoViewModel;
+    }
+
     /**
      * An observer on the HTTP Response from the web server.
      *
@@ -95,6 +99,34 @@ public class ChatListViewModel extends AndroidViewModel {
         mChatRoomList.setValue(temp);
     }
 
+    /**
+     * connect to the webservice and request for a chat deletion
+     */
+    public void deleteChat(final int chatId) {
+        String url = "https://mobileapp-group-backend.herokuapp.com/chats/"
+                + chatId + "/" + userInfoViewModel.getEmail();
+
+        Request request = new JsonObjectRequest(
+                Request.Method.DELETE,
+                url,
+                null,
+                mResponse::setValue,
+                this::handleError) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", userInfoViewModel.getmJwt());
+                return headers;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                10_000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        ));
+        Volley.newRequestQueue(getApplication().getApplicationContext()).add(request);
+    }
+
     public void addChat(final String jwt, final String name) {
         String url = getApplication().getResources().getString(R.string.base_url) + "chats";
 
@@ -126,13 +158,12 @@ public class ChatListViewModel extends AndroidViewModel {
         Volley.newRequestQueue(getApplication().getApplicationContext()).add(request);
     }
 
-    public void putMembers(final String jwt, int memberId, int chatID) throws JSONException {
-        String url = "https://mobileapp-group-backend.herokuapp.com/" + chatID;
+    public void putMembers(final String jwt, int chatID) throws JSONException {
+        String url = "https://mobileapp-group-backend.herokuapp.com/chats" + chatID;
         System.out.println("Adding Members");
         JSONObject body = new JSONObject();
-        JSONArray member = new JSONArray(memberId);
         try {
-            body.put("member", member);
+            body.put("chatid", chatID);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -169,7 +200,7 @@ public class ChatListViewModel extends AndroidViewModel {
      * @param error the error.
      */
     private void handleError(final VolleyError error) {
-        Log.e("CONNECTION ERROR", "No contacts");
+        Log.e("CONNECTION ERROR", "No Chat Info");
     }
 
 }
