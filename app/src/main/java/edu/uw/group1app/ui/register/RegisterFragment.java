@@ -138,11 +138,13 @@ public class RegisterFragment extends Fragment {
     }
     /**Helper for navigation across nav map*/
     private void navigateToLogin() {
-        RegisterFragmentDirections.ActionRegisterFragmentToSignInFragment directions =
-                RegisterFragmentDirections.actionRegisterFragmentToSignInFragment();
-
-        directions.setEmail(binding.registerEmailBox.getText().toString());
-        directions.setPassword(binding.registerPwBox.getText().toString());
+//        RegisterFragmentDirections.ActionRegisterFragmentToSignInFragment directions =
+//                RegisterFragmentDirections.actionRegisterFragmentToSignInFragment();
+        RegisterFragmentDirections.ActionRegisterFragmentToEmailVerificationFragment directions =
+                    RegisterFragmentDirections.actionRegisterFragmentToEmailVerificationFragment(
+                            binding.registerEmailBox.getText().toString(),
+                            binding.registerPwBox.getText().toString()
+                    );
 
         Navigation.findNavController(getView()).navigate(directions);
 
