@@ -25,11 +25,11 @@ import edu.uw.group1app.model.UserInfoViewModel;
  */
 public class ChatFragment extends Fragment {
 
-    private int mChatId;
-    private String mChatTitle;
     private ChatSendViewModel mSendModel;
     private ChatViewModel mChatModel;
     private UserInfoViewModel mUserModel;
+    private int mChatId;
+    private String mChatTitle;
 
     public ChatFragment() {
         // Required empty public constructor
@@ -40,12 +40,13 @@ public class ChatFragment extends Fragment {
         super.onCreate(savedInstanceState);
         ViewModelProvider provider = new ViewModelProvider(getActivity());
         ChatFragmentArgs args = ChatFragmentArgs.fromBundle(getArguments());
-        mChatId = args.getChatid();
-        mChatTitle = args.getChattitle();
         mUserModel = provider.get(UserInfoViewModel.class);
         mChatModel = provider.get(ChatViewModel.class);
         mChatModel.getFirstMessages(mChatId, mUserModel.getmJwt());
         mSendModel = provider.get(ChatSendViewModel.class);
+        mChatId = args.getChatid();
+        mChatTitle = args.getChattitle();
+        ((MainActivity) getActivity()).setActionBarTitle(mChatTitle);
     }
 
     @Override
@@ -102,6 +103,5 @@ public class ChatFragment extends Fragment {
         //when we get the response back from the server, clear the edittext
         mSendModel.addResponseObserver(getViewLifecycleOwner(), response ->
                 binding.editMessage.setText(""));
-
     }
 }
