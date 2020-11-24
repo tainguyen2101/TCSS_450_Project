@@ -67,6 +67,14 @@ public class ContactsFragment extends Fragment {
         //Set homepage to ALL
         viewPager.setCurrentItem(1);
 
+        //update every tab change.
+        viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                viewPager.getAdapter().notifyDataSetChanged();
+            }
+        });
+
     }
 }
 class ViewPagerAdapter extends FragmentStatePagerAdapter {
@@ -96,6 +104,11 @@ class ViewPagerAdapter extends FragmentStatePagerAdapter {
     public void addFrag(Fragment fragment, String title) {
         mFragmentList.add(fragment);
         mFragmentTitleList.add(title);
+    }
+
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+        return POSITION_NONE;
     }
 }
 

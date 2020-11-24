@@ -67,6 +67,7 @@ public class ContactRecyclerViewAdapter extends
         private Contact mContact;
         private final View mView;
 
+
         public ContactViewHolder(View v) {
             super(v);
             mView = v;
@@ -106,6 +107,7 @@ public class ContactRecyclerViewAdapter extends
                     switch (item.getItemId()) {
                         case R.id.favorite_pop_menu:
                             FavorDialog();
+                            notifyDataSetChanged();
                             return true;
                         case R.id.delete_pop_menu:
                             deleteDialog();
