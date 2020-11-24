@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ContactListViewModel mContactViewModel;
 
-
     /**
      * A BroadcastReceiver that listens for messages sent from PushReceiver
      */
@@ -59,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
             NavController nc =
                     Navigation.findNavController(
                             MainActivity.this, R.id.nav_host_fragment);
+
             NavDestination nd = nc.getCurrentDestination();
 
             if (intent.hasExtra("chatMessage")) {
@@ -107,7 +107,11 @@ public class MainActivity extends AppCompatActivity {
 
         mNewMessageModel = new ViewModelProvider(this).get(NewMessageCountViewModel.class);
         new ViewModelProvider(this,
-                new UserInfoViewModel.UserInfoViewModelFactory(args.getEmail(), args.getJwt(), args.getMemberid(), args.getUsername())
+                new UserInfoViewModel.UserInfoViewModelFactory(
+                        args.getEmail(),
+                        args.getJwt(),
+                        args.getMemberid(),
+                        args.getUsername())
                 ).get(UserInfoViewModel.class);
 
 
@@ -116,7 +120,10 @@ public class MainActivity extends AppCompatActivity {
         // menu should be considered as top level destinations
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home,
-                R.id.navigation_contacts, R.id.navigation_chat,R.id.navigation_weather).build();
+                R.id.navigation_contacts,
+                R.id.navigation_chat,
+                R.id.navigation_weather)
+                .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);

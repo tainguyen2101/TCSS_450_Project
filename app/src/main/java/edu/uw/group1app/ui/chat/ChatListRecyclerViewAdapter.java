@@ -1,6 +1,7 @@
 package edu.uw.group1app.ui.chat;
 
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,14 +74,13 @@ public class ChatListRecyclerViewAdapter extends RecyclerView.Adapter<ChatListRe
         }
 
         void setChatRoom(final ChatRoom chatRoom) throws JSONException {
+            mChatRoom = chatRoom;
+            nameTextView.setText(mChatRoom.getmChatRoomName() + " " + mChatRoom.getmChatId());
             binding.buttonDelete.setOnClickListener(button -> deletChat());
             binding.buttonEnter.setOnClickListener(view ->
                     Navigation.findNavController(mView)
                             .navigate(ChatListFragmentDirections
-                                    .actionNavigationChatToChatFragment(chatRoom.getmChatId()
-                                            , chatRoom.getmChatRoomName())));
-            mChatRoom = chatRoom;
-            nameTextView.setText(mChatRoom.getmChatRoomName() + " " + mChatRoom.getmChatId());
+                                    .actionNavigationChatToChatFragment(mChatRoom.getmChatId(), mChatRoom.getmChatRoomName())));
         }
 
         void deletChat() {

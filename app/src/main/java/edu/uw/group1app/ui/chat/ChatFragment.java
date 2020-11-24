@@ -24,18 +24,13 @@ import edu.uw.group1app.model.UserInfoViewModel;
  * A simple {@link Fragment} subclass.
  */
 public class ChatFragment extends Fragment {
-    //The chat ID for "global" chat
-    // private static final int HARD_CODED_CHAT_ID = 1;
 
+    private int mChatId;
+    private String mChatTitle;
+    private ChatSendViewModel mSendModel;
     private ChatViewModel mChatModel;
     private UserInfoViewModel mUserModel;
-    private ChatSendViewModel mSendModel;
-    private int mChatID;
-    private String mTitle;
 
-    /**
-     * an empty constructor.
-     */
     public ChatFragment() {
         // Required empty public constructor
     }
@@ -45,13 +40,11 @@ public class ChatFragment extends Fragment {
         super.onCreate(savedInstanceState);
         ViewModelProvider provider = new ViewModelProvider(getActivity());
         ChatFragmentArgs args = ChatFragmentArgs.fromBundle(getArguments());
-        mChatID = args.getChatid();
-        mTitle = args.getChattitle();
-        //getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-        Log.i("CHAT", String.valueOf(mChatID));
+        mChatId = args.getChatid();
+        mChatTitle = args.getChattitle();
         mUserModel = provider.get(UserInfoViewModel.class);
         mChatModel = provider.get(ChatViewModel.class);
-        mChatModel.getFirstMessages(mChatID, mUserModel.getmJwt());
+        mChatModel.getFirstMessages(mChatId, mUserModel.getmJwt());
         mSendModel = provider.get(ChatSendViewModel.class);
     }
 
@@ -65,9 +58,9 @@ public class ChatFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        //ChatFragmentArgs args = ChatFragmentArgs.fromBundle(getArguments());
+        //mChatId = args.getChatroom().getChatId();
         FragmentChatBinding binding = FragmentChatBinding.bind(getView());
-
 
         //SetRefreshing shows the internal Swiper view progress bar. Show this until messages load
         binding.swipeContainer.setRefreshing(true);
@@ -76,17 +69,17 @@ public class ChatFragment extends Fragment {
         //Set the Adapter to hold a reference to the list FOR THIS chat ID that the ViewModel
         //holds.
         rv.setAdapter(new ChatRecylerViewAdapter(
-                mChatModel.getMessageListByChatId(mChatID),
+                mChatModel.getMessageListByChatId(mChatId),
                 mUserModel.getEmail()));
 
 
         //When the user scrolls to the top of the RV, the swiper list will "refresh"
         //The user is out of messages, go out to the service and get more
         binding.swipeContainer.setOnRefreshListener(() -> {
-            mChatModel.getNextMessages(mChatID, mUserModel.getmJwt());
+            mChatModel.getNextMessages(mChatId, mUserModel.getmJwt());
         });
 
-        mChatModel.addMessageObserver(mChatID, getViewLifecycleOwner(),
+        mChatModel.addMessageObserver(mChatId, getViewLifecycleOwner(),
                 list -> {
                     /*
                      * This solution needs work on the scroll position. As a group,
@@ -101,13 +94,11 @@ public class ChatFragment extends Fragment {
                 });
 
         //Send button was clicked. Send the message via the SendViewModel
-        //Error produced from here
         binding.buttonSend.setOnClickListener(button -> {
-            mSendModel.sendMessage(mChatID,
+            mSendModel.sendMessage(mChatId,
                     mUserModel.getmJwt(),
                     binding.editMessage.getText().toString());
         });
-
         //when we get the response back from the server, clear the edittext
         mSendModel.addResponseObserver(getViewLifecycleOwner(), response ->
                 binding.editMessage.setText(""));

@@ -23,6 +23,7 @@ public class ChatRecylerViewAdapter extends RecyclerView.Adapter<ChatRecylerView
 
     private final List<ChatMessage> mMessages;
     private final String mEmail;
+
     public ChatRecylerViewAdapter(List<ChatMessage> messages, String email) {
         this.mMessages = messages;
         this.mEmail = email;
