@@ -1,4 +1,4 @@
-package edu.uw.group1app.ui.contacts;
+package edu.uw.group1app.ui.contacts.all;
 
 import java.util.ArrayList;
 

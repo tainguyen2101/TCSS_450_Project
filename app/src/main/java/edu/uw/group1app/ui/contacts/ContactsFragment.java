@@ -18,7 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.uw.group1app.R;
-import edu.uw.group1app.ui.home.HomeFragment;
+import edu.uw.group1app.ui.contacts.all.ContactListFragment;
+import edu.uw.group1app.ui.contacts.favorite.ContactFavoriteListFragment;
+import edu.uw.group1app.ui.contacts.request.ContactRequestListFragment;
 
 /**
  * A simple {@link Fragment} subclass.

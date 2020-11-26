@@ -1,4 +1,4 @@
-package edu.uw.group1app.ui.contacts;
+package edu.uw.group1app.ui.contacts.all;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -57,7 +57,7 @@ public class DeleteContactDialog extends DialogFragment {
         mContactModel.addContactListObserver(getViewLifecycleOwner(), contactList -> {
             binding.listRoot.setAdapter(
                     new ContactRecyclerViewAdapter(contactList, this.getContext(),
-                            getChildFragmentManager()));
+                            getChildFragmentManager(), mUserModel, mContactModel));
         });
     }
 

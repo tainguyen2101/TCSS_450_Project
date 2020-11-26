@@ -1,24 +1,21 @@
-package edu.uw.group1app.ui.contacts;
+package edu.uw.group1app.ui.contacts.favorite;
 
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import android.widget.ImageButton;
 
 import edu.uw.group1app.R;
 import edu.uw.group1app.databinding.FragmentContactFavoriteListBinding;
 import edu.uw.group1app.model.UserInfoViewModel;
+import edu.uw.group1app.ui.contacts.all.ContactListViewModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +23,7 @@ import edu.uw.group1app.model.UserInfoViewModel;
 public class ContactFavoriteListFragment extends Fragment {
 
     private ContactListViewModel mModel;
+    private UserInfoViewModel mUser;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,20 +37,22 @@ public class ContactFavoriteListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mModel = new ViewModelProvider(getActivity()).get(ContactListViewModel.class);
 
-        UserInfoViewModel model = new ViewModelProvider(getActivity()).get(UserInfoViewModel.class);
-        mModel.connectGetFavorite(model.getmJwt());
+        mUser = new ViewModelProvider(getActivity()).get(UserInfoViewModel.class);
+        mModel.connectGetFavorite(mUser.getmJwt());
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        FragmentContactFavoriteListBinding binding = FragmentContactFavoriteListBinding.bind(getView());
+        FragmentContactFavoriteListBinding binding = FragmentContactFavoriteListBinding
+                .bind(getView());
 
         mModel.addContactFavoriteListObserver(getViewLifecycleOwner(), contactList -> {
             binding.listRoot.setAdapter(
                     new ContactFavoriteRecyclerViewAdapter(contactList, this.getContext(),
-                            getChildFragmentManager())
+                            getChildFragmentManager(), mUser, mModel)
             );
         });
+
     }
 }

@@ -1,4 +1,4 @@
-package edu.uw.group1app.ui.contacts;
+package edu.uw.group1app.ui.contacts.request;
 
 import android.os.Bundle;
 
@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 
 import edu.uw.group1app.R;
 import edu.uw.group1app.databinding.FragmentContactRequestListBinding;

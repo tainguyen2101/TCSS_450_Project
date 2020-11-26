@@ -29,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/contactListFragment"
-        android:name="edu.uw.group1app.ui.contacts.ContactListFragment"
+        android:name="edu.uw.group1app.ui.contacts.all.ContactListFragment"
         android:label="ContactListFragment" />
     <fragment
         android:id="@+id/chatFragment"

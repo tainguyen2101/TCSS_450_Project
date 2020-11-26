@@ -1,7 +1,6 @@
-package edu.uw.group1app.ui.contacts;
+package edu.uw.group1app.ui.contacts.request;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,6 +16,7 @@ import java.util.List;
 
 import edu.uw.group1app.R;
 import edu.uw.group1app.model.UserInfoViewModel;
+import edu.uw.group1app.ui.contacts.all.ContactListViewModel;
 
 public class ContactRequestRecyclerViewAdapter extends
         RecyclerView.Adapter<ContactRequestRecyclerViewAdapter.RequestViewHolder> {

@@ -1,4 +1,4 @@
-package edu.uw.group1app.ui.contacts;
+package edu.uw.group1app.ui.contacts.all;
 
 import android.content.Context;
 import android.os.Build;
@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import edu.uw.group1app.R;
+import edu.uw.group1app.model.UserInfoViewModel;
 
 /**
  * Contact List Fragment Recycle View Adapter
@@ -27,20 +28,25 @@ public class ContactRecyclerViewAdapter extends
         RecyclerView.Adapter<ContactRecyclerViewAdapter.ContactViewHolder> {
 
     private List<Contact> mContacts;
-
     private Context mContext;
-
     private final FragmentManager mFragMan;
+    private UserInfoViewModel mUserModel;
+    private ContactListViewModel mViewModel;
 
-    public ContactRecyclerViewAdapter(List<Contact> contacts, Context context, FragmentManager fm) {
+    public ContactRecyclerViewAdapter(List<Contact> contacts, Context context, FragmentManager fm,
+                                      UserInfoViewModel userModel,
+                                      ContactListViewModel viewModel) {
         this.mContacts = contacts;
-        mContext = context;
+        this.mContext = context;
         this.mFragMan = fm;
+        this.mUserModel = userModel;
+        this.mViewModel = viewModel;
     }
 
     @NonNull
     @Override
-    public ContactRecyclerViewAdapter.ContactViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ContactRecyclerViewAdapter.ContactViewHolder onCreateViewHolder(
+            @NonNull ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
 
@@ -82,12 +88,6 @@ public class ContactRecyclerViewAdapter extends
             dialog.show(mFragMan, "yes/no?");
         }
 
-        private void FavorDialog() {
-            FavorContactDialog dialog = new FavorContactDialog(mContact.getMemberID(), mFragMan,
-                    this);
-            dialog.show(mFragMan, "yes/no");
-        }
-
 
         /**
          * Sets the contact name and username
@@ -106,8 +106,7 @@ public class ContactRecyclerViewAdapter extends
                 popupMenu.setOnMenuItemClickListener(item -> {
                     switch (item.getItemId()) {
                         case R.id.favorite_pop_menu:
-                            FavorDialog();
-                            notifyDataSetChanged();
+                            mViewModel.addFavorite(mUserModel.getmJwt(), mContact.getMemberID());
                             return true;
                         case R.id.delete_pop_menu:
                             deleteDialog();

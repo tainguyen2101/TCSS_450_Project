@@ -27,7 +27,7 @@ import edu.uw.group1app.model.UserInfoViewModel;
 import edu.uw.group1app.services.PushReceiver;
 import edu.uw.group1app.ui.chat.ChatMessage;
 import edu.uw.group1app.ui.chat.ChatViewModel;
-import edu.uw.group1app.ui.contacts.ContactListViewModel;
+import edu.uw.group1app.ui.contacts.all.ContactListViewModel;
 
 /**
  * Main Activity class

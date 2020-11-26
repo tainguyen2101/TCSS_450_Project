@@ -1,6 +1,5 @@
-package edu.uw.group1app.ui.contacts;
+package edu.uw.group1app.ui.contacts.all;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,10 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.text.InputType;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -91,7 +87,7 @@ public class ContactListFragment extends Fragment {
         mModel.addContactListObserver(getViewLifecycleOwner(), contactList -> {
             binding.listRoot.setAdapter(
                     new ContactRecyclerViewAdapter(contactList, this.getContext(),
-                            getChildFragmentManager())
+                            getChildFragmentManager(), mInfoModel, mModel)
             );
         });
     }
