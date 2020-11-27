@@ -19,10 +19,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Contact List View Model that connect to the back-end to pull user contacts from server
@@ -41,6 +43,7 @@ public class ContactListViewModel extends AndroidViewModel {
 
     /**
      * Constructor for Contact List View Model
+     *
      * @param application the application
      */
     public ContactListViewModel(@NonNull Application application) {
@@ -53,7 +56,8 @@ public class ContactListViewModel extends AndroidViewModel {
 
     /**
      * contact list view model observer.
-     * @param owner life cycle owner
+     *
+     * @param owner    life cycle owner
      * @param observer observer
      */
     public void addContactListObserver(@NonNull LifecycleOwner owner,
@@ -63,16 +67,31 @@ public class ContactListViewModel extends AndroidViewModel {
 
     /**
      * contact list view model observer.
-     * @param owner life cycle owner
+     *
+     * @param owner    life cycle owner
      * @param observer observer
      */
-    public void addContactFavoriteListObserver(@NonNull LifecycleOwner owner,
+    public void addFavoriteContactListObserver(@NonNull LifecycleOwner owner,
                                        @NonNull Observer<? super List<Contact>> observer) {
         mFavoriteList.observe(owner, observer);
     }
 
     /**
+     * webservice response observer.
+     *
+     * @param owner    life cycle owner
+     * @param observer observer
+     */
+    public void addResponseObserver(@NonNull LifecycleOwner owner,
+                                    @NonNull Observer<? super JSONObject> observer) {
+        mResponse.observe(owner, observer);
+    }
+
+
+
+    /**
      * connect to the webservice and get contact list
+     *
      * @param jwt authorization token
      */
     public void connectGet(String jwt) {
@@ -102,6 +121,7 @@ public class ContactListViewModel extends AndroidViewModel {
 
     /**
      * connect to the webservice and get favorite list
+     *
      * @param jwt authorization token
      */
     public void connectGetFavorite(String jwt) {
@@ -131,7 +151,8 @@ public class ContactListViewModel extends AndroidViewModel {
 
     /**
      * connect to the webservice and request for a contact deletion
-     * @param jwt JWT authorization token
+     *
+     * @param jwt      JWT authorization token
      * @param memberID to be deleted
      */
     public void deleteContact(String jwt, final int memberID) {
@@ -159,7 +180,8 @@ public class ContactListViewModel extends AndroidViewModel {
 
     /**
      * add a contact to favorite tab
-     * @param jwt JWT Authorization Token
+     *
+     * @param jwt      JWT Authorization Token
      * @param memberID to be favorite
      */
     public void addFavorite(final String jwt, final int memberID) {
@@ -191,7 +213,8 @@ public class ContactListViewModel extends AndroidViewModel {
 
     /**
      * Remove a contact from the favorite tab
-     * @param jwt JWT Authorization Token
+     *
+     * @param jwt      JWT Authorization Token
      * @param memberID to be un-favorite
      */
     public void unFavorite(final String jwt, final int memberID) {
@@ -223,7 +246,8 @@ public class ContactListViewModel extends AndroidViewModel {
 
     /**
      * Aceept friend request
-     * @param jwt JWT
+     *
+     * @param jwt      JWT
      * @param memberID to accept
      */
     public void acceptRequest(final String jwt, final int memberID) {
@@ -288,7 +312,8 @@ public class ContactListViewModel extends AndroidViewModel {
 
     /**
      * send a friend request to username if match.
-     * @param jwt JWT Authorization Token.
+     *
+     * @param jwt      JWT Authorization Token.
      * @param username the username.
      */
     public void addFriend(final String jwt, final String username) {
@@ -329,6 +354,7 @@ public class ContactListViewModel extends AndroidViewModel {
 
     /**
      * handle a success connection to the back-end
+     *
      * @param result result
      */
     private void handleSuccess(final JSONObject result) {
@@ -358,6 +384,7 @@ public class ContactListViewModel extends AndroidViewModel {
 
     /**
      * handle a success connection to the back-end
+     *
      * @param result result
      */
     private void handleSuccessFavorite(final JSONObject result) {
@@ -385,11 +412,25 @@ public class ContactListViewModel extends AndroidViewModel {
         mFavoriteList.setValue(temp);
     }
 
-    /**
-     * handle a failure connection to the back-end
-     * @param error the error.
-     */
     private void handleError(final VolleyError error) {
-        Log.e("CONNECTION ERROR", "No contacts");
+        if (Objects.isNull(error.networkResponse)) {
+            try {
+                mResponse.setValue(new JSONObject("{" +
+                        "error:\"" + error.getMessage() +
+                        "\"}"));
+            } catch (JSONException e) {
+                Log.e("JSON PARSE", "JSON Parse Error in handleError");
+            }
+        } else {
+            String data = new String(error.networkResponse.data, Charset.defaultCharset());
+            try {
+                mResponse.setValue(new JSONObject("{" +
+                        "code:" + error.networkResponse.statusCode +
+                        ", data:" + data +
+                        "}"));
+            } catch (JSONException e) {
+                Log.e("JSON PARSE", "JSON Parse Error in handleError");
+            }
+        }
     }
 }
