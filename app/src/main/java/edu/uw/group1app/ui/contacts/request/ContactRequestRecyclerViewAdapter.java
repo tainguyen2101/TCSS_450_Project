@@ -69,6 +69,7 @@ public class ContactRequestRecyclerViewAdapter extends
 
         private TextView usernameTextView;
         private ImageButton acceptImageButton;
+        private ImageButton declineImageButton;
         private final View mView;
         private FriendRequest mRequest;
 
@@ -77,6 +78,7 @@ public class ContactRequestRecyclerViewAdapter extends
             mView = v;
             usernameTextView = v.findViewById(R.id.contact_username_request);
             acceptImageButton = v.findViewById(R.id.contact_request_accept_button);
+            declineImageButton = v.findViewById(R.id.contact_request_decline_button);
         }
 
         private void setRequest(final FriendRequest request) {
@@ -87,6 +89,14 @@ public class ContactRequestRecyclerViewAdapter extends
             acceptImageButton.setOnClickListener(v -> {
 
                 mViewModel.acceptRequest(mInfoModel.getmJwt(), mRequest.getMemberID());
+                // Notify change to data set
+                mFriendRequest.remove(mRequest);
+                notifyDataSetChanged();
+            });
+            //Decline button on click listener
+            declineImageButton.setOnClickListener(v -> {
+                mViewModel.declineRequest(mInfoModel.getmJwt(),
+                        usernameTextView.getText().toString());
                 // Notify change to data set
                 mFriendRequest.remove(mRequest);
                 notifyDataSetChanged();
