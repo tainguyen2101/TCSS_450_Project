@@ -140,7 +140,7 @@ public class ChatListViewModel extends AndroidViewModel {
                 Request.Method.POST,
                 url,
                 body, //push token found in the JSONObject body
-                mResponse::setValue,
+                response -> handleAddChat(jwt, response),
                 this::handleError) {
             @Override
             public Map<String, String> getHeaders() {
@@ -158,8 +158,21 @@ public class ChatListViewModel extends AndroidViewModel {
         Volley.newRequestQueue(getApplication().getApplicationContext()).add(request);
     }
 
+    private void handleAddChat(final String jwt, final JSONObject response) {
+        ArrayList<ChatRoom> temp = new ArrayList<>();
+        try {
+            int chatID = response.getInt("chatID");
+            putMembers(jwt, chatID);
+            connectGet(jwt);
+        } catch (JSONException e) {
+            Log.e("JSON PARSE ERROR", "Found in handle Success ChatViewModel");
+            Log.e("JSON PARSE ERROR", "Error: " + e.getMessage());
+        }
+    }
+
+
     public void putMembers(final String jwt, int chatID) throws JSONException {
-        String url = "https://mobileapp-group-backend.herokuapp.com/chats" + chatID;
+        String url = "https://mobileapp-group-backend.herokuapp.com/chats/" + chatID;
         System.out.println("Adding Members");
         JSONObject body = new JSONObject();
         try {
