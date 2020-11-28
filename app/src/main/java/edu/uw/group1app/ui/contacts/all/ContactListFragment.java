@@ -45,6 +45,7 @@ public class ContactListFragment extends Fragment {
 
     private EditText mUserInput;
 
+    private AlertDialog mDialog;
 
     public ContactListFragment() {
         // empty constructor
@@ -92,19 +93,29 @@ public class ContactListFragment extends Fragment {
                 // DO NOTHING
             });
 
-            builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
-            AlertDialog dialog = builder.create();
-            dialog.show();
-            Button okButton = dialog.getButton(DialogInterface.BUTTON_POSITIVE);
+            builder.setNegativeButton("Cancel", (dialog, which) -> {
+                // DO NOTHING
+            });
+            mDialog = builder.create();
+            mDialog.show();
 
+            Button okButton = mDialog.getButton(DialogInterface.BUTTON_POSITIVE);
             okButton.setOnClickListener(v1 -> {
                 mModel.addFriend(mInfoModel.getmJwt(), mUserInput.getText().toString());
+                mModel.addResponseObserver(
+                        getViewLifecycleOwner(),
+                        this::observeAddUserResponse);
             });
-            mModel.addResponseObserver(
-                    getViewLifecycleOwner(),
-                    this::observeAddUserResponse);
 
 
+
+            Button cancelButton = mDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+            cancelButton.setOnClickListener(v12 -> {
+                mDialog.dismiss();
+            });
+
+            // clear error when dismiss dialog
+            mUserInput.setError(null);
         });
         mModel.addContactListObserver(getViewLifecycleOwner(), contactList -> {
             binding.listRoot.setAdapter(
@@ -128,6 +139,9 @@ public class ContactListFragment extends Fragment {
                 } catch (JSONException e) {
                     Log.e("JSON Parse Error", e.getMessage());
                 }
+            } else {
+                mDialog.cancel();
+                mModel.addFriend(mInfoModel.getmJwt(), mUserInput.getText().toString());
             }
         } else {
             Log.d("JSON Response", "No Response");
