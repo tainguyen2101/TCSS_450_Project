@@ -140,6 +140,7 @@ public class ChatListViewModel extends AndroidViewModel {
                 Request.Method.POST,
                 url,
                 body, //push token found in the JSONObject body
+                //mResponse::setValue,
                 response -> handleAddChat(jwt, response),
                 this::handleError) {
             @Override

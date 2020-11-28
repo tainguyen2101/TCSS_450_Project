@@ -26,6 +26,7 @@ import edu.uw.group1app.R;
 import edu.uw.group1app.io.RequestQueueSingleton;
 
 public class ChatSendViewModel extends AndroidViewModel {
+
     private final MutableLiveData<JSONObject> mResponse;
 
     public ChatSendViewModel(@NonNull Application application) {

@@ -29,6 +29,7 @@ import edu.uw.group1app.R;
 import edu.uw.group1app.io.RequestQueueSingleton;
 
 public class ChatViewModel extends AndroidViewModel {
+
     /**
      * A Map of Lists of Chat Messages.
      * The Key represents the Chat ID

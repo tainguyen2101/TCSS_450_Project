@@ -60,7 +60,6 @@ public class ChatListFragment extends Fragment {
             binding.textChatTitle.setError("Please enter a valid chat room name");
         }else{
             mChatListModel.addChat(mUserInfoViewmodel.getmJwt(), title);
-            //mChatListModel.putMembers(mUserInfoViewmodel.getmJwt(), 11);
         }
     }
 
