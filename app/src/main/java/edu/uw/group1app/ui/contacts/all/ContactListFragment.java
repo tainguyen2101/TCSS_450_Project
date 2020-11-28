@@ -141,7 +141,6 @@ public class ContactListFragment extends Fragment {
                 }
             } else {
                 mDialog.cancel();
-                mModel.addFriend(mInfoModel.getmJwt(), mUserInput.getText().toString());
             }
         } else {
             Log.d("JSON Response", "No Response");
