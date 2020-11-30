@@ -19,6 +19,7 @@ import android.view.MenuItem;
 
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.pusher.pushnotifications.PushNotifications;
 
 import edu.uw.group1app.databinding.ActivityMainBinding;
 import edu.uw.group1app.model.NewMessageCountViewModel;
@@ -185,6 +186,7 @@ public class MainActivity extends AppCompatActivity {
                         .get(UserInfoViewModel.class)
                         .getmJwt()
         );
+        PushNotifications.clearAllState();
     }
 
     @Override

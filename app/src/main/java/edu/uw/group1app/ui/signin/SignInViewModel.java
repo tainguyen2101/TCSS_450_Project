@@ -14,6 +14,12 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.pusher.pushnotifications.BeamsCallback;
+import com.pusher.pushnotifications.PushNotifications;
+import com.pusher.pushnotifications.PusherCallbackError;
+import com.pusher.pushnotifications.auth.AuthData;
+import com.pusher.pushnotifications.auth.AuthDataGetter;
+import com.pusher.pushnotifications.auth.BeamsTokenProvider;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,6 +52,8 @@ public class SignInViewModel extends AndroidViewModel {
 
 
     public void connect(final String email, final String password) {
+
+
         String url = getApplication().getResources().getString(R.string.base_url) +
                 "auth";
 
@@ -77,8 +85,11 @@ public class SignInViewModel extends AndroidViewModel {
         RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
                 .addToRequestQueue(request);
 
+
+
         //code here will run
     }
+
 
 
     private void handleError(final VolleyError error) {

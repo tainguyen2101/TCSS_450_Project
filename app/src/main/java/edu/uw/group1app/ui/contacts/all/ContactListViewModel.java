@@ -14,6 +14,12 @@ import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.pusher.pushnotifications.BeamsCallback;
+import com.pusher.pushnotifications.PushNotifications;
+import com.pusher.pushnotifications.PusherCallbackError;
+import com.pusher.pushnotifications.auth.AuthData;
+import com.pusher.pushnotifications.auth.AuthDataGetter;
+import com.pusher.pushnotifications.auth.BeamsTokenProvider;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -87,7 +93,40 @@ public class ContactListViewModel extends AndroidViewModel {
         mResponse.observe(owner, observer);
     }
 
+    public void connectPusher(final String jwt, final String email) {
+        BeamsTokenProvider tokenProvider = new BeamsTokenProvider(
+                "https://mobileapp-group-backend.herokuapp.com/pusher",
+                new AuthDataGetter() {
+                    @Override
+                    public AuthData getAuthData() {
+                        // Headers and URL query params your auth endpoint needs to
+                        // request a Beams Token for a given user
+                        HashMap<String, String> headers = new HashMap<>();
+                        headers.put("Authorization", jwt);
 
+                        HashMap<String, String> queryParams = new HashMap<>();
+                        return new AuthData(
+                                headers,
+                                queryParams
+                        );
+                    }
+                }
+        );
+
+        PushNotifications.setUserId(email, tokenProvider,
+                new BeamsCallback<Void, PusherCallbackError>(){
+                    @Override
+                    public void onSuccess(Void... values) {
+                        Log.i("PusherBeams", "Successfully authenticated with Pusher Beams");
+                    }
+
+                    @Override
+                    public void onFailure(PusherCallbackError error) {
+                        Log.i("PusherBeams", "Pusher Beams authentication failed: "
+                                + error.getMessage());
+                    }
+                });
+    }
 
     /**
      * connect to the webservice and get contact list

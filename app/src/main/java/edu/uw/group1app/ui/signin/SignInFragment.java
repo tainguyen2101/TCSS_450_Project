@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.auth0.android.jwt.JWT;
+import com.pusher.pushnotifications.PushNotifications;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

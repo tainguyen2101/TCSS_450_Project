@@ -1,16 +1,7 @@
 package edu.uw.group1app.ui.contacts.all;
 
 import android.content.DialogInterface;
-import android.media.Image;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,17 +9,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.pusher.pushnotifications.PushNotifications;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import edu.uw.group1app.R;
 import edu.uw.group1app.databinding.FragmentContactListBinding;
-import edu.uw.group1app.model.PushyTokenViewModel;
 import edu.uw.group1app.model.UserInfoViewModel;
 
 
@@ -40,12 +38,11 @@ import edu.uw.group1app.model.UserInfoViewModel;
 public class ContactListFragment extends Fragment {
 
     private ContactListViewModel mModel;
-
     private UserInfoViewModel mInfoModel;
-
     private EditText mUserInput;
-
     private AlertDialog mDialog;
+
+
 
     public ContactListFragment() {
         // empty constructor
@@ -61,6 +58,7 @@ public class ContactListFragment extends Fragment {
 
 
         mModel.connectGet(mInfoModel.getmJwt());
+        mModel.connectPusher(mInfoModel.getmJwt(), mInfoModel.getEmail());
     }
 
     @Override
@@ -76,6 +74,7 @@ public class ContactListFragment extends Fragment {
         FragmentContactListBinding binding = FragmentContactListBinding.bind(getView());
 
         FloatingActionButton fab = view.findViewById(R.id.contact_add_float_button);
+
 
         fab.setOnClickListener(v -> {
 
