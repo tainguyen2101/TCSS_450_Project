@@ -46,6 +46,8 @@ public class SignInViewModel extends AndroidViewModel {
 
 
     public void connect(final String email, final String password) {
+
+
         String url = getApplication().getResources().getString(R.string.base_url) +
                 "auth";
 
@@ -77,8 +79,11 @@ public class SignInViewModel extends AndroidViewModel {
         RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
                 .addToRequestQueue(request);
 
+
+
         //code here will run
     }
+
 
 
     private void handleError(final VolleyError error) {

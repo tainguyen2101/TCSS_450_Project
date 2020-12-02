@@ -19,15 +19,15 @@ import java.util.List;
 import edu.uw.group1app.R;
 import edu.uw.group1app.databinding.FragmentChatMessageBinding;
 
-public class ChatRecylerViewAdapter extends RecyclerView.Adapter<ChatRecylerViewAdapter.MessageViewHolder> {
+public class ChatRecyclerViewAdapter extends RecyclerView.Adapter<ChatRecyclerViewAdapter.MessageViewHolder> {
 
     private final List<ChatMessage> mMessages;
     private final String mEmail;
-
-    public ChatRecylerViewAdapter(List<ChatMessage> messages, String email) {
+    public ChatRecyclerViewAdapter(List<ChatMessage> messages, String email) {
         this.mMessages = messages;
-        this.mEmail = email;
+        mEmail = email;
     }
+
 
     @NonNull
     @Override

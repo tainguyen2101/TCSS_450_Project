@@ -19,6 +19,7 @@ import android.view.MenuItem;
 
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.pusher.pushnotifications.PushNotifications;
 
 import edu.uw.group1app.databinding.ActivityMainBinding;
 import edu.uw.group1app.model.NewMessageCountViewModel;
@@ -34,7 +35,7 @@ import edu.uw.group1app.ui.contacts.all.ContactListViewModel;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private AppBarConfiguration mAppBarConfiguration;
+    AppBarConfiguration mAppBarConfiguration;
 
     private ActivityMainBinding binding;
 
@@ -58,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
             NavController nc =
                     Navigation.findNavController(
                             MainActivity.this, R.id.nav_host_fragment);
-
             NavDestination nd = nc.getCurrentDestination();
 
             if (intent.hasExtra("chatMessage")) {
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //If the user is not on the chat screen, update the
                 // NewMessageCountView Model
-                if (nd.getId() != R.id.chatFragment) {
+                if (nd.getId() != R.id.navigation_chat) {
                     mNewMessageModel.increment();
                 }
                 //Inform the view model holding chatroom messages of the new
@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-            if (destination.getId() == R.id.chatFragment) {
+            if (destination.getId() == R.id.navigation_chat) {
                 //When the user navigates to the chats page, reset the new message count.
                 //This will need some extra logic for your project as it should have
                 //multiple chat rooms.
@@ -186,6 +186,7 @@ public class MainActivity extends AppCompatActivity {
                         .get(UserInfoViewModel.class)
                         .getmJwt()
         );
+        PushNotifications.clearAllState();
     }
 
     @Override

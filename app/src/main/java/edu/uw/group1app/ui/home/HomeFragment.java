@@ -13,6 +13,8 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.pusher.pushnotifications.PushNotifications;
+
 import edu.uw.group1app.R;
 import edu.uw.group1app.databinding.FragmentHomeBinding;
 import edu.uw.group1app.model.UserInfoViewModel;
@@ -39,6 +41,7 @@ public class HomeFragment extends Fragment {
         UserInfoViewModel model = new ViewModelProvider(getActivity())
                 .get(UserInfoViewModel.class);
         FragmentHomeBinding.bind(getView()).emailLabel.setText("Hello " + model.getEmail());
+        PushNotifications.start(getActivity(), "c9680030-b0e8-4d56-a722-5d92adf8c303");
     }
 
     @Override

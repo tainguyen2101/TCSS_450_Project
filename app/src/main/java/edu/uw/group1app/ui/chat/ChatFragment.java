@@ -19,17 +19,19 @@ import edu.uw.group1app.MainActivity;
 import edu.uw.group1app.R;
 import edu.uw.group1app.databinding.FragmentChatBinding;
 import edu.uw.group1app.model.UserInfoViewModel;
+import edu.uw.group1app.ui.signin.SignInFragmentDirections;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ChatFragment extends Fragment {
 
+    //The chat ID for "global" chat
+    private int mChatID;
+    private String mChatTitle;
     private ChatSendViewModel mSendModel;
     private ChatViewModel mChatModel;
     private UserInfoViewModel mUserModel;
-    private int mChatId;
-    private String mChatTitle;
 
     public ChatFragment() {
         // Required empty public constructor
@@ -39,14 +41,9 @@ public class ChatFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ViewModelProvider provider = new ViewModelProvider(getActivity());
-        ChatFragmentArgs args = ChatFragmentArgs.fromBundle(getArguments());
         mUserModel = provider.get(UserInfoViewModel.class);
         mChatModel = provider.get(ChatViewModel.class);
-        mChatModel.getFirstMessages(mChatId, mUserModel.getmJwt());
         mSendModel = provider.get(ChatSendViewModel.class);
-        mChatId = args.getChatid();
-        mChatTitle = args.getChattitle();
-        ((MainActivity) getActivity()).setActionBarTitle(mChatTitle);
     }
 
     @Override
@@ -59,8 +56,11 @@ public class ChatFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //ChatFragmentArgs args = ChatFragmentArgs.fromBundle(getArguments());
-        //mChatId = args.getChatroom().getChatId();
+        ChatFragmentArgs args = ChatFragmentArgs.fromBundle(getArguments());
+        mChatID = args.getChatid();
+        mChatTitle = args.getChattitle();
+        ((MainActivity) getActivity()).setActionBarTitle(mChatTitle);
+        mChatModel.getFirstMessages(mChatID, mUserModel.getmJwt());
         FragmentChatBinding binding = FragmentChatBinding.bind(getView());
 
         //SetRefreshing shows the internal Swiper view progress bar. Show this until messages load
@@ -69,18 +69,18 @@ public class ChatFragment extends Fragment {
         final RecyclerView rv = binding.recyclerMessages;
         //Set the Adapter to hold a reference to the list FOR THIS chat ID that the ViewModel
         //holds.
-        rv.setAdapter(new ChatRecylerViewAdapter(
-                mChatModel.getMessageListByChatId(mChatId),
+        rv.setAdapter(new ChatRecyclerViewAdapter(
+                mChatModel.getMessageListByChatId(mChatID),
                 mUserModel.getEmail()));
 
 
         //When the user scrolls to the top of the RV, the swiper list will "refresh"
         //The user is out of messages, go out to the service and get more
         binding.swipeContainer.setOnRefreshListener(() -> {
-            mChatModel.getNextMessages(mChatId, mUserModel.getmJwt());
+            mChatModel.getNextMessages(mChatID, mUserModel.getmJwt());
         });
 
-        mChatModel.addMessageObserver(mChatId, getViewLifecycleOwner(),
+        mChatModel.addMessageObserver(mChatID, getViewLifecycleOwner(),
                 list -> {
                     /*
                      * This solution needs work on the scroll position. As a group,
@@ -96,12 +96,19 @@ public class ChatFragment extends Fragment {
 
         //Send button was clicked. Send the message via the SendViewModel
         binding.buttonSend.setOnClickListener(button -> {
-            mSendModel.sendMessage(mChatId,
+            mSendModel.sendMessage(mChatID,
                     mUserModel.getmJwt(),
                     binding.editMessage.getText().toString());
         });
+
+        binding.buttonAdd.setOnClickListener(button ->
+            Navigation.findNavController(getView()).navigate(
+                    ChatFragmentDirections.actionChatFragmentToContactListFragment()
+        ));
+
         //when we get the response back from the server, clear the edittext
         mSendModel.addResponseObserver(getViewLifecycleOwner(), response ->
                 binding.editMessage.setText(""));
+
     }
 }
