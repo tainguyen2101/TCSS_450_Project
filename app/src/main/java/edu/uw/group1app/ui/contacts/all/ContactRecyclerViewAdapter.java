@@ -5,6 +5,7 @@ import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -14,6 +15,8 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import edu.uw.group1app.R;
@@ -28,10 +31,13 @@ public class ContactRecyclerViewAdapter extends
         RecyclerView.Adapter<ContactRecyclerViewAdapter.ContactViewHolder> {
 
     private List<Contact> mContacts;
+    private List<Contact> mClickedContacts;
     private Context mContext;
     private final FragmentManager mFragMan;
     private UserInfoViewModel mUserModel;
     private ContactListViewModel mViewModel;
+    private List<Contact> mNoDupClickedContacts;
+
 
     public ContactRecyclerViewAdapter(List<Contact> contacts, Context context, FragmentManager fm,
                                       UserInfoViewModel userModel,
@@ -41,6 +47,7 @@ public class ContactRecyclerViewAdapter extends
         this.mFragMan = fm;
         this.mUserModel = userModel;
         this.mViewModel = viewModel;
+        this.mClickedContacts = new ArrayList<>();
     }
 
     @NonNull
@@ -66,13 +73,12 @@ public class ContactRecyclerViewAdapter extends
         return mContacts.size();
     }
 
-    public class ContactViewHolder extends RecyclerView.ViewHolder {
+    public class ContactViewHolder extends RecyclerView.ViewHolder  {
         private TextView nameTextView;
         private TextView usernameTextView;
         private ImageButton moreButtonView;
         private Contact mContact;
         private final View mView;
-
 
         public ContactViewHolder(View v) {
             super(v);
@@ -80,6 +86,15 @@ public class ContactRecyclerViewAdapter extends
             nameTextView = v.findViewById(R.id.contact_name);
             usernameTextView = v.findViewById(R.id.contact_username);
             moreButtonView = v.findViewById(R.id.contact_more_button);
+
+            mView.setOnClickListener(v1 -> {
+                int position = getAdapterPosition();
+                mClickedContacts.add(mContacts.get(position));
+                mNoDupClickedContacts = new ArrayList<>(new HashSet<>(mClickedContacts));
+                for(Contact c : mNoDupClickedContacts) {
+                    System.out.println(c.getEmail() + " " + c.getUsername() + " " + c.getMemberID());
+                }
+            });
         }
 
         private void deleteDialog() {
@@ -124,5 +139,8 @@ public class ContactRecyclerViewAdapter extends
             notifyDataSetChanged();
         }
 
+        public void onItemClick(int position) {
+            System.out.println(mContacts.get(position));
+        }
     }
 }

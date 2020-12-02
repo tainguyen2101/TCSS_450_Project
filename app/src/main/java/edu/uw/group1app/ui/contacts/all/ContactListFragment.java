@@ -1,6 +1,7 @@
 package edu.uw.group1app.ui.contacts.all;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -17,13 +18,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.pusher.pushnotifications.PushNotifications;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import edu.uw.group1app.R;
 import edu.uw.group1app.databinding.FragmentContactListBinding;
@@ -35,7 +32,7 @@ import edu.uw.group1app.model.UserInfoViewModel;
  * @author Ford Nguyen
  * @version 3.0
  */
-public class ContactListFragment extends Fragment {
+public class ContactListFragment extends Fragment  {
 
     private ContactListViewModel mModel;
     private UserInfoViewModel mInfoModel;
@@ -74,7 +71,6 @@ public class ContactListFragment extends Fragment {
         FragmentContactListBinding binding = FragmentContactListBinding.bind(getView());
 
         FloatingActionButton fab = view.findViewById(R.id.contact_add_float_button);
-
 
         fab.setOnClickListener(v -> {
 
@@ -145,5 +141,4 @@ public class ContactListFragment extends Fragment {
             Log.d("JSON Response", "No Response");
         }
     }
-
 }

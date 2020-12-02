@@ -14,12 +14,6 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.pusher.pushnotifications.BeamsCallback;
-import com.pusher.pushnotifications.PushNotifications;
-import com.pusher.pushnotifications.PusherCallbackError;
-import com.pusher.pushnotifications.auth.AuthData;
-import com.pusher.pushnotifications.auth.AuthDataGetter;
-import com.pusher.pushnotifications.auth.BeamsTokenProvider;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -78,7 +78,7 @@ public class ContactListViewModel extends AndroidViewModel {
      * @param observer observer
      */
     public void addFavoriteContactListObserver(@NonNull LifecycleOwner owner,
-                                       @NonNull Observer<? super List<Contact>> observer) {
+                                               @NonNull Observer<? super List<Contact>> observer) {
         mFavoriteList.observe(owner, observer);
     }
 

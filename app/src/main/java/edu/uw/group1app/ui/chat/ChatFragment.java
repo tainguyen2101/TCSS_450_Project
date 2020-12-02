@@ -19,6 +19,7 @@ import edu.uw.group1app.MainActivity;
 import edu.uw.group1app.R;
 import edu.uw.group1app.databinding.FragmentChatBinding;
 import edu.uw.group1app.model.UserInfoViewModel;
+import edu.uw.group1app.ui.signin.SignInFragmentDirections;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -99,6 +100,11 @@ public class ChatFragment extends Fragment {
                     mUserModel.getmJwt(),
                     binding.editMessage.getText().toString());
         });
+
+        binding.buttonAdd.setOnClickListener(button ->
+            Navigation.findNavController(getView()).navigate(
+                    ChatFragmentDirections.actionChatFragmentToContactListFragment()
+        ));
 
         //when we get the response back from the server, clear the edittext
         mSendModel.addResponseObserver(getViewLifecycleOwner(), response ->

@@ -8,6 +8,7 @@
     <string name="title_home">Home</string>
     <string name="title_weather">Weather</string>
     <string name="title_chat">CHAT</string>
+
     <!--Strings for sign in -->
     <string name="editText_sign_in_email">Email</string>
     <string name="editText_sign_in_password">Password</string>
@@ -19,6 +20,7 @@
     <string name="keys_prefs_memberid">Sharded Prefs MemberID</string>
     <string name="switch_sign_in">Stay Signed in</string>
     <string name="action_sign_out">Sign Out</string>
+
     <!--String values for register-->
     <string name="email_hint">Email address</string>
     <string name="pw_hint">Password</string>
