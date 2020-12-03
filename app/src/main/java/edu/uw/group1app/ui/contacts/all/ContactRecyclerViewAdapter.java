@@ -87,7 +87,7 @@ public class ContactRecyclerViewAdapter extends
             usernameTextView = v.findViewById(R.id.contact_username);
             moreButtonView = v.findViewById(R.id.contact_more_button);
 
-            mView.setOnClickListener(v1 -> {
+            mView.setOnClickListener(view -> {
                 int position = getAdapterPosition();
                 mClickedContacts.add(mContacts.get(position));
                 mNoDupClickedContacts = new ArrayList<>(new HashSet<>(mClickedContacts));
@@ -137,10 +137,6 @@ public class ContactRecyclerViewAdapter extends
         public void deleteContact(){
             mContacts.remove(mContact);
             notifyDataSetChanged();
-        }
-
-        public void onItemClick(int position) {
-            System.out.println(mContacts.get(position));
         }
     }
 }

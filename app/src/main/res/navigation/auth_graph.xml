@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_signInFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_passwordFinding"
+            app:destination="@id/passwordFinding" />
     </fragment>
     <activity
         android:id="@+id/mainActivity"
@@ -68,5 +71,14 @@
         <argument
             android:name="password"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/passwordFinding"
+        android:name="edu.uw.group1app.ui.password.PasswordFinding"
+        android:label="fragment_password_finding"
+        tools:layout="@layout/fragment_password_finding" >
+        <action
+            android:id="@+id/action_passwordFinding_to_signInFragment"
+            app:destination="@id/signInFragment" />
     </fragment>
 </navigation>
