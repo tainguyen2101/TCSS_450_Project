@@ -86,7 +86,7 @@ public class SignInFragment extends Fragment {
 
         binding.buttonForgot.setOnClickListener(button ->
                 Navigation.findNavController(getView()).navigate(
-                        SignInFragmentDirections.actionSignInFragmentToPasswordFinding()
+                        SignInFragmentDirections.actionSignInFragmentToPasswordRecoveryFragment()
                 ));
 
 

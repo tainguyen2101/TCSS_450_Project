@@ -21,6 +21,8 @@
     <string name="switch_sign_in">Stay Signed in</string>
     <string name="action_sign_out">Sign Out</string>
     <string name="type_email_hint">Enter Email Address</string>
+    <string name="type_new_pass_hint">Enter New Password</string>
+    <string name="type_conf_pass_hint">Confirm Password</string>
 
     <!--String values for register-->
     <string name="email_hint">Email address</string>

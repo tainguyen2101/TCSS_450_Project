@@ -25,8 +25,8 @@
             android:id="@+id/action_signInFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
         <action
-            android:id="@+id/action_signInFragment_to_passwordFinding"
-            app:destination="@id/passwordFinding" />
+            android:id="@+id/action_signInFragment_to_passwordRecoveryFragment"
+            app:destination="@id/passwordRecoveryFragment" />
     </fragment>
     <activity
         android:id="@+id/mainActivity"
@@ -73,12 +73,12 @@
             app:argType="string" />
     </fragment>
     <fragment
-        android:id="@+id/passwordFinding"
-        android:name="edu.uw.group1app.ui.password.PasswordFinding"
-        android:label="fragment_password_finding"
-        tools:layout="@layout/fragment_password_finding" >
+        android:id="@+id/passwordRecoveryFragment"
+        android:name="edu.uw.group1app.ui.password.PasswordRecoveryFragment"
+        android:label="fragment_password_recovery"
+        tools:layout="@layout/fragment_password_recovery" >
         <action
-            android:id="@+id/action_passwordFinding_to_signInFragment"
+            android:id="@+id/action_passwordRecoveryFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
     </fragment>
 </navigation>
