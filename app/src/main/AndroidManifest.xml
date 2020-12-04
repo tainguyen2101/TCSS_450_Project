@@ -16,14 +16,7 @@
         android:roundIcon="@drawable/app_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.Group1App">
-        <service
-            android:name=".services.NotificationService"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
+
 
         <activity android:name=".MainActivity" />
         <activity
@@ -69,6 +62,7 @@
             android:name="me.pushy.sdk.services.PushyJobService"
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE" />
+
     </application>
 
 </manifest>

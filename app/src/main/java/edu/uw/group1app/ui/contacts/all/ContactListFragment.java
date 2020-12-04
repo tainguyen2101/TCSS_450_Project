@@ -89,7 +89,8 @@ public class ContactListFragment extends Fragment  {
             });
 
             builder.setNegativeButton("Cancel", (dialog, which) -> {
-                // DO NOTHING
+                // dismiss
+                mDialog.dismiss();
             });
             mDialog = builder.create();
             mDialog.show();
@@ -100,13 +101,6 @@ public class ContactListFragment extends Fragment  {
                 mModel.addResponseObserver(
                         getViewLifecycleOwner(),
                         this::observeAddUserResponse);
-            });
-
-
-
-            Button cancelButton = mDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
-            cancelButton.setOnClickListener(v12 -> {
-                mDialog.dismiss();
             });
 
             // clear error when dismiss dialog
