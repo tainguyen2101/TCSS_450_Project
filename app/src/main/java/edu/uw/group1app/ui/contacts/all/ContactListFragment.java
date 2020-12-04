@@ -79,7 +79,7 @@ public class ContactListFragment extends Fragment  {
             mUserInput.setHint("Username");
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
-            builder.setTitle("Who would like to be friend with?");
+            builder.setTitle("Who would you like to add to your contacts?");
 
             // Specify the type of input expected
             mUserInput.setInputType(InputType.TYPE_CLASS_TEXT);
