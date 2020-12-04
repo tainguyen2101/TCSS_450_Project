@@ -84,6 +84,10 @@ public class SignInFragment extends Fragment {
                 getViewLifecycleOwner(),
                 this::observeSignInResponse);
 
+        binding.buttonForgot.setOnClickListener(button ->
+                Navigation.findNavController(getView()).navigate(
+                        SignInFragmentDirections.actionSignInFragmentToPasswordRecoveryFragment()
+                ));
 
 
         SignInFragmentArgs args = SignInFragmentArgs.fromBundle(getArguments());
@@ -124,6 +128,7 @@ public class SignInFragment extends Fragment {
         //This is an Asynchronous call. No statements after should rely on the
         //result of connect().
     }
+
 
     /**
      * Helper to abstract the navigation to the Activity past Authentication.

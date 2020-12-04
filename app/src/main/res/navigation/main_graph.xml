@@ -50,4 +50,22 @@
             android:id="@+id/action_chatFragment_to_contactListFragment"
             app:destination="@id/contactListFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/navigation_password_chage"
+        android:name="edu.uw.group1app.ui.password.PasswordChangingFragment"
+        android:label="fragment_password_finding"
+        tools:layout="@layout/fragment_password_changing" >
+        <action
+            android:id="@+id/action_navigation_password_chage_to_navigation_user_setting"
+            app:destination="@id/navigation_user_setting" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_user_setting"
+        android:name="edu.uw.group1app.ui.userSetting.UserSettingFragment"
+        android:label="fragment_user_setting"
+        tools:layout="@layout/fragment_user_setting" >
+        <action
+            android:id="@+id/action_navigation_user_setting_to_navigation_password_chage"
+            app:destination="@id/navigation_password_chage" />
+    </fragment>
 </navigation>

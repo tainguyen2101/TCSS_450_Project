@@ -189,6 +189,11 @@ public class MainActivity extends AppCompatActivity {
         PushNotifications.clearAllState();
     }
 
+    public void getUserSetting() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        navController.navigate(R.id.navigation_user_setting);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -197,6 +202,12 @@ public class MainActivity extends AppCompatActivity {
             signOut();
             return true;
         }
+
+        if (id == R.id.action_user_setting) {
+            getUserSetting();
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
