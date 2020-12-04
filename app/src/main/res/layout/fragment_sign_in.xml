@@ -87,7 +87,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="89dp"
         android:outlineProvider="none"
-        android:src="@drawable/TCSS450AppIcon"
+        android:src="@drawable/app_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
