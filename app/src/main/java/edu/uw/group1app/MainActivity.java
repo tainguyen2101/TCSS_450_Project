@@ -1,7 +1,7 @@
 package edu.uw.group1app;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
@@ -9,13 +9,18 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -27,7 +32,6 @@ import edu.uw.group1app.databinding.ActivityMainBinding;
 import edu.uw.group1app.model.NewMessageCountViewModel;
 import edu.uw.group1app.model.PushyTokenViewModel;
 import edu.uw.group1app.model.UserInfoViewModel;
-import edu.uw.group1app.services.NotificationService;
 import edu.uw.group1app.services.PushReceiver;
 import edu.uw.group1app.ui.chat.ChatMessage;
 import edu.uw.group1app.ui.chat.ChatViewModel;
@@ -88,6 +92,40 @@ public class MainActivity extends AppCompatActivity {
         }
         IntentFilter iFilter = new IntentFilter(PushReceiver.RECEIVED_NEW_MESSAGE);
         registerReceiver(mPushMessageReceiver, iFilter);
+
+        PushNotifications.setOnMessageReceivedListenerForVisibleActivity(this,
+                remoteMessage -> {
+                    String messagePayload = remoteMessage.getData().get("body");
+                    if (messagePayload == null) {
+                        // Message payload was not set for this notification
+                        Log.i("Contacts Fragment", "Payload was missing");
+                    } else {
+                        Log.i("Contacts Fragment", messagePayload);
+
+                        String channelId = "default";
+                        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                        NotificationCompat.Builder notificationBuilder =
+                                new NotificationCompat.Builder(this, channelId)
+                                        .setSmallIcon(R.drawable.ic_baseline_notifications_24)
+                                        .setContentTitle(remoteMessage.getNotification().getTitle())
+                                        .setContentText(remoteMessage.getNotification().getBody())
+                                        .setAutoCancel(true)
+                                        .setSound(defaultSoundUri);
+
+                        NotificationManager notificationManager =
+                                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                        // Since android Oreo notification channel is needed.
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+                            NotificationChannel channel = new NotificationChannel(channelId,
+                                    "Channel human readable title",
+                                    NotificationManager.IMPORTANCE_HIGH);
+                            notificationManager.createNotificationChannel(channel);
+                        }
+
+                        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+                    }
+                });
     }
 
     @Override
@@ -104,6 +142,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        PushNotifications.start(this, "c9680030-b0e8-4d56-a722-5d92adf8c303");
+
 
         MainActivityArgs args = MainActivityArgs.fromBundle(getIntent().getExtras());
 
