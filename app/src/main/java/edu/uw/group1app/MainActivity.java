@@ -1,5 +1,6 @@
 package edu.uw.group1app;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -13,6 +14,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +27,7 @@ import edu.uw.group1app.databinding.ActivityMainBinding;
 import edu.uw.group1app.model.NewMessageCountViewModel;
 import edu.uw.group1app.model.PushyTokenViewModel;
 import edu.uw.group1app.model.UserInfoViewModel;
+import edu.uw.group1app.services.NotificationService;
 import edu.uw.group1app.services.PushReceiver;
 import edu.uw.group1app.ui.chat.ChatMessage;
 import edu.uw.group1app.ui.chat.ChatViewModel;
@@ -95,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
                         args.getMemberid(),
                         args.getUsername())
                 ).get(UserInfoViewModel.class);
+        
 
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
