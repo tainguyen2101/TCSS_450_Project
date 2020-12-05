@@ -41,6 +41,10 @@
     <string name="delete_popup_menu">Delete</string>
     <string name="favorite_popup_menu">Favorite</string>
 
+    <!--Strings for weather-->
+    <string name="textView_weather_current_city">City</string>
+    <string name="textView_weather_current_temperature">Temperature</string>
+    <string name="textView_weather_current_status">Status</string>
 
     <string name="base_url">https://mobileapp-group-backend.herokuapp.com/</string>
     <string name="favor_contact_dialog">This is your favorite person?</string>
