@@ -23,7 +23,6 @@ import edu.uw.group1app.databinding.FragmentWeatherBinding;
 
 /**
  * A simple {@link Fragment} subclass.
-
  */
 public class WeatherFragment extends Fragment {
 
