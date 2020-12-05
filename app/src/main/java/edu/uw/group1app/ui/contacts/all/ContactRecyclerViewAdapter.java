@@ -5,7 +5,6 @@ import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -16,8 +15,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 
 import edu.uw.group1app.R;
@@ -37,7 +34,6 @@ public class ContactRecyclerViewAdapter extends
     private final FragmentManager mFragMan;
     private UserInfoViewModel mUserModel;
     private ContactListViewModel mViewModel;
-    private List<Contact> mNoDupClickedContacts;
 
 
     public ContactRecyclerViewAdapter(List<Contact> contacts, Context context, FragmentManager fm,
@@ -89,20 +85,12 @@ public class ContactRecyclerViewAdapter extends
             moreButtonView = v.findViewById(R.id.contact_more_button);
 
             mView.setOnClickListener(view -> {
-                int position = getAdapterPosition();
-                mClickedContacts.add(mContacts.get(position));
-                mNoDupClickedContacts = new ArrayList<>(new HashSet<>(mClickedContacts));
-                for(Contact c : mNoDupClickedContacts) {
-                    System.out.println(c.getEmail() + " " + c.getUsername() + " " + c.getMemberID());
-                }
+                ContactDetailDialog dialog = new ContactDetailDialog(mContact, mViewModel,
+                        mUserModel, this);
+                dialog.show(mFragMan, "detail");
             });
         }
 
-        private void deleteDialog() {
-            DeleteContactDialog dialog = new DeleteContactDialog(mContact.getMemberID(), mFragMan,
-                    this);
-            dialog.show(mFragMan, "yes/no?");
-        }
 
 
         /**
@@ -113,7 +101,8 @@ public class ContactRecyclerViewAdapter extends
         @RequiresApi(api = Build.VERSION_CODES.Q)
         private void setContact(final Contact contact) {
             mContact = contact;
-            nameTextView.setText(contact.getFirstName() + " " + contact.getLastName());
+            final String name = contact.getFirstName() + " " + contact.getLastName();
+            nameTextView.setText(name);
             usernameTextView.setText(contact.getUsername());
             moreButtonView.setOnClickListener(v -> {
                 PopupMenu popupMenu = new PopupMenu(mContext, v);
@@ -123,9 +112,6 @@ public class ContactRecyclerViewAdapter extends
                     switch (item.getItemId()) {
                         case R.id.favorite_pop_menu:
                             mViewModel.addFavorite(mUserModel.getmJwt(), mContact.getMemberID());
-                            return true;
-                        case R.id.delete_pop_menu:
-                            deleteDialog();
                             return true;
                         default:
                             return false;
