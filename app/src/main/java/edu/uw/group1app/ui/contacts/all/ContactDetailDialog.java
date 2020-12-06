@@ -12,9 +12,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import edu.uw.group1app.R;
 import edu.uw.group1app.model.UserInfoViewModel;
+import edu.uw.group1app.ui.contacts.favorite.ContactFavoriteRecyclerViewAdapter;
 
 /**
  * Contact Detail Dialog to show user more detail of a contact when they click on a contact card
@@ -41,6 +43,15 @@ public class ContactDetailDialog extends DialogFragment {
         mUpdater = updater;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
 
     @NonNull
     @Override

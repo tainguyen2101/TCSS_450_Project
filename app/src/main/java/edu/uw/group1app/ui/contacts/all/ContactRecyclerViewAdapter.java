@@ -29,7 +29,6 @@ public class ContactRecyclerViewAdapter extends
         RecyclerView.Adapter<ContactRecyclerViewAdapter.ContactViewHolder> {
 
     private List<Contact> mContacts;
-    private List<Contact> mClickedContacts;
     private Context mContext;
     private final FragmentManager mFragMan;
     private UserInfoViewModel mUserModel;
@@ -44,7 +43,6 @@ public class ContactRecyclerViewAdapter extends
         this.mFragMan = fm;
         this.mUserModel = userModel;
         this.mViewModel = viewModel;
-        this.mClickedContacts = new ArrayList<>();
     }
 
     @NonNull
@@ -88,6 +86,9 @@ public class ContactRecyclerViewAdapter extends
                 ContactDetailDialog dialog = new ContactDetailDialog(mContact, mViewModel,
                         mUserModel, this);
                 dialog.show(mFragMan, "detail");
+                if(!dialog.isVisible()) {
+                    notifyDataSetChanged();
+                }
             });
         }
 
