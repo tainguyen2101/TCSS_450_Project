@@ -33,16 +33,19 @@ public class ContactRecyclerViewAdapter extends
     private final FragmentManager mFragMan;
     private UserInfoViewModel mUserModel;
     private ContactListViewModel mViewModel;
+    private int mChatID;
 
 
     public ContactRecyclerViewAdapter(List<Contact> contacts, Context context, FragmentManager fm,
                                       UserInfoViewModel userModel,
-                                      ContactListViewModel viewModel) {
+                                      ContactListViewModel viewModel,
+                                      int chatID) {
         this.mContacts = contacts;
         this.mContext = context;
         this.mFragMan = fm;
         this.mUserModel = userModel;
         this.mViewModel = viewModel;
+        this.mChatID = chatID;
     }
 
     @NonNull
@@ -84,7 +87,7 @@ public class ContactRecyclerViewAdapter extends
 
             mView.setOnClickListener(view -> {
                 ContactDetailDialog dialog = new ContactDetailDialog(mContact, mViewModel,
-                        mUserModel, this);
+                        mUserModel, mChatID, this);
                 dialog.show(mFragMan, "detail");
                 if(!dialog.isVisible()) {
                     notifyDataSetChanged();

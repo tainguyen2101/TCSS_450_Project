@@ -34,8 +34,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list_chat_root"
         android:name="edu.uw.group1.chat.ChatFragment"
-        android:layout_width="379dp"
-        android:layout_height="551dp"
+        android:layout_width="367dp"
+        android:layout_height="496dp"
         android:layout_marginBottom="16dp"
         android:orientation="vertical"
         app:layoutManager="LinearLayoutManager"
@@ -44,5 +44,15 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:context="edu.uw.tcss450.griffin.ui.chat.ChatListFragment"
         tools:listitem="@layout/fragment_chat_list_card" />
+
+    <ImageButton
+        android:id="@+id/button_refresh"
+        android:layout_width="57dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="318dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_baseline_refresh_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_add_chat" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

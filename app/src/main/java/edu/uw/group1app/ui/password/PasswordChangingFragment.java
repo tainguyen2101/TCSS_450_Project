@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -39,7 +40,7 @@ public class PasswordChangingFragment extends Fragment {
             .and(checkExcludeWhiteSpace())
             .and(checkPwdSpecialChar("@"));
     private PasswordValidator mPassWordValidator =
-            checkClientPredicate(pwd -> pwd.equals(binding.textChageConfirmPass.getText().toString()))
+            checkClientPredicate(pwd -> !pwd.equals(binding.textChageConfirmPass.getText().toString()))
                     .and(checkPwdLength(7))
                     .and(checkPwdSpecialChar())
                     .and(checkExcludeWhiteSpace())
@@ -60,6 +61,7 @@ public class PasswordChangingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentPasswordChangingBinding.inflate(inflater);
+        mPasswordModel =  new ViewModelProvider(getActivity()).get(PasswordChangingViewModel.class);
         return binding.getRoot();
     }
 
@@ -71,7 +73,8 @@ public class PasswordChangingFragment extends Fragment {
                 Navigation.findNavController(getView()).navigate(
                         PasswordChangingFragmentDirections.actionNavigationPasswordChageToNavigationUserSetting()));
 
-        binding.buttonSend.setOnClickListener(this::attemptRegister);
+        binding.buttonSend.setOnClickListener(button ->
+                                                verifyAuthWithServer());
         /*mPasswordModel.addResponseObserver(getViewLifecycleOwner(),
                 this::observeResponse);*/
 
@@ -99,7 +102,8 @@ public class PasswordChangingFragment extends Fragment {
     private void verifyAuthWithServer() {
         mPasswordModel.connect(
                 binding.textChangeEmail.getText().toString(),
-                binding.textChangeNewPass.getText().toString());
+                binding.textChangeNewPass.getText().toString(),
+                binding.textChageConfirmPass.getText().toString());
     }
 
     /*private void navigateToLogin() {

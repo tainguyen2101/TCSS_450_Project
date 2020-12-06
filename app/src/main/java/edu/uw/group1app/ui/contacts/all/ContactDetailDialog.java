@@ -14,6 +14,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import org.json.JSONException;
+
 import edu.uw.group1app.R;
 import edu.uw.group1app.model.UserInfoViewModel;
 import edu.uw.group1app.ui.contacts.favorite.ContactFavoriteRecyclerViewAdapter;
@@ -34,12 +36,16 @@ public class ContactDetailDialog extends DialogFragment {
 
     private final ContactRecyclerViewAdapter.ContactViewHolder mUpdater;
 
+    private int mChatID;
+
     public ContactDetailDialog(Contact contact, ContactListViewModel contactModel,
                                UserInfoViewModel infoModel,
+                               int chatId,
                                ContactRecyclerViewAdapter.ContactViewHolder updater) {
         this.mContact = contact;
         this.mContactModel = contactModel;
         this.mUserModel = infoModel;
+        this.mChatID = chatId;
         mUpdater = updater;
     }
 
@@ -81,8 +87,26 @@ public class ContactDetailDialog extends DialogFragment {
             dismiss();
         });
 
+        Button messageButton = view.findViewById(R.id.contact_detail_message_button);
+        messageButton.setOnClickListener(v -> {
+            putMemberIntoTheRoom();
+        });
 
         builder.setView(view);
         return builder.create();
+    }
+
+    private void putMemberIntoTheRoom(){
+        /*try {
+            mContactModel.putContactMembers(mUserModel.getmJwt(), mContact.getMemberID(), mChatID);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }*/
+        System.out.println(mContact.getMemberID() + " " + mChatID);
+        try {
+            mContactModel.putContactMembers(mUserModel.getmJwt(), mChatID, mContact.getMemberID());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

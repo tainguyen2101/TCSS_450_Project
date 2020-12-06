@@ -160,7 +160,6 @@ public class ChatListViewModel extends AndroidViewModel {
     }
 
     private void handleAddChat(final String jwt, final JSONObject response) {
-        ArrayList<ChatRoom> temp = new ArrayList<>();
         try {
             int chatID = response.getInt("chatID");
             putMembers(jwt, chatID);
