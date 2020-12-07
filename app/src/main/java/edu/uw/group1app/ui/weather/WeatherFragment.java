@@ -31,6 +31,13 @@ import edu.uw.group1app.databinding.ZipcodeDialogBinding;
 
 /**
  * A simple {@link Fragment} subclass that holds all the information for weather.
+ * **NOTE**: The zip code view model takes in a zip code to acquire a location key
+ *           via zip code and the city. That location key then is passed
+ *           to the current view model to acquire the current weather conditions.
+ *           The geoposition view model takes lat/lon coord to acquire a location key
+ *           via geoposition and the city.That location key then is passed
+ *  *        to the current view model to acquire the current weather conditions.
+ *           Thank you Accuweather.
  * @author Ivan Mendez
  */
 public class WeatherFragment extends Fragment {
@@ -38,6 +45,7 @@ public class WeatherFragment extends Fragment {
     private CurrentWeatherViewModel mModel;
     private FragmentWeatherBinding binding;
     private ZipcodeViewModel mZipModel;
+    private GeopositionViewModel mGeoModel;
     private Context mContext;
     private ZipcodeDialogBinding zipBinding;
 
@@ -47,12 +55,10 @@ public class WeatherFragment extends Fragment {
 
         mModel = new ViewModelProvider(getActivity()).get(CurrentWeatherViewModel.class);
         mZipModel = new ViewModelProvider(getActivity()).get(ZipcodeViewModel.class);
+        mGeoModel = new ViewModelProvider(getActivity()).get(GeopositionViewModel.class);
         //mZipModel.connect("78247");
+        mGeoModel.connect("40.73","-74.00");
 
-    }
-
-    private void findZipcode(String zipcode){
-        mZipModel.connect(zipcode);
     }
 
     @Override
@@ -71,6 +77,7 @@ public class WeatherFragment extends Fragment {
 
         mModel.addResponseObserver(getViewLifecycleOwner(), this::observeResponse);
         mZipModel.addResponseObserver(getViewLifecycleOwner(), this::observeZipResponse);
+        mGeoModel.addResponseObserver(getViewLifecycleOwner(),this::observeGeoResponse);
 
         binding.imageButtonChangeLocation.setOnClickListener(v -> {
             PopupMenu menu = new PopupMenu(getActivity().getApplicationContext(),v);
@@ -97,6 +104,17 @@ public class WeatherFragment extends Fragment {
 
     }
 
+    private void observeGeoResponse(JSONObject response) {
+
+        try{
+            binding.textViewCity.setText(response.getString("LocalizedName"));
+            mModel.connect(response.getString("Key"));
+        }catch(JSONException e){
+            Log.e("JSON Parse Error",e.getMessage());
+
+        }
+    }
+
     private void searchByZipCode() {
         ZipcodeDialog dialog = new ZipcodeDialog();
         dialog.show(getChildFragmentManager(),"hello");
@@ -116,10 +134,11 @@ public class WeatherFragment extends Fragment {
 
     }
 
+    //The current conditions are acquired from this method by the mModel.connect method
     private void observeZipResponse(final JSONObject response){
         try{
             binding.textViewCity.setText(response.getString("LocalizedName"));
-            mModel.connect(response.getString("Key"));
+            //mModel.connect(response.getString("Key"));
         } catch (JSONException e) {
 
             Log.e("JSON Parse Error",e.getMessage());

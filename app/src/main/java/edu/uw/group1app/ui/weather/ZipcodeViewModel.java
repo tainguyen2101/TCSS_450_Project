@@ -32,14 +32,10 @@ public class ZipcodeViewModel extends AndroidViewModel {
         super(application);
         mDetails = new MutableLiveData<>();
         mDetails.setValue(new JSONObject());
-
-
     }
 
     public void addResponseObserver(@NonNull LifecycleOwner owner,
                                     @NonNull Observer<? super JSONObject> observer) {
-        //mCity.observe(owner, observer);
-        //mTemperature.observe(owner, observer);
         mDetails.observe(owner, observer);
     }
 
