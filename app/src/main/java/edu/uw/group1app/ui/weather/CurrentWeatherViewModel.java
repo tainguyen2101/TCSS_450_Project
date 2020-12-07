@@ -78,14 +78,21 @@ public class CurrentWeatherViewModel extends AndroidViewModel {
 
     }
 
-    public void connect(){
+    public void connect(final String locationKey){
         String url = "https://mobileapp-group-backend.herokuapp.com/weather";
 
-        Request request = new JsonArrayRequest(
-                Request.Method.GET,
+        JSONObject body = new JSONObject();
+        try{
+            body.put("locationkey", locationKey);
+        } catch (JSONException e){
+            e.printStackTrace();
+        }
+
+        Request request = new JsonObjectRequest(
+                Request.Method.POST,
                 url,
-                null,
-                this::handleResult,
+                body,
+                mStatus::setValue,
                 this::handleError
         );
 

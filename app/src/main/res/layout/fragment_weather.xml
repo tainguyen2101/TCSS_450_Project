@@ -11,29 +11,37 @@
         android:id="@+id/textView_status"
         android:layout_width="115dp"
         android:layout_height="24dp"
-        android:layout_marginEnd="152dp"
+        android:layout_marginEnd="150dp"
         android:text="@string/textView_weather_current_status"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_temperature" />
 
     <TextView
         android:id="@+id/textView_temperature"
-        android:layout_width="123dp"
-        android:layout_height="66dp"
-        android:layout_marginTop="111dp"
-        android:layout_marginEnd="144dp"
+        android:layout_width="49dp"
+        android:layout_height="45dp"
         android:text="@string/keys_json_weather_temperature"
         android:textSize="36sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/textView_city" />
 
     <TextView
         android:id="@+id/textView_city"
         android:layout_width="118dp"
         android:layout_height="18dp"
-        android:layout_marginTop="93dp"
-        android:layout_marginEnd="149dp"
+        android:layout_marginTop="90dp"
+        android:layout_marginEnd="147dp"
         android:text="@string/textView_weather_current_city"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="23dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="193dp"
+        android:text="F"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_city" />
 </androidx.constraintlayout.widget.ConstraintLayout>

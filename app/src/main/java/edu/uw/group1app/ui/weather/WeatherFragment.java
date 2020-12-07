@@ -35,9 +35,9 @@ public class WeatherFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mModel = new ViewModelProvider(getActivity()).get(CurrentWeatherViewModel.class);
-        mModel.connect();
         mZipModel = new ViewModelProvider(getActivity()).get(ZipcodeViewModel.class);
-        mZipModel.connect("98374");
+        //mModel.connect();
+        mZipModel.connect("78247");
 
     }
 
@@ -80,6 +80,7 @@ public class WeatherFragment extends Fragment {
     private void observeZipResponse(final JSONObject response){
         try{
             binding.textViewCity.setText(response.getString("LocalizedName"));
+            mModel.connect(response.getString("Key"));
         } catch (JSONException e) {
 
             Log.e("JSON Parse Error",e.getMessage());
