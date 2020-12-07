@@ -11,7 +11,6 @@
         android:id="@+id/textView_status"
         android:layout_width="115dp"
         android:layout_height="24dp"
-        android:layout_marginTop="10dp"
         android:layout_marginEnd="152dp"
         android:text="@string/textView_weather_current_status"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,6 +24,16 @@
         android:layout_marginEnd="144dp"
         android:text="@string/keys_json_weather_temperature"
         android:textSize="36sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_city"
+        android:layout_width="118dp"
+        android:layout_height="18dp"
+        android:layout_marginTop="93dp"
+        android:layout_marginEnd="149dp"
+        android:text="@string/textView_weather_current_city"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

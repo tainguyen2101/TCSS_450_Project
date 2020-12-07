@@ -28,6 +28,7 @@ public class WeatherFragment extends Fragment {
 
     private CurrentWeatherViewModel mModel;
     private FragmentWeatherBinding binding;
+    private ZipcodeViewModel mZipModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,6 +36,8 @@ public class WeatherFragment extends Fragment {
 
         mModel = new ViewModelProvider(getActivity()).get(CurrentWeatherViewModel.class);
         mModel.connect();
+        mZipModel = new ViewModelProvider(getActivity()).get(ZipcodeViewModel.class);
+        mZipModel.connect("98374");
 
     }
 
@@ -54,6 +57,7 @@ public class WeatherFragment extends Fragment {
         //FragmentWeatherBinding binding = FragmentWeatherBinding.bind(getView());
 
         mModel.addResponseObserver(getViewLifecycleOwner(), this::observeResponse);
+        mZipModel.addResponseObserver(getViewLifecycleOwner(), this::observeZipResponse);
 
 
     }
@@ -71,6 +75,15 @@ public class WeatherFragment extends Fragment {
             Log.e("JSON Parse Error",e.getMessage());
         }
 
+    }
+
+    private void observeZipResponse(final JSONObject response){
+        try{
+            binding.textViewCity.setText(response.getString("LocalizedName"));
+        } catch (JSONException e) {
+
+            Log.e("JSON Parse Error",e.getMessage());
+        }
     }
 
 
