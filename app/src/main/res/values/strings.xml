@@ -45,6 +45,9 @@
     <string name="textView_weather_current_city">City</string>
     <string name="textView_weather_current_temperature">Temperature</string>
     <string name="textView_weather_current_status">Status</string>
+    <string name="item_weather_current_location">Change to current location</string>
+    <string name="item_weather_zipcode">Change by Zip code</string>
+    <string name="item_weather_map">Change by location</string>
 
     <string name="base_url">https://mobileapp-group-backend.herokuapp.com/</string>
     <string name="favor_contact_dialog">This is your favorite person?</string>

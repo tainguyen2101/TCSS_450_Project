@@ -52,25 +52,6 @@ public class ZipcodeViewModel extends AndroidViewModel {
     }
 
 
-    private void handleResult(final JSONObject result) {
-
-        try {
-            mDetails.setValue(result);
-            JSONObject data = result.getJSONObject("LocalizedName");
-
-
-            Log.d("DETAILS" , "" + result);
-
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Log.e("ERROR!", e.getMessage());
-        }
-
-
-    }
-
     public void connect(final String zipCode){
         String url = "https://mobileapp-group-backend.herokuapp.com/zipcode";
 

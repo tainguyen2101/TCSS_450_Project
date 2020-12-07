@@ -25,27 +25,25 @@ import java.util.function.IntFunction;
 
 import edu.uw.group1app.R;
 
+/** A view model to get the current weather information from the server
+ * @author Ivan Mendez
+ */
 public class CurrentWeatherViewModel extends AndroidViewModel {
 
-    private MutableLiveData<JSONObject> mCity;
-    private MutableLiveData<JSONObject> mTemperature;
-    private MutableLiveData<JSONObject> mStatus;
+
+    private MutableLiveData<JSONObject> mDetails;
 
     public CurrentWeatherViewModel(@NonNull Application application) {
         super(application);
-        mCity = new MutableLiveData<>();
-        mCity.setValue(new JSONObject());
-        mTemperature = new MutableLiveData<>();
-        mTemperature.setValue(new JSONObject());
-        mStatus = new MutableLiveData<JSONObject>();
-        mStatus.setValue(new JSONObject());
+
+        mDetails = new MutableLiveData<JSONObject>();
+        mDetails.setValue(new JSONObject());
     }
 
     public void addResponseObserver(@NonNull LifecycleOwner owner,
                                     @NonNull Observer<? super JSONObject> observer) {
-        //mCity.observe(owner, observer);
-        //mTemperature.observe(owner, observer);
-        mStatus.observe(owner, observer);
+
+        mDetails.observe(owner, observer);
     }
 
     private void handleError(final VolleyError error) {
@@ -57,26 +55,7 @@ public class CurrentWeatherViewModel extends AndroidViewModel {
     }
 
 
-    private void handleResult(final JSONArray result) {
 
-        IntFunction<String> getString =
-                getApplication().getResources()::getString;
-
-        try {
-
-            JSONObject data = result.getJSONObject(0);
-
-            Log.d("WEATHER" , "" + data);
-
-            mStatus.setValue(data);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-            Log.e("ERROR!", e.getMessage());
-        }
-
-
-    }
 
     public void connect(final String locationKey){
         String url = "https://mobileapp-group-backend.herokuapp.com/weather";
@@ -92,7 +71,7 @@ public class CurrentWeatherViewModel extends AndroidViewModel {
                 Request.Method.POST,
                 url,
                 body,
-                mStatus::setValue,
+                mDetails::setValue,
                 this::handleError
         );
 

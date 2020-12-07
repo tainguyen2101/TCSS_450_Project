@@ -214,6 +214,8 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+
+
     private void signOut() {
         SharedPreferences prefs =
                 getSharedPreferences(
