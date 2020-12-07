@@ -475,7 +475,7 @@ public class ContactListViewModel extends AndroidViewModel {
 
     public void putContactMembers(final String jwt, int chatID, int memberID) throws JSONException {
         String url = "https://mobileapp-group-backend.herokuapp.com/addcontactmember/" + chatID  + "/" + memberID;
-        System.out.println("Adding Members");
+        System.out.println("Adding Contact To Chat, Member ID: ");
         JSONObject body = new JSONObject();
         try {
             body.put("memberid", memberID);

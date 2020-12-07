@@ -38,14 +38,18 @@ public class ContactDetailDialog extends DialogFragment {
 
     private int mChatID;
 
+    private boolean throughChat;
+
     public ContactDetailDialog(Contact contact, ContactListViewModel contactModel,
                                UserInfoViewModel infoModel,
                                int chatId,
+                               boolean throughChat,
                                ContactRecyclerViewAdapter.ContactViewHolder updater) {
         this.mContact = contact;
         this.mContactModel = contactModel;
         this.mUserModel = infoModel;
         this.mChatID = chatId;
+        this.throughChat = throughChat;
         mUpdater = updater;
     }
 
@@ -88,8 +92,11 @@ public class ContactDetailDialog extends DialogFragment {
         });
 
         Button messageButton = view.findViewById(R.id.contact_detail_message_button);
+        messageButton.setEnabled(throughChat);
         messageButton.setOnClickListener(v -> {
             putMemberIntoTheRoom();
+            messageButton.setText("Added!");
+            messageButton.setEnabled(false);
         });
 
         builder.setView(view);

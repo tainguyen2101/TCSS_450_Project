@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //If the user is not on the chat screen, update the
                 // NewMessageCountView Model
-                if (nd.getId() != R.id.navigation_chat) {
+                if (nd.getId() != R.id.chatFragment) {
                     mNewMessageModel.increment();
                 }
                 //Inform the view model holding chatroom messages of the new
@@ -151,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
         mContactViewModel = new ViewModelProvider(this).get(ContactListViewModel.class);
 
         mNewMessageModel = new ViewModelProvider(this).get(NewMessageCountViewModel.class);
+
         new ViewModelProvider(this,
                 new UserInfoViewModel.UserInfoViewModelFactory(
                         args.getEmail(),
@@ -158,8 +159,6 @@ public class MainActivity extends AppCompatActivity {
                         args.getMemberid(),
                         args.getUsername())
                 ).get(UserInfoViewModel.class);
-        
-
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -175,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
 
         navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-            if (destination.getId() == R.id.navigation_chat) {
+            if (destination.getId() == R.id.chatFragment) {
                 //When the user navigates to the chats page, reset the new message count.
                 //This will need some extra logic for your project as it should have
                 //multiple chat rooms.

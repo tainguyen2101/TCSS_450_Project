@@ -34,18 +34,21 @@ public class ContactRecyclerViewAdapter extends
     private UserInfoViewModel mUserModel;
     private ContactListViewModel mViewModel;
     private int mChatID;
+    private boolean mThroughChat;
 
 
     public ContactRecyclerViewAdapter(List<Contact> contacts, Context context, FragmentManager fm,
                                       UserInfoViewModel userModel,
                                       ContactListViewModel viewModel,
-                                      int chatID) {
+                                      int chatID,
+                                      boolean throughChat) {
         this.mContacts = contacts;
         this.mContext = context;
         this.mFragMan = fm;
         this.mUserModel = userModel;
         this.mViewModel = viewModel;
         this.mChatID = chatID;
+        this.mThroughChat = throughChat;
     }
 
     @NonNull
@@ -87,7 +90,7 @@ public class ContactRecyclerViewAdapter extends
 
             mView.setOnClickListener(view -> {
                 ContactDetailDialog dialog = new ContactDetailDialog(mContact, mViewModel,
-                        mUserModel, mChatID, this);
+                        mUserModel, mChatID, mThroughChat, this);
                 dialog.show(mFragMan, "detail");
                 if(!dialog.isVisible()) {
                     notifyDataSetChanged();
