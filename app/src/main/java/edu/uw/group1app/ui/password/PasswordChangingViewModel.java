@@ -39,13 +39,15 @@ public class PasswordChangingViewModel extends AndroidViewModel {
     }
 
     public void connect(final String email,
-                        final String password) {
-        String url = getApplication().getResources().getString(R.string.base_url); //+ somthing
+                        final String oldPass,
+                        final String newPass) {
+        String url = getApplication().getResources().getString(R.string.base_url) + "password";
 
         JSONObject body = new JSONObject();
         try {
             body.put("email", email);
-            body.put("password", password);
+            body.put("password", oldPass);
+            body.put("password", newPass);
         } catch (JSONException e) {
             e.printStackTrace();
         }

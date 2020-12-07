@@ -47,6 +47,7 @@ public class ChatListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentChatListBinding.bind(getView());
         binding.buttonAddChat.setOnClickListener(button -> createChatRoom());
+        binding.buttonRefresh.setOnClickListener(button -> mChatListModel.connectGet(mUserInfoViewmodel.getmJwt()));
         chatListRecyclerViewAdapter = new ChatListRecyclerViewAdapter(new ArrayList<>(), this);
         binding.listChatRoot.setAdapter(chatListRecyclerViewAdapter);
         mChatListModel.addChatListObserver(getViewLifecycleOwner(), chatRoomList -> {

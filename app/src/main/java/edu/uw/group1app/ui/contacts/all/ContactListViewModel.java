@@ -33,6 +33,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import edu.uw.group1app.io.RequestQueueSingleton;
+
 /**
  * Contact List View Model that connect to the back-end to pull user contacts from server
  * if verified on the back-end contacts table is 1
@@ -72,16 +74,6 @@ public class ContactListViewModel extends AndroidViewModel {
         mContactList.observe(owner, observer);
     }
 
-    /**
-     * contact list view model observer.
-     *
-     * @param owner    life cycle owner
-     * @param observer observer
-     */
-    public void addFavoriteContactListObserver(@NonNull LifecycleOwner owner,
-                                               @NonNull Observer<? super List<Contact>> observer) {
-        mFavoriteList.observe(owner, observer);
-    }
 
     /**
      * webservice response observer.
@@ -92,6 +84,31 @@ public class ContactListViewModel extends AndroidViewModel {
     public void addResponseObserver(@NonNull LifecycleOwner owner,
                                     @NonNull Observer<? super JSONObject> observer) {
         mResponse.observe(owner, observer);
+    }
+
+    public void reset(String jwt) {
+        String url = "https://mobileapp-group-backend.herokuapp.com/chatrooms";
+        Request request = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                null, // no body
+                this::handleSuccess,
+                this::handleError
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", jwt);
+                return headers;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                10_000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        //Instantiate the RequestQueue and add the request to the queue
+        Volley.newRequestQueue(getApplication().getApplicationContext())
+                .add(request);
     }
 
     public void connectPusher(final String jwt, final String email) {
@@ -150,6 +167,7 @@ public class ContactListViewModel extends AndroidViewModel {
                 return headers;
             }
         };
+        reset(jwt);
         request.setRetryPolicy(new DefaultRetryPolicy(
                 10_000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
@@ -371,7 +389,7 @@ public class ContactListViewModel extends AndroidViewModel {
                 Request.Method.POST,
                 url,
                 body,
-                mResponse::setValue,
+                response -> handleAddChat(jwt),
                 this::handleError
         ) {
             @Override
@@ -391,6 +409,9 @@ public class ContactListViewModel extends AndroidViewModel {
 
     }
 
+    private void handleAddChat(final String jwt) {
+        reset(jwt);
+    }
 
     /**
      * handle a success connection to the back-end
@@ -450,6 +471,49 @@ public class ContactListViewModel extends AndroidViewModel {
             Log.e("JSON PARSE ERROR", "Error: " + e.getMessage());
         }
         mFavoriteList.setValue(temp);
+    }
+
+    public void putContactMembers(final String jwt, int chatID, int memberID) throws JSONException {
+        String url = "https://mobileapp-group-backend.herokuapp.com/addcontactmember/" + chatID  + "/" + memberID;
+        System.out.println("Adding Members");
+        JSONObject body = new JSONObject();
+        try {
+            body.put("memberid", memberID);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        System.out.println(body.toString());
+
+        Request request = new JsonObjectRequest(
+                Request.Method.PUT,
+                url,
+                body, //push token found in the JSONObject body
+                mResponse::setValue,
+                this::handleAddError) {
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                // add headers <key,value>
+                headers.put("Authorization", jwt);
+                return headers;
+            }
+        };
+
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                10_000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        //Instantiate the RequestQueue and add the request to the queue
+        RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
+                .addToRequestQueue(request);
+    }
+    /**
+     * handle a failure connection to the back-end
+     * @param error the error.
+     */
+    private void handleAddError(final VolleyError error) {
+        Log.e("CONNECTION ERROR", "No Chat Info");
     }
 
     private void handleError(final VolleyError error) {

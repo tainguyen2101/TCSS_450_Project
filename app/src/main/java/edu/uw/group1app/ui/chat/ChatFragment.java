@@ -103,12 +103,16 @@ public class ChatFragment extends Fragment {
 
         binding.buttonAdd.setOnClickListener(button ->
             Navigation.findNavController(getView()).navigate(
-                    ChatFragmentDirections.actionChatFragmentToContactListFragment()
+                    ChatFragmentDirections.actionChatFragmentToContactListFragment(mChatID)
         ));
 
         //when we get the response back from the server, clear the edittext
         mSendModel.addResponseObserver(getViewLifecycleOwner(), response ->
                 binding.editMessage.setText(""));
 
+    }
+
+    public int getmChatID() {
+        return mChatID;
     }
 }

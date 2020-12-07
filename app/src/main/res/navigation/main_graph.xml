@@ -17,7 +17,11 @@
         android:id="@+id/navigation_weather"
         android:name="edu.uw.group1app.ui.weather.WeatherFragment"
         android:label="@string/title_weather"
-        tools:layout="@layout/fragment_weather" />
+        tools:layout="@layout/fragment_weather" >
+        <argument
+            android:name="chatid"
+            app:argType="integer" />
+    </fragment>
     <fragment
         android:id="@+id/navigation_chat"
         android:name="edu.uw.group1app.ui.chat.ChatListFragment"
@@ -34,6 +38,9 @@
         <action
             android:id="@+id/action_contactListFragment_to_chatFragment"
             app:destination="@id/chatFragment" />
+        <argument
+            android:name="chatid"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/chatFragment"

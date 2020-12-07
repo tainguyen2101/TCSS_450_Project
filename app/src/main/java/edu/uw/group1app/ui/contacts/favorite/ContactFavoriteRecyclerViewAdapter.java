@@ -31,16 +31,14 @@ public class ContactFavoriteRecyclerViewAdapter extends
 
     private List<Contact> mContacts;
     private Context mContext;
-    private final FragmentManager mFragMan;
     private UserInfoViewModel mUserModel;
     private ContactListViewModel mContactModel;
 
     public ContactFavoriteRecyclerViewAdapter(List<Contact> contacts, Context context,
-                                              FragmentManager fm, UserInfoViewModel userModel,
+                                              UserInfoViewModel userModel,
                                               ContactListViewModel viewModel) {
         this.mContacts = contacts;
         this.mContext = context;
-        this.mFragMan = fm;
         this.mUserModel = userModel;
         this.mContactModel = viewModel;
     }
@@ -61,7 +59,6 @@ public class ContactFavoriteRecyclerViewAdapter extends
     @Override
     public void onBindViewHolder(@NonNull ContactViewHolder holder, int position) {
         holder.setContact(mContacts.get(position));
-
     }
 
     @Override

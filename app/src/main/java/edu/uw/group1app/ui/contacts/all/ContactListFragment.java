@@ -25,6 +25,7 @@ import org.json.JSONObject;
 import edu.uw.group1app.R;
 import edu.uw.group1app.databinding.FragmentContactListBinding;
 import edu.uw.group1app.model.UserInfoViewModel;
+import edu.uw.group1app.ui.chat.ChatFragment;
 
 
 /**
@@ -38,6 +39,8 @@ public class ContactListFragment extends Fragment  {
     private UserInfoViewModel mInfoModel;
     private EditText mUserInput;
     private AlertDialog mDialog;
+    private ChatFragment fragment;
+    private int mChatID;
 
 
 
@@ -53,9 +56,14 @@ public class ContactListFragment extends Fragment  {
 
         mInfoModel = new ViewModelProvider(getActivity()).get(UserInfoViewModel.class);
 
+        /*Chat id*/
+        if(getArguments() != null) {
+            ContactListFragmentArgs args = ContactListFragmentArgs.fromBundle(getArguments());
+            mChatID = args.getChatid();
+        }
 
         mModel.connectGet(mInfoModel.getmJwt());
-        mModel.connectPusher(mInfoModel.getmJwt(), mInfoModel.getEmail());
+        //mModel.connectPusher(mInfoModel.getmJwt(), mInfoModel.getEmail());
     }
 
     @Override
@@ -68,6 +76,7 @@ public class ContactListFragment extends Fragment  {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         FragmentContactListBinding binding = FragmentContactListBinding.bind(getView());
 
         FloatingActionButton fab = view.findViewById(R.id.contact_add_float_button);
@@ -109,7 +118,7 @@ public class ContactListFragment extends Fragment  {
         mModel.addContactListObserver(getViewLifecycleOwner(), contactList -> {
             binding.listRoot.setAdapter(
                     new ContactRecyclerViewAdapter(contactList, this.getContext(),
-                            getChildFragmentManager(), mInfoModel, mModel));
+                            getChildFragmentManager(), mInfoModel, mModel, mChatID));
         });
     }
 
