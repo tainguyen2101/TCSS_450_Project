@@ -53,7 +53,7 @@ public class UserSettingFragment extends Fragment {
         binding.textViewUserEmail.setText(mUserViewModel.getEmail());
         binding.buttonChangePass.setOnClickListener(button ->
                 Navigation.findNavController(getView()).navigate(
-                        UserSettingFragmentDirections.actionNavigationUserSettingToNavigationPasswordChage()
+                        UserSettingFragmentDirections.actionNavigationUserSettingToNavigationPasswordChage(mUserViewModel.getEmail())
                 ));
 
         binding.switchDarkMode.setOnCheckedChangeListener(

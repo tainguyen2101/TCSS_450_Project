@@ -17,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import edu.uw.group1app.databinding.FragmentPasswordChangingBinding;
+import edu.uw.group1app.ui.chat.ChatFragmentArgs;
 import edu.uw.group1app.ui.utils.PasswordValidator;
 
 import static edu.uw.group1app.ui.utils.PasswordValidator.checkClientPredicate;
@@ -36,11 +37,13 @@ public class PasswordChangingFragment extends Fragment {
 
     private PasswordChangingViewModel mPasswordModel;
 
-    private PasswordValidator mEmailValidator = checkPwdLength(2)
-            .and(checkExcludeWhiteSpace())
-            .and(checkPwdSpecialChar("@"));
+    private String mEmail;
+
+    private PasswordValidator mEmailValidator =
+            checkClientPredicate(email -> email.equals(binding.textChangeEmail.getText().toString()));
+
     private PasswordValidator mPassWordValidator =
-            checkClientPredicate(pwd -> !pwd.equals(binding.textChageConfirmPass.getText().toString()))
+            checkClientPredicate(pwd -> !pwd.equals(binding.textChangeOldPass.getText().toString()))
                     .and(checkPwdLength(7))
                     .and(checkPwdSpecialChar())
                     .and(checkExcludeWhiteSpace())
@@ -69,75 +72,46 @@ public class PasswordChangingFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        PasswordChangingFragmentArgs args = PasswordChangingFragmentArgs.fromBundle(getArguments());
+
+        mEmail = args.getEmail();
+
+        binding.textChangeEmail.setText(mEmail);
+
         binding.buttonCancel.setOnClickListener(button ->
                 Navigation.findNavController(getView()).navigate(
                         PasswordChangingFragmentDirections.actionNavigationPasswordChageToNavigationUserSetting()));
 
-        binding.buttonSend.setOnClickListener(button ->
-                                                verifyAuthWithServer());
-        /*mPasswordModel.addResponseObserver(getViewLifecycleOwner(),
-                this::observeResponse);*/
-
+        binding.buttonSend.setOnClickListener(this::attemptChangePassword);
     }
 
-    private void attemptRegister(final View button) {
+    private void attemptChangePassword(final View button) {
         validateEmail();
     }
 
     private void validateEmail() {
         mEmailValidator.processResult(
-                mEmailValidator.apply(binding.textChangeEmail.getText().toString().trim()),
+                mEmailValidator.apply(mEmail.trim()),
                 this::validatePassword,
-                result -> binding.textChangeEmail.setError("Please enter a valid Email address."));
+                result -> binding.textChangeEmail.setError("Please enter your own email."));
     }
 
     private void validatePassword() {
         mPassWordValidator.processResult(
-                mPassWordValidator.apply(binding.textChangeNewPass.getText().toString()),
+                mPassWordValidator.apply(binding.textChageNewPass.getText().toString()),
                 this::verifyAuthWithServer,
-                result -> binding.textChangeNewPass.setError("Please enter a valid Password."));
+                result -> binding.textChageNewPass.setError("1) Should not be same as old password\n" +
+                                                            "2) More Than 7 characters\n" +
+                                                            "3) At least one lowercase letter\n" +
+                                                            "4) At least one number digit\n" +
+                                                            "5) At least one special character\n" +
+                                                            "6) At least one uppercase letter"));
     }
-
 
     private void verifyAuthWithServer() {
-        mPasswordModel.connect(
+        mPasswordModel.changePassword(
                 binding.textChangeEmail.getText().toString(),
-                binding.textChangeNewPass.getText().toString(),
-                binding.textChageConfirmPass.getText().toString());
-    }
-
-    /*private void navigateToLogin() {
-        PasswordFindingDirections.ActionPasswordFindingToSignInFragment directions =
-                PasswordFindingDirections.actionPasswordFindingToSignInFragment();
-
-        directions.setEmail(binding.textChangeEmail.getText().toString());
-        directions.setPassword(binding.textChangeNewPass.getText().toString());
-
-        Navigation.findNavController(getView()).navigate(directions);
-
-    }*/
-
-    /**
-     * An observer on the HTTP Response from the web server. This observer should be
-     * attached to SignInViewModel.
-     *
-     * @param response the Response from the server
-     */
-    private void observeResponse(final JSONObject response) {
-        if (response.length() > 0) {
-            if (response.has("code")) {
-                try {
-                    binding.textChangeEmail.setError(
-                            "Error Authenticating: " +
-                                    response.getJSONObject("data").getString("message"));
-                } catch (JSONException e) {
-                    Log.e("JSON Parse Error", e.getMessage());
-                }
-            } else {
-                //navigateToLogin();
-            }
-        } else {
-            Log.d("JSON Response", "No Response");
-        }
+                binding.textChangeOldPass.getText().toString(),
+                binding.textChageNewPass.getText().toString());
     }
 }

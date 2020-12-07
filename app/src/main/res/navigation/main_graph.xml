@@ -68,6 +68,9 @@
         <action
             android:id="@+id/action_navigation_password_chage_to_navigation_user_setting"
             app:destination="@id/navigation_user_setting" />
+        <argument
+            android:name="email"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/navigation_user_setting"

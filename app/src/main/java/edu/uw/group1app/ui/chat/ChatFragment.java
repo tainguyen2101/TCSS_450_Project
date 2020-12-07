@@ -8,25 +8,19 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-
 import edu.uw.group1app.MainActivity;
 import edu.uw.group1app.R;
 import edu.uw.group1app.databinding.FragmentChatBinding;
 import edu.uw.group1app.model.UserInfoViewModel;
-import edu.uw.group1app.ui.signin.SignInFragmentDirections;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ChatFragment extends Fragment {
 
-    //The chat ID for "global" chat
     private int mChatID;
     private String mChatTitle;
     private ChatSendViewModel mSendModel;
@@ -37,6 +31,10 @@ public class ChatFragment extends Fragment {
         // Required empty public constructor
     }
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

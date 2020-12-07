@@ -26,7 +26,6 @@ import org.json.JSONObject;
 import edu.uw.group1app.R;
 import edu.uw.group1app.databinding.FragmentCurrentWeatherBinding;
 import edu.uw.group1app.databinding.FragmentWeatherBinding;
-import edu.uw.group1app.databinding.ZipcodeDialogBinding;
 
 
 /**
@@ -47,7 +46,7 @@ public class WeatherFragment extends Fragment {
     private ZipcodeViewModel mZipModel;
     private GeopositionViewModel mGeoModel;
     private Context mContext;
-    private ZipcodeDialogBinding zipBinding;
+    private ZipcodeDialog zipBinding;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -82,7 +81,7 @@ public class WeatherFragment extends Fragment {
         binding.imageButtonChangeLocation.setOnClickListener(v -> {
             PopupMenu menu = new PopupMenu(getActivity().getApplicationContext(),v);
             menu.getMenuInflater().inflate(R.menu.weather_change_location_menu, menu.getMenu());
-            menu.setOnMenuItemClickListener(item -> {
+           menu.setOnMenuItemClickListener(item -> {
                 switch (item.getItemId()) {
                     case R.id.item_current_location:
                         Log.d("SUBMENU","current location placeholder");
@@ -104,7 +103,7 @@ public class WeatherFragment extends Fragment {
 
     }
 
-    private void observeGeoResponse(JSONObject response) {
+   private void observeGeoResponse(JSONObject response) {
 
         try{
             binding.textViewCity.setText(response.getString("LocalizedName"));
@@ -144,7 +143,4 @@ public class WeatherFragment extends Fragment {
             Log.e("JSON Parse Error",e.getMessage());
         }
     }
-
-
-
 }
