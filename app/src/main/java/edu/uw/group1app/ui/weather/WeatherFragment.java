@@ -138,7 +138,7 @@ public class WeatherFragment extends Fragment {
     private void observeZipResponse(final JSONObject response){
         try{
             binding.textViewCity.setText(response.getString("LocalizedName"));
-            //mModel.connect(response.getString("Key"));
+            mModel.connect(response.getString("Key"));
         } catch (JSONException e) {
 
             Log.e("JSON Parse Error",e.getMessage());

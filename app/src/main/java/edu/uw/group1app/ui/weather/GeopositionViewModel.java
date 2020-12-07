@@ -18,11 +18,11 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
-public class FiveDayViewModel extends AndroidViewModel {
+public class GeopositionViewModel extends AndroidViewModel {
 
     private MutableLiveData<JSONObject> mDetails;
-    public FiveDayViewModel(@NonNull Application application) {
+
+    public GeopositionViewModel(@NonNull Application application) {
         super(application);
         mDetails = new MutableLiveData<>();
         mDetails.setValue(new JSONObject());
@@ -33,8 +33,6 @@ public class FiveDayViewModel extends AndroidViewModel {
         mDetails.observe(owner, observer);
     }
 
-
-
     private void handleError(final VolleyError error) {
         //you should add much better error handling in a production release.
         //i.e. YOUR PTOJECT
@@ -43,16 +41,13 @@ public class FiveDayViewModel extends AndroidViewModel {
         throw new IllegalStateException(error.getMessage());
     }
 
-    private void handleResult(final JSONObject result){
-        //TO-DO
-    }
-
-    public void connect(final String locationKey){
-        String url = "https://mobileapp-group-backend.herokuapp.com/fiveday";
+    public void connect(final String latitude, final String longitude){
+        String url = "https://mobileapp-group-backend.herokuapp.com/geoposition";
 
         JSONObject body = new JSONObject();
         try{
-            body.put("locationkey", locationKey);
+            body.put("latitude", latitude);
+            body.put("longitude", longitude);
         } catch (JSONException e){
             e.printStackTrace();
         }
@@ -61,7 +56,7 @@ public class FiveDayViewModel extends AndroidViewModel {
                 Request.Method.POST,
                 url,
                 body,
-                this::handleResult,
+                mDetails::setValue,
                 this::handleError
         );
 

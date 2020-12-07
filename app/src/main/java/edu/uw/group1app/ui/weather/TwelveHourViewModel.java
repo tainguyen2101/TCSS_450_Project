@@ -18,11 +18,11 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
-public class FiveDayViewModel extends AndroidViewModel {
+public class TwelveHourViewModel extends AndroidViewModel {
 
     private MutableLiveData<JSONObject> mDetails;
-    public FiveDayViewModel(@NonNull Application application) {
+
+    public TwelveHourViewModel(@NonNull Application application) {
         super(application);
         mDetails = new MutableLiveData<>();
         mDetails.setValue(new JSONObject());
@@ -32,8 +32,6 @@ public class FiveDayViewModel extends AndroidViewModel {
                                     @NonNull Observer<? super JSONObject> observer) {
         mDetails.observe(owner, observer);
     }
-
-
 
     private void handleError(final VolleyError error) {
         //you should add much better error handling in a production release.
@@ -48,7 +46,7 @@ public class FiveDayViewModel extends AndroidViewModel {
     }
 
     public void connect(final String locationKey){
-        String url = "https://mobileapp-group-backend.herokuapp.com/fiveday";
+        String url = "https://mobileapp-group-backend.herokuapp.com/twelvehour";
 
         JSONObject body = new JSONObject();
         try{
