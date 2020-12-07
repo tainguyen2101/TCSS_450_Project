@@ -41,6 +41,9 @@
         <argument
             android:name="chatid"
             app:argType="integer" />
+        <argument
+            android:name="throughChat"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/chatFragment"

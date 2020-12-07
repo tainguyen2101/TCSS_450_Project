@@ -40,7 +40,6 @@ public class SignInFragment extends Fragment {
     private PushyTokenViewModel mPushyTokenViewModel;
     private UserInfoViewModel mUserViewModel;
 
-
     private PasswordValidator mEmailValidator = PasswordValidator.checkPwdLength(2)
             .and(PasswordValidator.checkExcludeWhiteSpace())
             .and(PasswordValidator.checkPwdSpecialChar("@"));

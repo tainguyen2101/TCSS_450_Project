@@ -103,7 +103,7 @@ public class ChatFragment extends Fragment {
 
         binding.buttonAdd.setOnClickListener(button ->
             Navigation.findNavController(getView()).navigate(
-                    ChatFragmentDirections.actionChatFragmentToContactListFragment(mChatID)
+                    ChatFragmentDirections.actionChatFragmentToContactListFragment(mChatID, true)
         ));
 
         //when we get the response back from the server, clear the edittext

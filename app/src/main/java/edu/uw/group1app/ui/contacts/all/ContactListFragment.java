@@ -41,6 +41,7 @@ public class ContactListFragment extends Fragment  {
     private AlertDialog mDialog;
     private ChatFragment fragment;
     private int mChatID;
+    private boolean mThroughChat;
 
 
 
@@ -60,6 +61,10 @@ public class ContactListFragment extends Fragment  {
         if(getArguments() != null) {
             ContactListFragmentArgs args = ContactListFragmentArgs.fromBundle(getArguments());
             mChatID = args.getChatid();
+            mThroughChat = args.getThroughChat();
+        } else {
+            mChatID = -1;
+            mThroughChat = false;
         }
 
         mModel.connectGet(mInfoModel.getmJwt());
@@ -118,7 +123,7 @@ public class ContactListFragment extends Fragment  {
         mModel.addContactListObserver(getViewLifecycleOwner(), contactList -> {
             binding.listRoot.setAdapter(
                     new ContactRecyclerViewAdapter(contactList, this.getContext(),
-                            getChildFragmentManager(), mInfoModel, mModel, mChatID));
+                            getChildFragmentManager(), mInfoModel, mModel, mChatID, mThroughChat));
         });
     }
 

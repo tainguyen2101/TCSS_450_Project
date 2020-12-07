@@ -50,7 +50,7 @@
             android:id="@+id/text_chatRoom_title"
             android:layout_width="393dp"
             android:layout_height="59dp"
-            android:background="@color/color_primary"
+            style="@android:style/Widget.Material.Light.ActionBar.Solid"
             android:text="DUMMY"
             android:textAlignment="center"
             android:textColor="@android:color/background_light"
