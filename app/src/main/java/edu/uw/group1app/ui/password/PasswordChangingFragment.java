@@ -13,10 +13,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import edu.uw.group1app.R;
 import edu.uw.group1app.databinding.FragmentPasswordChangingBinding;
+import edu.uw.group1app.model.UserInfoViewModel;
 import edu.uw.group1app.ui.chat.ChatFragmentArgs;
 import edu.uw.group1app.ui.utils.PasswordValidator;
 
@@ -38,6 +42,10 @@ public class PasswordChangingFragment extends Fragment {
     private PasswordChangingViewModel mPasswordModel;
 
     private String mEmail;
+
+    private boolean isSucess;
+
+    private String message;
 
     private PasswordValidator mEmailValidator =
             checkClientPredicate(email -> email.equals(binding.textChangeEmail.getText().toString()));
@@ -83,6 +91,11 @@ public class PasswordChangingFragment extends Fragment {
                         PasswordChangingFragmentDirections.actionNavigationPasswordChageToNavigationUserSetting()));
 
         binding.buttonSend.setOnClickListener(this::attemptChangePassword);
+
+        mPasswordModel.addResponseObserver(
+                getViewLifecycleOwner(),
+                this::observeChangingPasswordResponse
+        );
     }
 
     private void attemptChangePassword(final View button) {
@@ -108,10 +121,39 @@ public class PasswordChangingFragment extends Fragment {
                                                             "6) At least one uppercase letter"));
     }
 
+    private void observeChangingPasswordResponse(final JSONObject response) {
+        if (response.length() > 0) {
+
+            try {
+                isSucess = response.getBoolean("success");
+                message = response.getString("message");
+
+                System.out.println(isSucess);
+                System.out.println(message);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            if(isSucess) {
+                openDialog("Success!", message);
+            } else {
+                openDialog("Failed!", message);
+            }
+        } else {
+            Log.d("JSON Response", "No Response");
+        }
+
+    }
+
     private void verifyAuthWithServer() {
         mPasswordModel.changePassword(
                 binding.textChangeEmail.getText().toString(),
                 binding.textChangeOldPass.getText().toString(),
                 binding.textChageNewPass.getText().toString());
+    }
+
+    private void openDialog(String theTitle, String theMessage) {
+        PasswordDialog passDialog = new PasswordDialog(theTitle, theMessage);
+        passDialog.show(getChildFragmentManager(), "password change dialog");
     }
 }

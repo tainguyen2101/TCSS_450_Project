@@ -145,7 +145,6 @@ public class MainActivity extends AppCompatActivity {
 
         PushNotifications.start(this, "c9680030-b0e8-4d56-a722-5d92adf8c303");
 
-
         MainActivityArgs args = MainActivityArgs.fromBundle(getIntent().getExtras());
 
         mContactViewModel = new ViewModelProvider(this).get(ContactListViewModel.class);
