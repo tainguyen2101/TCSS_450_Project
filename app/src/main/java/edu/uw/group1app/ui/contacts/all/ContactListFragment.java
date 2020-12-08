@@ -39,7 +39,6 @@ public class ContactListFragment extends Fragment  {
     private UserInfoViewModel mInfoModel;
     private EditText mUserInput;
     private AlertDialog mDialog;
-    private ChatFragment fragment;
     private int mChatID;
     private boolean mThroughChat;
 
@@ -101,7 +100,6 @@ public class ContactListFragment extends Fragment  {
             builder.setPositiveButton("OK", (dialog, which) -> {
                 // DO NOTHING
             });
-
             builder.setNegativeButton("Cancel", (dialog, which) -> {
                 // dismiss
                 mDialog.dismiss();

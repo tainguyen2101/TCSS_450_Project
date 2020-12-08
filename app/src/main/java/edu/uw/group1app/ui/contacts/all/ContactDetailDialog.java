@@ -1,24 +1,34 @@
 package edu.uw.group1app.ui.contacts.all;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
+import edu.uw.group1app.MainActivity;
 import edu.uw.group1app.R;
+import edu.uw.group1app.databinding.FragmentPasswordChangingBinding;
 import edu.uw.group1app.model.UserInfoViewModel;
 import edu.uw.group1app.ui.contacts.favorite.ContactFavoriteRecyclerViewAdapter;
+import edu.uw.group1app.ui.password.PasswordChangingViewModel;
+import edu.uw.group1app.ui.password.PasswordDialog;
 
 /**
  * Contact Detail Dialog to show user more detail of a contact when they click on a contact card
@@ -30,7 +40,7 @@ public class ContactDetailDialog extends DialogFragment {
 
     private final Contact mContact;
 
-    private final ContactListViewModel mContactModel;
+    private ContactListViewModel mContactModel;
 
     private final UserInfoViewModel mUserModel;
 
@@ -39,6 +49,8 @@ public class ContactDetailDialog extends DialogFragment {
     private int mChatID;
 
     private boolean throughChat;
+
+    private Activity activity;
 
     public ContactDetailDialog(Contact contact, ContactListViewModel contactModel,
                                UserInfoViewModel infoModel,
@@ -56,6 +68,7 @@ public class ContactDetailDialog extends DialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContactModel =  new ViewModelProvider(getActivity()).get(ContactListViewModel.class);
     }
 
     @Override
@@ -95,20 +108,57 @@ public class ContactDetailDialog extends DialogFragment {
         messageButton.setEnabled(throughChat);
         messageButton.setOnClickListener(v -> {
             putMemberIntoTheRoom();
-            messageButton.setText("Added!");
-            messageButton.setEnabled(false);
         });
+
+        mContactModel.addResponseObserver(
+                this.getActivity(),
+                this::observeAddingContactToChat
+        );
 
         builder.setView(view);
         return builder.create();
     }
 
+    private void observeAddingContactToChat(final JSONObject response) {
+        if (response.length() > 0) {
+            try {
+                openDialog(response.getBoolean("success"), response.getString("message"));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Log.d("JSON Response", "No Response");
+        }
+    }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if (context instanceof Activity) {
+            this.activity = (Activity) context;
+        }
+    }
+
+    private void openDialog(boolean isSuccess, String theMessage) {
+        Toast.makeText(activity, theMessage, Toast.LENGTH_SHORT).show();
+        /*AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        String theTitle = "";
+        if(isSuccess) {
+            theTitle = "Success!";
+        } else {
+            theTitle = "Failed!";
+        }
+        builder.setTitle(theTitle);
+        builder.setMessage(theMessage);
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            dialog.dismiss();
+        });
+        builder.create();
+        builder.show();
+        */
+    }
+
     private void putMemberIntoTheRoom(){
-        /*try {
-            mContactModel.putContactMembers(mUserModel.getmJwt(), mContact.getMemberID(), mChatID);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }*/
         System.out.println(mContact.getMemberID() + " " + mChatID);
         try {
             mContactModel.putContactMembers(mUserModel.getmJwt(), mChatID, mContact.getMemberID());

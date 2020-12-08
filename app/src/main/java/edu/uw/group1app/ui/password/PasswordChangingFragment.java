@@ -1,5 +1,6 @@
 package edu.uw.group1app.ui.password;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,15 +14,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import edu.uw.group1app.R;
+import java.util.HashMap;
+import java.util.Map;
+
 import edu.uw.group1app.databinding.FragmentPasswordChangingBinding;
-import edu.uw.group1app.model.UserInfoViewModel;
-import edu.uw.group1app.ui.chat.ChatFragmentArgs;
 import edu.uw.group1app.ui.utils.PasswordValidator;
 
 import static edu.uw.group1app.ui.utils.PasswordValidator.checkClientPredicate;
@@ -43,9 +42,9 @@ public class PasswordChangingFragment extends Fragment {
 
     private String mEmail;
 
-    private boolean isSucess;
+    private AlertDialog.Builder builder;
 
-    private String message;
+    private Map<Boolean, String> map;
 
     private PasswordValidator mEmailValidator =
             checkClientPredicate(email -> email.equals(binding.textChangeEmail.getText().toString()));
@@ -73,6 +72,7 @@ public class PasswordChangingFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentPasswordChangingBinding.inflate(inflater);
         mPasswordModel =  new ViewModelProvider(getActivity()).get(PasswordChangingViewModel.class);
+        map = new HashMap<>();
         return binding.getRoot();
     }
 
@@ -123,21 +123,23 @@ public class PasswordChangingFragment extends Fragment {
 
     private void observeChangingPasswordResponse(final JSONObject response) {
         if (response.length() > 0) {
-
             try {
-                isSucess = response.getBoolean("success");
-                message = response.getString("message");
+                //openDialog(response.getBoolean("success"), response.getString("message"));
 
-                System.out.println(isSucess);
-                System.out.println(message);
-
+                if(!map.containsKey(response.getBoolean("success"))) {
+                    map.put(response.getBoolean("success"), response.getString("message"));
+                    openDialog(response.getBoolean("success"), map.get(response.getBoolean("success")));
+                } else {
+                    map.clear();
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            if(isSucess) {
-                openDialog("Success!", message);
-            } else {
-                openDialog("Failed!", message);
+            try {
+                System.out.println(response.getBoolean("success"));
+                System.out.println(response.getString("message"));
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         } else {
             Log.d("JSON Response", "No Response");
@@ -152,8 +154,21 @@ public class PasswordChangingFragment extends Fragment {
                 binding.textChageNewPass.getText().toString());
     }
 
-    private void openDialog(String theTitle, String theMessage) {
-        PasswordDialog passDialog = new PasswordDialog(theTitle, theMessage);
-        passDialog.show(getChildFragmentManager(), "password change dialog");
+
+    private void openDialog(boolean isSuccess, String theMessage) {
+        builder = new AlertDialog.Builder(getActivity());
+        String theTitle = "";
+        if(isSuccess) {
+            theTitle = "Success!";
+        } else {
+            theTitle = "Failed!";
+        }
+        builder.setTitle(theTitle);
+        builder.setMessage(theMessage);
+        builder.setPositiveButton("OK", (dialog, which) -> {
+            dialog.dismiss();
+        });
+        builder.create();
+        builder.show();
     }
 }

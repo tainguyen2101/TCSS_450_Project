@@ -13,7 +13,7 @@ public class PasswordDialog extends AppCompatDialogFragment {
 
     private String myTitle;
 
-    public PasswordDialog(String theTitle,String theMessage) {
+    public PasswordDialog(String theTitle, String theMessage) {
         myTitle = theTitle;
         myMessage = theMessage;
     }
