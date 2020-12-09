@@ -51,4 +51,14 @@
 
     <string name="base_url">https://mobileapp-group-backend.herokuapp.com/</string>
     <string name="favor_contact_dialog">This is your favorite person?</string>
+    <string name="title_activity_weather">WeatherActivity</string>
+
+
+    <string name="label_location">Confirm location?:</string>
+    <string name="title_activity_maps">Map</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
 </resources>

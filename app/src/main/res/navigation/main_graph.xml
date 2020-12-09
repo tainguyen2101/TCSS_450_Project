@@ -21,6 +21,9 @@
         <argument
             android:name="chatid"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_navigation_weather_to_locationFragment"
+            app:destination="@id/locationFragment" />
     </fragment>
     <fragment
         android:id="@+id/navigation_chat"
@@ -81,4 +84,8 @@
             android:id="@+id/action_navigation_user_setting_to_navigation_password_chage"
             app:destination="@id/navigation_password_chage" />
     </fragment>
+    <fragment
+        android:id="@+id/locationFragment"
+        android:name="edu.uw.group1app.ui.weather.LocationFragment"
+        android:label="LocationFragment" />
 </navigation>

@@ -19,6 +19,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,6 +48,7 @@ public class WeatherFragment extends Fragment {
     private GeopositionViewModel mGeoModel;
     private Context mContext;
     private ZipcodeDialog zipBinding;
+    private LocationViewModel mLocationModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,8 +57,8 @@ public class WeatherFragment extends Fragment {
         mModel = new ViewModelProvider(getActivity()).get(CurrentWeatherViewModel.class);
         mZipModel = new ViewModelProvider(getActivity()).get(ZipcodeViewModel.class);
         mGeoModel = new ViewModelProvider(getActivity()).get(GeopositionViewModel.class);
-        //mZipModel.connect("78247");
-        mGeoModel.connect("40.73","-74.00");
+        mLocationModel = new ViewModelProvider(getActivity()).get(LocationViewModel.class);
+        //mGeoModel.connect("40.73","-74.00");
 
     }
 
@@ -84,12 +86,22 @@ public class WeatherFragment extends Fragment {
            menu.setOnMenuItemClickListener(item -> {
                 switch (item.getItemId()) {
                     case R.id.item_current_location:
-                        Log.d("SUBMENU","current location placeholder");
+                        mLocationModel.addLocationObserver(getViewLifecycleOwner(), location -> {
+
+                            String lat = String.valueOf(location.getLatitude());
+                            String lng = String.valueOf(location.getLongitude());
+                            mGeoModel.connect(lat, lng);
+                            Log.d("SUBMENU","" + lat + " " + lng);
+
+                        });
+
                         return true;
                     case R.id.item_zipcode:
                         searchByZipCode();
                         return true;
                     case R.id.item_map_location:
+                        Navigation.findNavController(getView()).navigate(
+                                R.id.action_navigation_weather_to_locationFragment);
                             Log.d("SUBMENU","map location placeholder");
                     return true;
 
