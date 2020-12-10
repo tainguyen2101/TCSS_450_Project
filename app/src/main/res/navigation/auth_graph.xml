@@ -71,6 +71,11 @@
         <argument
             android:name="password"
             app:argType="string" />
+        <argument
+            android:name="fname"
+            app:argType="string" />
+        <argument android:name="lname"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/passwordRecoveryFragment"

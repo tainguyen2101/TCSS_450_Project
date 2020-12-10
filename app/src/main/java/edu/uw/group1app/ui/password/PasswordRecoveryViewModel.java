@@ -1,7 +1,6 @@
-package edu.uw.group1app.ui.signin;
+package edu.uw.group1app.ui.password;
 
 import android.app.Application;
-import android.util.Base64;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -19,21 +18,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.nio.charset.Charset;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 import edu.uw.group1app.R;
 import edu.uw.group1app.io.RequestQueueSingleton;
-/**
- * A simple {@link androidx.lifecycle.ViewModel} class to accompany Sign in
- * @author Ivan
- */
-public class SignInViewModel extends AndroidViewModel {
 
+public class PasswordRecoveryViewModel extends AndroidViewModel {
     private MutableLiveData<JSONObject> mResponse;
 
-    public SignInViewModel(@NonNull Application application) {
+    public PasswordRecoveryViewModel(@NonNull Application application) {
         super(application);
         mResponse = new MutableLiveData<>();
         mResponse.setValue(new JSONObject());
@@ -45,43 +38,28 @@ public class SignInViewModel extends AndroidViewModel {
     }
 
 
-    public void connect(final String email, final String password) {
-
-
+    public void connect(String email) {
         String url = getApplication().getResources().getString(R.string.base_url) +
-                "auth";
+                "forgottenpassword?email=" + email;
+
 
         Request request = new JsonObjectRequest(
                 Request.Method.GET,
                 url,
-                null, //no body for this get request
+                null,
                 mResponse::setValue,
-                this::handleError) {
+                this::handleError);
 
-            @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String> headers = new HashMap<>();
-                // add headers <key,value>
-                String credentials = email + ":" + password;
-                String auth = "Basic "
-                        + Base64.encodeToString(credentials.getBytes(),
-                        Base64.NO_WRAP);
-                headers.put("Authorization", auth);
-                return headers;
-            }
-        };
-        Log.d("request fields", url + " " + mResponse.getValue());
         request.setRetryPolicy(new DefaultRetryPolicy(
-                10_000,
+                60_000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         //Instantiate the RequestQueue and add the request to the queue
         RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
                 .addToRequestQueue(request);
-
-        Log.d("request fields", url + " " + mResponse.getValue());
-
+        Log.d("after request", "Request complete, response value: " + mResponse.getValue());
         //code here will run
+        //connect2("'" + email + "'");
     }
 
 
@@ -107,4 +85,6 @@ public class SignInViewModel extends AndroidViewModel {
             }
         }
     }
+
+
 }

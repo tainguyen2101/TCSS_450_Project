@@ -12,7 +12,7 @@
         android:layout_width="160dp"
         android:layout_height="38dp"
         android:layout_marginStart="35dp"
-        android:layout_marginTop="125dp"
+        android:layout_marginTop="60dp"
         android:text="TextView"
         android:textColor="@color/color_status_bar"
         app:layout_constraintStart_toEndOf="@+id/imageView_name"
@@ -21,11 +21,12 @@
     <Button
         android:id="@+id/button_change_pass"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginStart="166dp"
-        android:layout_marginTop="40dp"
         android:layout_marginEnd="152dp"
+        android:layout_marginBottom="40dp"
         android:text="Change Password"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.577"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +37,7 @@
         android:layout_width="54dp"
         android:layout_height="53dp"
         android:layout_marginStart="75dp"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="48dp"
         android:src="@drawable/ic_person_image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView_user" />
@@ -77,12 +78,12 @@
         android:id="@+id/switch_dark_mode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="62dp"
+        android:layout_marginTop="265dp"
         android:text="Dark Mode"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_user_email" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView_user" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

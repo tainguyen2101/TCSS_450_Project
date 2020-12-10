@@ -21,6 +21,10 @@ import org.json.JSONObject;
 
 import java.nio.charset.Charset;
 import java.util.Objects;
+
+import edu.uw.group1app.R;
+import edu.uw.group1app.io.RequestQueueSingleton;
+
 /**
  * A simple {@link androidx.lifecycle.ViewModel} class to accompany Register
  * @author D. Jared Idler (idledj)
@@ -97,5 +101,30 @@ public class RegisterViewModel extends AndroidViewModel {
         Volley.newRequestQueue(getApplication().getApplicationContext())
                 .add(request);
     }
+    public void connect2(String email) {
+        String url = getApplication().getResources().getString(R.string.base_url) +
+                "emailwait";
+        JSONObject body = new JSONObject();
+        try {
+            body.put("email", "'" + email + "'");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Request request = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                body,
+                mResponse::setValue,
+                this::handleError);
 
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                10_000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        //Instantiate the RequestQueue and add the request to the queue
+        RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
+                .addToRequestQueue(request);
+
+        //code here will run
+    }
 }

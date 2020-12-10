@@ -38,22 +38,16 @@ public class EmailVerificationFragment extends Fragment {
         // Required empty public constructor
     }
     private FragmentEmailVerificationBinding binding;
-    private EmailVerificationViewModel mEmailVerificationModel;
+    //private EmailVerificationViewModel mEmailVerificationModel;
     private EmailVerificationFragmentArgs mArgs;
-
-    private PasswordValidator mEmailValidator = PasswordValidator.checkPwdLength(2)
-            .and(PasswordValidator.checkExcludeWhiteSpace())
-            .and(PasswordValidator.checkPwdSpecialChar("@"));
-
-    private PasswordValidator mPassWordValidator = PasswordValidator.checkPwdLength(1)
-            .and(PasswordValidator.checkExcludeWhiteSpace());
-
-
+    private RegisterViewModel mRegisterModel;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mEmailVerificationModel = new ViewModelProvider(getActivity())
-                .get(EmailVerificationViewModel.class);
+//        mEmailVerificationModel = new ViewModelProvider(getActivity())
+//                .get(EmailVerificationViewModel.class);
+        mRegisterModel = new ViewModelProvider(getActivity())
+                .get(RegisterViewModel.class);
     }
 
     @Override
@@ -67,22 +61,24 @@ public class EmailVerificationFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        mEmailVerificationModel.addResponseObserver(
+//
+//        mEmailVerificationModel.addResponseObserver(
+//                getViewLifecycleOwner(),
+//                this::observeEmailVerificationResponse);
+        binding.emailVerificationButton.setOnClickListener(this::registerWithServer);
+        mRegisterModel.addResponseObserver(
                 getViewLifecycleOwner(),
-                this::observeEmailVerificationResponse);
-
-
+                this::observeRegResponse);
             mArgs = EmailVerificationFragmentArgs.fromBundle(getArguments());
     }
 
 
 
-    private void verifyAuthWithServer() {
-        mEmailVerificationModel.connect();
-        //This is an Asynchronous call. No statements after should rely on the
-        //result of connect().
-    }
+//    private void verifyEmailWithServer() {
+//        mEmailVerificationModel.connect(mArgs.getEmail());
+//        //This is an Asynchronous call. No statements after should rely on the
+//        //result of connect().
+//    }
 
     /**
      * Helper to abstract the navigation to the sign in fragment.
@@ -94,13 +90,28 @@ public class EmailVerificationFragment extends Fragment {
                         .actionEmailVerificationFragmentToSignInFragment());
     }
 
+
+    /**asynchronous call to verify authentication with web service*/
+    private void registerWithServer(final View Button) {
+
+        mRegisterModel.connect(
+                mArgs.getFname(),
+                mArgs.getLname(),
+                mArgs.getEmail(),
+                mArgs.getPassword());
+
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
     /**
      * An observer on the HTTP Response from the web server. This observer should be
-     * attached to EmailVerificationViewModel.
+     * attached to SignInViewModel.
      *
      * @param response the Response from the server
      */
-    private void observeEmailVerificationResponse(final JSONObject response) {
+    private void observeRegResponse(final JSONObject response) {
         if (response.length() > 0) {
             if (response.has("code")) {
                 try {
@@ -116,12 +127,5 @@ public class EmailVerificationFragment extends Fragment {
         } else {
             Log.d("JSON Response", "No Response");
         }
-
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
 }

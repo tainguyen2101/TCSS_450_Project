@@ -41,27 +41,30 @@ public class EmailVerificationViewModel extends AndroidViewModel {
     }
 
 
-    public void connect() {
+    public void connect(String email) {
         String url = getApplication().getResources().getString(R.string.base_url) +
-                "emailverification";
+                "verifier?email=" + email;
+
 
         Request request = new JsonObjectRequest(
                 Request.Method.GET,
                 url,
-                null, //no body for this get request
+                null,
                 mResponse::setValue,
                 this::handleError);
 
         request.setRetryPolicy(new DefaultRetryPolicy(
-                10_000,
+                60_000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         //Instantiate the RequestQueue and add the request to the queue
         RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
                 .addToRequestQueue(request);
-
+        Log.d("after request", "Request complete, response value: " + mResponse.getValue());
         //code here will run
+        //connect2("'" + email + "'");
     }
+
 
 
     private void handleError(final VolleyError error) {
@@ -85,5 +88,6 @@ public class EmailVerificationViewModel extends AndroidViewModel {
             }
         }
     }
+
 
 }

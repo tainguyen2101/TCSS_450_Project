@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
@@ -34,7 +35,8 @@ public class RegisterFragment extends Fragment {
 
     private FragmentRegisterBinding binding;
     /**View model for preservation of data through life cycles*/
-    private RegisterViewModel mRegisterModel;
+    private EmailVerificationViewModel mEmailVerificationModel;
+    //private RegisterViewModel mRegisterModel;
     /**Input validation helpers*/
     private PasswordValidator mNameValidator = checkPwdLength(1);
     private PasswordValidator mUserValidator = checkPwdLength(1);
@@ -56,8 +58,10 @@ public class RegisterFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mRegisterModel = new ViewModelProvider(getActivity())
-                .get(RegisterViewModel.class);
+        mEmailVerificationModel = new ViewModelProvider(getActivity())
+                .get(EmailVerificationViewModel.class);
+//        mRegisterModel = new ViewModelProvider(getActivity())
+//                .get(RegisterViewModel.class);
     }
 
     @Override
@@ -72,8 +76,10 @@ public class RegisterFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding.actualRegButton.setOnClickListener(this::attemptRegister);
-        mRegisterModel.addResponseObserver(getViewLifecycleOwner(),
+        mEmailVerificationModel.addResponseObserver(getViewLifecycleOwner(),
                 this::observeResponse);
+//        mRegisterModel.addResponseObserver(getViewLifecycleOwner(),
+//                this::observeResponse);
     }
     /**helper to call when button clicked*/
     private void attemptRegister(final View button) {
@@ -123,36 +129,31 @@ public class RegisterFragment extends Fragment {
     private void validatePassword() {
         mPassWordValidator.processResult(
                 mPassWordValidator.apply(binding.registerPwBox.getText().toString()),
-                this::verifyAuthWithServer,
+                this::sendEmail,
                 result -> binding.registerPwBox.setError("Please enter a valid Password."));
     }
-    /**asynchronous call to verify authentication with web service*/
-    private void verifyAuthWithServer() {
-
-        mRegisterModel.connect(
-                binding.registerFirstNameBox.getText().toString(),
-                binding.registerLastNameBox.getText().toString(),
-                binding.registerEmailBox.getText().toString(),
-                binding.registerPwBox.getText().toString());
-
+    private void sendEmail() {
+        mEmailVerificationModel.connect(binding.registerEmailBox.getText().toString());
     }
     /**Helper for navigation across nav map*/
     private void navigateToLogin() {
 //        RegisterFragmentDirections.ActionRegisterFragmentToSignInFragment directions =
 //                RegisterFragmentDirections.actionRegisterFragmentToSignInFragment();
+
         RegisterFragmentDirections.ActionRegisterFragmentToEmailVerificationFragment directions =
                     RegisterFragmentDirections.actionRegisterFragmentToEmailVerificationFragment(
                             binding.registerEmailBox.getText().toString(),
-                            binding.registerPwBox.getText().toString()
+                            binding.registerPwBox.getText().toString(),
+                            binding.registerFirstNameBox.getText().toString(),
+                            binding.registerLastNameBox.getText().toString()
                     );
 
         Navigation.findNavController(getView()).navigate(directions);
 
     }
-
     /**
      * An observer on the HTTP Response from the web server. This observer should be
-     * attached to SignInViewModel.
+     * attached to EmailVerificationViewModel.
      *
      * @param response the Response from the server
      */
@@ -160,17 +161,20 @@ public class RegisterFragment extends Fragment {
         if (response.length() > 0) {
             if (response.has("code")) {
                 try {
-                    binding.registerEmailBox.setError(
+                    Log.d("Error code received",
                             "Error Authenticating: " +
                                     response.getJSONObject("data").getString("message"));
                 } catch (JSONException e) {
                     Log.e("JSON Parse Error", e.getMessage());
                 }
             } else {
+                //mEmailVerificationModel.connect(binding.registerEmailBox.getText().toString());
                 navigateToLogin();
             }
         } else {
             Log.d("JSON Response", "No Response");
         }
+
     }
+
 }
