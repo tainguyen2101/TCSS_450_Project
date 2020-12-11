@@ -29,8 +29,9 @@ import edu.uw.group1app.model.UserInfoViewModel;
 import edu.uw.group1app.ui.utils.PasswordValidator;
 
 /**
- * A simple {@link Fragment} subclass.
-
+ * A simple {@link Fragment} subclass. Enables multi-device email verification
+ * Connects to a {@Link ViewModel} to allow for connection / request to backend
+ * @author D. Jared Idler
  */
 public class EmailVerificationFragment extends Fragment {
 
