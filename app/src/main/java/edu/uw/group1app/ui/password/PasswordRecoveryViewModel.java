@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
@@ -22,7 +23,10 @@ import java.util.Objects;
 
 import edu.uw.group1app.R;
 import edu.uw.group1app.io.RequestQueueSingleton;
-
+/**
+ * View model connection to backend for password recovery
+ * @author D. Jared Idler
+ */
 public class PasswordRecoveryViewModel extends AndroidViewModel {
     private MutableLiveData<JSONObject> mResponse;
 
@@ -40,7 +44,7 @@ public class PasswordRecoveryViewModel extends AndroidViewModel {
 
     public void connect(String email) {
         String url = getApplication().getResources().getString(R.string.base_url) +
-                "forgottenpassword?email=" + email;
+                "forgotpwemail?email=" + email;
 
 
         Request request = new JsonObjectRequest(
@@ -59,8 +63,8 @@ public class PasswordRecoveryViewModel extends AndroidViewModel {
                 .addToRequestQueue(request);
         Log.d("after request", "Request complete, response value: " + mResponse.getValue());
         //code here will run
-        //connect2("'" + email + "'");
     }
+
 
 
 

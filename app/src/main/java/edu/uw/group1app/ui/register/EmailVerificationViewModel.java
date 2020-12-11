@@ -25,7 +25,10 @@ import java.util.Objects;
 
 import edu.uw.group1app.R;
 import edu.uw.group1app.io.RequestQueueSingleton;
-
+/**
+ * View model connection to backend for email verification
+ * @author D. Jared Idler
+ */
 public class EmailVerificationViewModel extends AndroidViewModel {
     private MutableLiveData<JSONObject> mResponse;
 
