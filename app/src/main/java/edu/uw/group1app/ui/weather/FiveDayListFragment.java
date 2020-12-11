@@ -45,7 +45,7 @@ public class FiveDayListFragment extends Fragment {
 
         mModel.addResponseObserver(getViewLifecycleOwner(), dayList ->{
             binding.listRoot.setAdapter(
-                    new DayRecyclerViewAdapter(dayList)
+                    new DayRecyclerViewAdapter(DayGenerator.getDayList())
             );
         });
 
