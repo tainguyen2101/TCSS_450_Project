@@ -44,7 +44,7 @@ public class ZipcodeViewModel extends AndroidViewModel {
         //i.e. YOUR PTOJECT
         Log.e("CONNECTION ERROR", error.getLocalizedMessage());
 
-        throw new IllegalStateException(error.getMessage());
+        //throw new IllegalStateException(error.getMessage());
     }
 
 

@@ -360,12 +360,12 @@ public class ContactListViewModel extends AndroidViewModel {
         }
 
         Request request = new JsonObjectRequest(
-                Request.Method.PUT,
+                Request.Method.POST,
                 url,
-                body, //push token found in the JSONObject body
+                body,
                 mResponse::setValue,
-                this::handleAddError)
-        {
+                this::handleError
+        ) {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
@@ -459,7 +459,7 @@ public class ContactListViewModel extends AndroidViewModel {
                 url,
                 body, //push token found in the JSONObject body
                 mResponse::setValue,
-                this::handleAddError) {
+                this::handleChatError) {
 
             @Override
             public Map<String, String> getHeaders() {
@@ -478,14 +478,20 @@ public class ContactListViewModel extends AndroidViewModel {
         RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
                 .addToRequestQueue(request);
     }
+
     /**
      * handle a failure connection to the back-end
      * @param error the error.
      */
-    private void handleAddError(final VolleyError error) {
+    private void handleChatError(final VolleyError error) {
         Log.e("CONNECTION ERROR", "No Chat Info");
     }
 
+
+    /**
+     * handle a failure connection to the back-end
+     * @param error the error.
+     */
     private void handleError(final VolleyError error) {
         if (Objects.isNull(error.networkResponse)) {
             try {

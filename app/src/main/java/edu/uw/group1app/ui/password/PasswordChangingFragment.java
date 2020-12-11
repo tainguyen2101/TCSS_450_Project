@@ -18,6 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import edu.uw.group1app.databinding.FragmentPasswordChangingBinding;
@@ -114,11 +115,11 @@ public class PasswordChangingFragment extends Fragment {
                 mPassWordValidator.apply(binding.textChageNewPass.getText().toString()),
                 this::verifyAuthWithServer,
                 result -> binding.textChageNewPass.setError("1) Should not be same as old password\n" +
-                                                            "2) More Than 7 characters\n" +
-                                                            "3) At least one lowercase letter\n" +
-                                                            "4) At least one number digit\n" +
-                                                            "5) At least one special character\n" +
-                                                            "6) At least one uppercase letter"));
+                        "2) More Than 7 characters\n" +
+                        "3) At least one lowercase letter\n" +
+                        "4) At least one number digit\n" +
+                        "5) At least one special character\n" +
+                        "6) At least one uppercase letter"));
     }
 
     private void observeChangingPasswordResponse(final JSONObject response) {
@@ -132,12 +133,6 @@ public class PasswordChangingFragment extends Fragment {
                 } else {
                     map.clear();
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            try {
-                System.out.println(response.getBoolean("success"));
-                System.out.println(response.getString("message"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }

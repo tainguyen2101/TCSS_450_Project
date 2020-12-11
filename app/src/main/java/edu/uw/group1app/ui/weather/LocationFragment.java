@@ -44,8 +44,6 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
         // Required empty public constructor
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -66,7 +64,6 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
         mModel.addLocationObserver(getViewLifecycleOwner(), location ->
                 binding.textLatLong.setText(location.toString()));
 
-
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment =
                 (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
@@ -79,7 +76,6 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
 
         mModel.addLocationObserver(getViewLifecycleOwner(), location -> {
             if(location != null) {
@@ -126,7 +122,5 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
         mMap.animateCamera(
                 CameraUpdateFactory.newLatLngZoom(
                         latLng, mMap.getCameraPosition().zoom));
-
-
     }
 }

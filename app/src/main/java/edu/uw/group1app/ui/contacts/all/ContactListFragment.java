@@ -61,13 +61,11 @@ public class ContactListFragment extends Fragment  {
             ContactListFragmentArgs args = ContactListFragmentArgs.fromBundle(getArguments());
             mChatID = args.getChatid();
             mThroughChat = args.getThroughChat();
-        } else {
-            mChatID = -1;
-            mThroughChat = false;
         }
 
         mModel.connectGet(mInfoModel.getmJwt());
-        //mModel.connectPusher(mInfoModel.getmJwt(), mInfoModel.getEmail());
+
+        mModel.connectPusher(mInfoModel.getmJwt(), mInfoModel.getEmail());
     }
 
     @Override
