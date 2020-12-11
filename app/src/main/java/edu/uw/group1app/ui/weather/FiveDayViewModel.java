@@ -15,22 +15,28 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import edu.uw.group1app.R;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.IntFunction;
 
 
 public class FiveDayViewModel extends AndroidViewModel {
 
-    private MutableLiveData<JSONObject> mDetails;
+    private MutableLiveData<List<DayPost>> mDayList;
     public FiveDayViewModel(@NonNull Application application) {
         super(application);
-        mDetails = new MutableLiveData<>();
-        mDetails.setValue(new JSONObject());
+        mDayList = new MutableLiveData<>();
+        mDayList.setValue(new ArrayList<>());
     }
 
     public void addResponseObserver(@NonNull LifecycleOwner owner,
-                                    @NonNull Observer<? super JSONObject> observer) {
-        mDetails.observe(owner, observer);
+                                    @NonNull Observer<? super List<DayPost>> observer) {
+        mDayList.observe(owner, observer);
     }
 
 
@@ -44,7 +50,46 @@ public class FiveDayViewModel extends AndroidViewModel {
     }
 
     private void handleResult(final JSONObject result){
-        //TO-DO
+        IntFunction<String> getString =
+                getApplication().getResources()::getString;
+
+
+
+        try{
+            JSONArray data = result.getJSONArray("DailyForecasts");
+            for(int i=0; i <data.length();i++){
+                JSONObject jsonDay = data.getJSONObject(i);
+                JSONObject temp = jsonDay.getJSONObject("Temperature");
+                JSONObject max = temp.getJSONObject("Maximum");
+                JSONObject min = temp.getJSONObject("Minimum");
+                JSONObject day = jsonDay.getJSONObject("IconPhrase");
+                JSONObject night = jsonDay.getJSONObject("IconPhrase");
+                DayPost post = new DayPost.Builder(
+                        //TODO:
+                        jsonDay.getString(
+                                getString.apply(
+                                        R.string.keys_json_weather_date)),
+                        max.getString(
+                                getString.apply(
+                                        R.string.keys_json_weather_value)),
+                        min.getString(
+                                getString.apply(
+                                        R.string.keys_json_weather_min)),
+                        day.getString(
+                                getString.apply(
+                                        R.string.keys_json_weather_condition)),
+                        night.getString(
+                                getString.apply(
+                                        R.string.keys_json_weather_condition)))
+                                .build();
+                        mDayList.getValue().add(post);
+            }
+        } catch(JSONException e){
+            e.printStackTrace();
+            Log.e("ERROR!", e.getMessage());
+        }
+
+        mDayList.setValue(mDayList.getValue());
     }
 
     public void connect(final String locationKey){

@@ -12,7 +12,6 @@ import androidx.lifecycle.Observer;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -23,21 +22,22 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.IntFunction;
+
 import edu.uw.group1app.R;
 
-public class TwelveHourViewModel extends AndroidViewModel {
+public class TwelveHourHomeViewModel extends AndroidViewModel {
 
-    private MutableLiveData<List<HourPost>> mHourList;
+    private MutableLiveData<JSONObject> mDetails;
 
-    public TwelveHourViewModel(@NonNull Application application) {
+    public TwelveHourHomeViewModel(@NonNull Application application) {
         super(application);
-        mHourList = new MutableLiveData<>();
-        mHourList.setValue(new ArrayList<>());
+        mDetails = new MutableLiveData<>();
+        mDetails.setValue(new JSONObject());
     }
 
     public void addResponseObserver(@NonNull LifecycleOwner owner,
-                                    @NonNull Observer<? super List<HourPost>> observer) {
-        mHourList.observe(owner, observer);
+                                    @NonNull Observer<? super JSONObject> observer) {
+        mDetails.observe(owner, observer);
     }
 
     private void handleError(final VolleyError error) {
@@ -48,38 +48,7 @@ public class TwelveHourViewModel extends AndroidViewModel {
         throw new IllegalStateException(error.getMessage());
     }
 
-    private void handleResult(final JSONObject result){
-        IntFunction<String> getString =
-                getApplication().getResources()::getString;
 
-
-        try{
-            JSONArray array = new JSONArray(result);
-
-            //Log.d("12DATA", String.valueOf(root.length()) );
-
-            for(int i= 0; i < array.length(); i++) {
-                JSONObject jsonHour = array.getJSONObject(i);
-                JSONObject temp = jsonHour.getJSONObject("Temperature");
-                HourPost post = new HourPost.Builder(
-                        jsonHour.getString(
-                                getString.apply(
-                                        R.string.keys_json_weather_date)),
-                        temp.getString(
-                                getString.apply(
-                                        R.string.keys_json_weather_value)),
-                        jsonHour.getString(
-                                getString.apply(R.string.keys_json_weather_condition)))
-                        .build();
-                mHourList.getValue().add(post);
-            }
-        } catch (JSONException e){
-            Log.e("ERROR!", e.getMessage());
-        }
-
-        mHourList.setValue(mHourList.getValue());
-
-    }
 
 
 
@@ -110,5 +79,13 @@ public class TwelveHourViewModel extends AndroidViewModel {
         //Instantiate the RequestQueue and add the request to the queue
         Volley.newRequestQueue(getApplication().getApplicationContext())
                 .add(request);
+
+        Log.d("JSON RESPONSE", mDetails.toString());
+    }
+
+    private void handleResult(JSONObject result) {
+
+
+        Log.d("JSON RESPONSE", result.toString());
     }
 }

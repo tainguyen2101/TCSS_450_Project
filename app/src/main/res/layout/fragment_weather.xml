@@ -55,4 +55,284 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_twelvehourhome"
+        android:layout_width="402dp"
+        android:layout_height="96dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_12hourforecast">
+
+        <TextView
+            android:id="@+id/textView_hour1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:text="TextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView_temp1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="9dp"
+            android:text="TextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_hour1" />
+
+        <TextView
+            android:id="@+id/textView_cond1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="9dp"
+            android:text="TextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_temp1" />
+
+        <TextView
+            android:id="@+id/textView_hour2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="47dp"
+            android:layout_marginTop="4dp"
+            android:text="TextView"
+            app:layout_constraintStart_toEndOf="@+id/textView_hour1"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView_temp2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="10dp"
+            android:text="TextView"
+            app:layout_constraintStart_toEndOf="@+id/textView_temp1"
+            app:layout_constraintTop_toBottomOf="@+id/textView_hour2" />
+
+        <TextView
+            android:id="@+id/textView_cond2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="47dp"
+            android:layout_marginTop="9dp"
+            android:text="TextView"
+            app:layout_constraintStart_toEndOf="@+id/textView_cond1"
+            app:layout_constraintTop_toBottomOf="@+id/textView_temp2" />
+
+        <TextView
+            android:id="@+id/textView_hour3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="47dp"
+            android:layout_marginTop="4dp"
+            android:text="TextView"
+            app:layout_constraintStart_toEndOf="@+id/textView_hour2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView_temp3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="47dp"
+            android:layout_marginTop="9dp"
+            android:text="TextView"
+            app:layout_constraintStart_toEndOf="@+id/textView_temp2"
+            app:layout_constraintTop_toBottomOf="@+id/textView_hour3" />
+
+        <TextView
+            android:id="@+id/textView_cond3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="47dp"
+            android:layout_marginTop="9dp"
+            android:text="TextView"
+            app:layout_constraintStart_toEndOf="@+id/textView_cond2"
+            app:layout_constraintTop_toBottomOf="@+id/textView_temp3" />
+
+        <TextView
+            android:id="@+id/textView_hour4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="47dp"
+            android:layout_marginTop="4dp"
+            android:text="TextView"
+            app:layout_constraintStart_toEndOf="@+id/textView_hour3"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView_temp4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="47dp"
+            android:layout_marginTop="9dp"
+            android:text="TextView"
+            app:layout_constraintStart_toEndOf="@+id/textView_temp3"
+            app:layout_constraintTop_toBottomOf="@+id/textView_hour4" />
+
+        <TextView
+            android:id="@+id/textView_cond4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="47dp"
+            android:layout_marginTop="9dp"
+            android:text="TextView"
+            app:layout_constraintStart_toEndOf="@+id/textView_cond3"
+            app:layout_constraintTop_toBottomOf="@+id/textView_temp4" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textView_12hourforecast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="200dp"
+        android:text="12 Hour Forecast"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_fivedayhome"
+        android:layout_width="402dp"
+        android:layout_height="96dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_twelvehourhome">
+
+        <TextView
+            android:id="@+id/textView_day1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:text="TextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView_day_hiTemp1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="9dp"
+            android:text="TextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_day1" />
+
+        <TextView
+            android:id="@+id/textView_day_loTemp1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="9dp"
+            android:text="TextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_day_hiTemp1" />
+
+        <TextView
+            android:id="@+id/textView_day2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="4dp"
+            android:text="TextView"
+            app:layout_constraintStart_toEndOf="@+id/textView_day1"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView_day_loTemp2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="9dp"
+            android:text="TextView"
+            app:layout_constraintStart_toEndOf="@+id/textView_day_loTemp1"
+            app:layout_constraintTop_toBottomOf="@+id/textView_day_hiTemp2" />
+
+        <TextView
+            android:id="@+id/textView_day_hiTemp2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="9dp"
+            android:text="TextView"
+            app:layout_constraintStart_toEndOf="@+id/textView_day_hiTemp1"
+            app:layout_constraintTop_toBottomOf="@+id/textView_day2" />
+
+        <TextView
+            android:id="@+id/textView_day3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="47dp"
+            android:layout_marginTop="4dp"
+            android:text="TextView"
+            app:layout_constraintStart_toEndOf="@+id/textView_day2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView_day_hiTemp3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="47dp"
+            android:layout_marginTop="9dp"
+            android:text="TextView"
+            app:layout_constraintStart_toEndOf="@+id/textView_day_hiTemp2"
+            app:layout_constraintTop_toBottomOf="@+id/textView_day3" />
+
+        <TextView
+            android:id="@+id/textView_day_loTemp3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="47dp"
+            android:layout_marginTop="9dp"
+            android:text="TextView"
+            app:layout_constraintStart_toEndOf="@+id/textView_day_loTemp2"
+            app:layout_constraintTop_toBottomOf="@+id/textView_day_hiTemp3" />
+
+        <TextView
+            android:id="@+id/textView_day4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="47dp"
+            android:layout_marginTop="4dp"
+            android:text="TextView"
+            app:layout_constraintStart_toEndOf="@+id/textView_day3"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView_day_hiTemp4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="47dp"
+            android:layout_marginTop="9dp"
+            android:text="TextView"
+            app:layout_constraintStart_toEndOf="@+id/textView_day_hiTemp3"
+            app:layout_constraintTop_toBottomOf="@+id/textView_day4" />
+
+        <TextView
+            android:id="@+id/textView_day_loTemp4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="47dp"
+            android:layout_marginTop="9dp"
+            android:text="TextView"
+            app:layout_constraintStart_toEndOf="@+id/textView_day_loTemp3"
+            app:layout_constraintTop_toBottomOf="@+id/textView_day_hiTemp4" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="10dp"
+        android:text="5 Day Forecast"
+        app:layout_constraintBottom_toTopOf="@+id/layout_fivedayhome"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -26,12 +26,14 @@ public class ZipcodeDialog extends DialogFragment {
 
     private ZipcodeDialogBinding binding;
     private ZipcodeViewModel mZipModel;
+    //private FiveDayHomeViewModel mFiveModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mZipModel = new ViewModelProvider(getActivity()).get(ZipcodeViewModel.class);
+        //mFiveModel = new ViewModelProvider(getActivity()).get(FiveDayHomeViewModel.class);
     }
 
     @Override

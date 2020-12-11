@@ -10,7 +10,18 @@
     <string name="keys_json_weather_weathertext">WeatherText</string>
     <string name="keys_json_weather_temperature">Temperature</string>
     <string name="keys_json_weather_metric">Imperial</string>
-    <string name="keys_json_weather_value">Value</string>
+
     <string name="keys_json_weather_unit">Unit</string>
+
+    <string name="keys_json_weather_date">DateTime</string>
+    <string name="keys_json_weather_condition">IconPhrase</string>
+    <string name="keys_json_weather_temp">Temperature</string>
+    <string name="keys_json_weather_value">Value</string>
+    <string name="keys_json_weather_min">Minimum</string>
+    <string name="keys_json_weather_max">Max</string>
+    <string name="keys_json_weather_day">Day</string>
+    <string name="keys_json_weather_night">Night</string>
+
+
 
 </resources>

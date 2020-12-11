@@ -1,0 +1,64 @@
+package edu.uw.group1app.ui.weather;
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
+
+import edu.uw.group1app.R;
+import edu.uw.group1app.databinding.FragmentDayPostBinding;
+
+public class DayRecyclerViewAdapter extends RecyclerView.Adapter<DayRecyclerViewAdapter.DayViewHolder> {
+
+    private final List<DayPost> mDays;
+
+    public DayRecyclerViewAdapter(List<DayPost> items){
+        this.mDays = items;
+    }
+
+    @NonNull
+    @Override
+    public DayViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new DayViewHolder(LayoutInflater
+                .from(parent.getContext())
+                .inflate(R.layout.fragment_day_post, parent, false));
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull DayViewHolder holder, int position) {
+        holder.setDay(mDays.get(position));
+    }
+
+    @Override
+    public int getItemCount() {
+        return mDays.size();
+    }
+
+    public class DayViewHolder extends RecyclerView.ViewHolder {
+        public final View mView;
+        public FragmentDayPostBinding binding;
+        private DayPost mDay;
+
+        public DayViewHolder(View view) {
+            super(view);
+            mView = view;
+            binding = edu.uw.group1app.databinding.FragmentDayPostBinding.bind(view);
+
+        }
+
+        void setDay(final DayPost day){
+            mDay = day;
+            binding.textViewDay.setText(day.getDay());
+            binding.textViewHiTemp.setText(day.getHiTemp());
+            binding.textViewLoTemp.setText(day.getLoTemp());
+            binding.textViewDayCond.setText(day.getDayCondition());
+            binding.textViewNightCond.setText(day.getNightCondition());
+
+        }
+    }
+
+}
