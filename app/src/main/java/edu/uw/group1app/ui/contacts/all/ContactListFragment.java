@@ -84,43 +84,13 @@ public class ContactListFragment extends Fragment  {
         FloatingActionButton fab = view.findViewById(R.id.contact_add_float_button);
 
         fab.setOnClickListener(v -> {
-
-            // Set up the input
-            mUserInput = new EditText(this.getContext());
-            mUserInput.setHint("Username");
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
-            builder.setTitle("Who would you like to add to your contacts?");
-
-            // Specify the type of input expected
-            mUserInput.setInputType(InputType.TYPE_CLASS_TEXT);
-            builder.setView(mUserInput);
-            builder.setPositiveButton("OK", (dialog, which) -> {
-                // DO NOTHING
-            });
-            builder.setNegativeButton("Cancel", (dialog, which) -> {
-                // dismiss
-                mDialog.dismiss();
-            });
-            mDialog = builder.create();
-            mDialog.show();
-
-            Button okButton = mDialog.getButton(DialogInterface.BUTTON_POSITIVE);
-            okButton.setOnClickListener(v1 -> {
-                mModel.addFriend(mInfoModel.getmJwt(), mUserInput.getText().toString());
-                mModel.addResponseObserver(
-                        getViewLifecycleOwner(),
-                        this::observeAddUserResponse);
-            });
-
-            // clear error when dismiss dialog
-            mUserInput.setError(null);
+            ContactAddDialog dialog = new ContactAddDialog(mInfoModel, mModel);
+            dialog.show(getChildFragmentManager(), "add");
         });
-        mModel.addContactListObserver(getViewLifecycleOwner(), contactList -> {
-            binding.listRoot.setAdapter(
-                    new ContactRecyclerViewAdapter(contactList, this.getContext(),
-                            getChildFragmentManager(), mInfoModel, mModel, mChatID, mThroughChat));
-        });
+        mModel.addContactListObserver(getViewLifecycleOwner(), contactList ->
+                binding.listRoot.setAdapter(
+                new ContactRecyclerViewAdapter(contactList, this.getContext(),
+                        getChildFragmentManager(), mInfoModel, mModel, mChatID, mThroughChat)));
     }
 
 
