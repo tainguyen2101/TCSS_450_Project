@@ -44,7 +44,7 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mWeatherModel = new ViewModelProvider(getActivity()).get(CurrentWeatherViewModel.class);
         mZipModel = new ViewModelProvider(getActivity()).get(ZipcodeViewModel.class);
-        mZipModel.connect("98374");
+        //mZipModel.connect("98374");
     }
 
     @Override
@@ -67,7 +67,7 @@ public class HomeFragment extends Fragment {
         mZipModel.addResponseObserver(getViewLifecycleOwner(), response ->{
             try {
 
-                mWeatherModel.connect(response.getString("Key"));
+                //mWeatherModel.connect(response.getString("Key"));
                 FragmentHomeBinding.bind(getView()).textViewHomeWeatherCity.setText(
                         response.getString("LocalizedName")
                 );
