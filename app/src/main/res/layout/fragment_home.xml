@@ -16,4 +16,41 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_home_weather_city"
+        android:layout_width="85dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="46dp"
+        android:layout_marginTop="82dp"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_home_weather_temp"
+        android:layout_width="92dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="46dp"
+        android:textSize="40sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_home_weather_city" />
+
+    <TextView
+        android:id="@+id/textView_home_weather_cond"
+        android:layout_width="96dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="46dp"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView_home_weather_temp" />
+
+    <TextView
+        android:id="@+id/textView_home_weather_unit"
+        android:layout_width="30dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="100dp"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/textView_home_weather_temp"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
