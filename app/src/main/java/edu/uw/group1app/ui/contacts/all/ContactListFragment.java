@@ -37,8 +37,6 @@ public class ContactListFragment extends Fragment  {
 
     private ContactListViewModel mModel;
     private UserInfoViewModel mInfoModel;
-    private EditText mUserInput;
-    private AlertDialog mDialog;
     private int mChatID;
     private boolean mThroughChat;
 
@@ -91,28 +89,5 @@ public class ContactListFragment extends Fragment  {
                 binding.listRoot.setAdapter(
                 new ContactRecyclerViewAdapter(contactList, this.getContext(),
                         getChildFragmentManager(), mInfoModel, mModel, mChatID, mThroughChat)));
-    }
-
-
-    /**
-     * An observer on the HTTP Response from the web server.
-     *
-     * @param response the Response from the server
-     */
-    private void observeAddUserResponse(JSONObject response) {
-        if (response.length() > 0) {
-            if (response.has("code")) {
-                try {
-                    mUserInput.setError("Error Adding: " +
-                            response.getJSONObject("data").getString("message"));
-                } catch (JSONException e) {
-                    Log.e("JSON Parse Error", e.getMessage());
-                }
-            } else {
-                mDialog.cancel();
-            }
-        } else {
-            Log.d("JSON Response", "No Response");
-        }
     }
 }

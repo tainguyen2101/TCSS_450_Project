@@ -51,8 +51,7 @@ public class ContactFavoriteRecyclerViewAdapter extends
         LayoutInflater inflater = LayoutInflater.from(context);
 
         View contactView = inflater.inflate(R.layout.favorite_item, parent, false);
-        ContactViewHolder viewHolder = new ContactViewHolder(contactView);
-        return viewHolder;
+        return new ContactViewHolder(contactView);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
@@ -92,7 +91,9 @@ public class ContactFavoriteRecyclerViewAdapter extends
         private void setContact(final Contact contact) {
             mContact = contact;
 
-            nameTextView.setText(contact.getFirstName() + " " + contact.getLastName());
+            String text = contact.getFirstName() + " " + contact.getLastName();
+
+            nameTextView.setText(text);
             usernameTextView.setText(contact.getUsername());
 
             deleteButton.setOnClickListener(v -> {
@@ -101,7 +102,5 @@ public class ContactFavoriteRecyclerViewAdapter extends
                 notifyDataSetChanged();
             });
         }
-
-
     }
 }

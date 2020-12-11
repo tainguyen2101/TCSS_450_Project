@@ -74,6 +74,11 @@ public class ContactListViewModel extends AndroidViewModel {
         mContactList.observe(owner, observer);
     }
 
+    public void addFavoriteListObserver(@NonNull LifecycleOwner owner,
+                                        @NonNull Observer<? super List<Contact>> observer) {
+        mFavoriteList.observe(owner, observer);
+    }
+
 
     /**
      * webservice response observer.
@@ -89,20 +94,19 @@ public class ContactListViewModel extends AndroidViewModel {
     public void connectPusher(final String jwt, final String email) {
         BeamsTokenProvider tokenProvider = new BeamsTokenProvider(
                 "https://mobileapp-group-backend.herokuapp.com/pusher",
-                new AuthDataGetter() {
-                    @Override
-                    public AuthData getAuthData() {
-                        // Headers and URL query params your auth endpoint needs to
-                        // request a Beams Token for a given user
-                        HashMap<String, String> headers = new HashMap<>();
-                        headers.put("Authorization", jwt);
+                () -> {
+                    /*
+                     Headers and URL query params your auth endpoint needs to
+                     request a Beams Token for a given user
+                    */
+                    HashMap<String, String> headers = new HashMap<>();
+                    headers.put("Authorization", jwt);
 
-                        HashMap<String, String> queryParams = new HashMap<>();
-                        return new AuthData(
-                                headers,
-                                queryParams
-                        );
-                    }
+                    HashMap<String, String> queryParams = new HashMap<>();
+                    return new AuthData(
+                            headers,
+                            queryParams
+                    );
                 }
         );
 

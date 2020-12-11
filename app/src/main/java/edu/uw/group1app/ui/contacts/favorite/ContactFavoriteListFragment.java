@@ -47,12 +47,9 @@ public class ContactFavoriteListFragment extends Fragment {
         FragmentContactFavoriteListBinding binding = FragmentContactFavoriteListBinding
                 .bind(getView());
 
-        mModel.addContactListObserver(getViewLifecycleOwner(), contactList -> {
-            binding.listRoot.setAdapter(
-                    new ContactFavoriteRecyclerViewAdapter(contactList, this.getContext(),
-                            mUser, mModel)
-            );
-        });
-
+        mModel.addFavoriteListObserver(getViewLifecycleOwner(), contactList -> binding.listRoot.setAdapter(
+                new ContactFavoriteRecyclerViewAdapter(contactList, this.getContext(),
+                        mUser, mModel)
+        ));
     }
 }
