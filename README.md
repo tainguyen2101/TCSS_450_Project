@@ -20,5 +20,8 @@ This auto deploy over to Heroku.
 #### What have not been implemented:
 * Search for contact
 * Remove contact from list remove it from chatroom
+#### Extra Features:
+* Floating Add Button
+    - When trying to add with username, it will tell the user whether the contact with that username exists, already friend or request pending (works either side)
 #### Bugs:
 * When deleting a contact from the list, the contact (if they are in favorite) still persists until the user re-login.
