@@ -17,9 +17,9 @@ This auto deploy over to Heroku.
 * Accept/Decline contact request
 * Remove an existing contact
 * New contact request notification (Foreground and Background)
+* Remove contact from list remove it from chat room
 #### What have not been implemented:
 * Search for contact
-* Remove contact from list remove it from chatroom
 #### Extra Features:
 * Floating Add Button
     - When trying to add with username, it will tell the user whether the contact with that username exists, already friend or request pending (works either side)
