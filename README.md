@@ -8,3 +8,10 @@
 This is our group's project at UW Tacoma TCSS 450 in effort to learn Mobile Application Development. This app consists of a Login/Register System, Messaging, Contact and Weather Forecast. All these system above is supported by a Heroku back-end which will be link below. After the user register an account (there are verification steps), they will be to login and use other functionalities mentioned above and will be discuss in detail below.
 ## Components:
 ### Contact (Ford Nguyen)
+#### What have been implemented:
+* Send friend request to another using their username
+* Accept/Decline contact request
+* Remove an exisiting chatroom
+* New contact request notification (Foreground and Background)
+#### What have not been implemented:
+* Search for contact
