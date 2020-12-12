@@ -15,10 +15,10 @@ This auto deploy over to Heroku.
 #### What have been implemented:
 * Send friend request to another using their username
 * Accept/Decline contact request
-* Remove an exisiting contact
+* Remove an existing contact
 * New contact request notification (Foreground and Background)
 #### What have not been implemented:
 * Search for contact
-* Remove contact fron list remove it from chatroom
+* Remove contact from list remove it from chatroom
 #### Bugs:
 * When deleting a contact from the list, the contact (if they are in favorite) still persists until the user re-login.
