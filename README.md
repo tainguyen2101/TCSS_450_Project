@@ -26,7 +26,6 @@ This auto deploy over to Heroku.
 #### Bugs:
 * When deleting a contact from the list, the contact (if they are in favorite) still persists until the user re-login.
 
-## Components:
 ## Chat, User Setting(Look and Feel and Password Finding) (Gyubeom Kim)
 #### What have been implemented:
 *	Add a member into chat room from contact list 
@@ -47,5 +46,5 @@ This auto deploy over to Heroku.
 *	Dialog
     - If a user typed different old password and all correct information, the message will be popped up corresponding to the situation.
 #### Bugs:
-*     When a user is added to chat, there is no live update. (should click refresh button)
-*     The Toast message and dialog that I created for password finding and chat keep the previous status
+*    When a user is added to chat, there is no live update. (should click refresh button)
+*    The Toast message and dialog that I created for password finding and chat keep the previous status
