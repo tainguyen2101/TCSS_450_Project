@@ -230,6 +230,8 @@ public class WeatherFragment extends Fragment {
             mModel.connect(response.getString("Key"));
             mFiveModel.connect(response.getString("Key"));
             mTwelveModel.connect(response.getString("Key"));
+            mFiveListModel.connect(response.getString("Key"));
+            mTwelveListModel.connect(response.getString("Key"));
 
         }catch(JSONException e){
             Log.e("JSON Parse Error",e.getMessage());
