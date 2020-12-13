@@ -9,7 +9,7 @@ This is our group's project at UW Tacoma TCSS 450 in effort to learn Mobile Appl
 ## Links:
 [Project](https://github.com/tainguyen2101/Team-1-TCSS-450)  
 [Back-end](https://github.com/gyubeomK/mobileapp-group-backend)  
-[Meeting Notes] (https://docs.google.com/document/d/1_lc9Bzp180XfwrVG8Oh53YYQGeCULMhxTF0mpzkysec/edit?usp=sharing)
+[Meeting Notes](https://docs.google.com/document/d/1_lc9Bzp180XfwrVG8Oh53YYQGeCULMhxTF0mpzkysec/edit?usp=sharing)
 
 ## Test Account:
 This one is the default username and password for those who want to try out our project quick  
