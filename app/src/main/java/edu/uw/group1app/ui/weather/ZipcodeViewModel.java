@@ -42,7 +42,7 @@ public class ZipcodeViewModel extends AndroidViewModel {
     private void handleError(final VolleyError error) {
         //you should add much better error handling in a production release.
         //i.e. YOUR PTOJECT
-        Log.e("CONNECTION ERROR", error.getLocalizedMessage());
+        Log.e("zipcodeviewmodel", error.getLocalizedMessage());
 
         //throw new IllegalStateException(error.getMessage());
     }

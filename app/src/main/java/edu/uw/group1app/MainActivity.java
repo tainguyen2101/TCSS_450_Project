@@ -262,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
                 for (Location location : locationResult.getLocations()) {
                     // Update UI with location data
                     // ...
-                    Log.d("LOCATION UPDATE!", location.toString());
+                   // Log.d("LOCATION UPDATE!", location.toString());
                     if (mLocationModel == null) {
                         mLocationModel = new ViewModelProvider(MainActivity.this)
                                 .get(LocationViewModel.class);

@@ -27,25 +27,25 @@ import edu.uw.group1app.R;
 
 public class TwelveHourHomeViewModel extends AndroidViewModel {
 
-    private MutableLiveData<JSONObject> mDetails;
+    private MutableLiveData<JSONArray> mDetails;
 
     public TwelveHourHomeViewModel(@NonNull Application application) {
         super(application);
         mDetails = new MutableLiveData<>();
-        mDetails.setValue(new JSONObject());
+        mDetails.setValue(new JSONArray());
     }
 
     public void addResponseObserver(@NonNull LifecycleOwner owner,
-                                    @NonNull Observer<? super JSONObject> observer) {
+                                    @NonNull Observer<? super JSONArray> observer) {
         mDetails.observe(owner, observer);
     }
 
     private void handleError(final VolleyError error) {
         //you should add much better error handling in a production release.
         //i.e. YOUR PTOJECT
-        Log.e("CONNECTION ERROR", error.getLocalizedMessage());
+        Log.e("twlevehourhomeviewmodel", error.getLocalizedMessage());
 
-        throw new IllegalStateException(error.getMessage());
+        //throw new IllegalStateException(error.getMessage());
     }
 
 
@@ -64,11 +64,11 @@ public class TwelveHourHomeViewModel extends AndroidViewModel {
             e.printStackTrace();
         }
 
-        Request request = new JsonObjectRequest(
+        CustomJsonArrayRequest request = new CustomJsonArrayRequest(
                 Request.Method.POST,
                 url,
                 body,
-                this::handleResult,
+                mDetails::setValue,
                 this::handleError
         );
 
@@ -80,12 +80,12 @@ public class TwelveHourHomeViewModel extends AndroidViewModel {
         Volley.newRequestQueue(getApplication().getApplicationContext())
                 .add(request);
 
-        Log.d("JSON RESPONSE", mDetails.toString());
+        Log.d("twelvehourhomeviewmodel mDetails", mDetails.toString());
     }
 
     private void handleResult(JSONObject result) {
 
 
-        Log.d("JSON RESPONSE", result.toString());
+        Log.d("twelvehourhomeviewmodel handleResult", result.toString());
     }
 }

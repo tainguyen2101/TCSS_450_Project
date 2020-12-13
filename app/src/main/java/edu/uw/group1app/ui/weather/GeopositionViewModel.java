@@ -36,9 +36,9 @@ public class GeopositionViewModel extends AndroidViewModel {
     private void handleError(final VolleyError error) {
         //you should add much better error handling in a production release.
         //i.e. YOUR PTOJECT
-        Log.e("CONNECTION ERROR", error.getLocalizedMessage());
+        Log.e("geopositionviewmodel", error.getLocalizedMessage());
 
-        throw new IllegalStateException(error.getMessage());
+        //throw new IllegalStateException(error.getMessage());
     }
 
     public void connect(final String latitude, final String longitude){

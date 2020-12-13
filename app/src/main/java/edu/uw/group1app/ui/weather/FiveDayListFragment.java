@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import edu.uw.group1app.R;
 import edu.uw.group1app.databinding.FragmentFiveDayListBinding;
 import edu.uw.group1app.databinding.FragmentTwelveHourListBinding;
@@ -22,11 +24,12 @@ import edu.uw.group1app.databinding.FragmentTwelveHourListBinding;
 public class FiveDayListFragment extends Fragment {
 
     private FiveDayViewModel mModel;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mModel = new ViewModelProvider(getActivity()).get(FiveDayViewModel.class);
-        mModel.connect("41531_PC");
+
     }
 
     @Override
@@ -44,9 +47,10 @@ public class FiveDayListFragment extends Fragment {
         FragmentFiveDayListBinding binding = FragmentFiveDayListBinding.bind(getView());
 
         mModel.addResponseObserver(getViewLifecycleOwner(), dayList ->{
-            binding.listRoot.setAdapter(
-                    new DayRecyclerViewAdapter(DayGenerator.getDayList())
-            );
+
+                binding.listRoot.setAdapter(
+                        new DayRecyclerViewAdapter(dayList));
+
         });
 
 

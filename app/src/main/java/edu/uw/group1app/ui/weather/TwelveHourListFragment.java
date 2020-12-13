@@ -23,12 +23,13 @@ import edu.uw.group1app.databinding.FragmentTwelveHourListBinding;
 public class TwelveHourListFragment extends Fragment {
 
     private TwelveHourViewModel mModel;
+    private List<HourPost> hourPosts;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
             mModel = new ViewModelProvider(getActivity()).get(TwelveHourViewModel.class);
-            //mModel.connect("41531_PC");
+
     }
 
     @Override
@@ -45,10 +46,10 @@ public class TwelveHourListFragment extends Fragment {
 
         FragmentTwelveHourListBinding binding = FragmentTwelveHourListBinding.bind(getView());
 
+
         mModel.addResponseObserver(getViewLifecycleOwner(), hourList ->{
             binding.layoutRoot.setAdapter(
-                    new HourRecyclerViewAdapter(HourGenerator.getHourList())
-            );
+                    new HourRecyclerViewAdapter(hourList));
         });
 
 

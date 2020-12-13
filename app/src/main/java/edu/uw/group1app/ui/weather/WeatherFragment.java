@@ -29,6 +29,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import edu.uw.group1app.R;
 
@@ -56,6 +57,8 @@ public class WeatherFragment extends Fragment {
     private LocationViewModel mLocationModel;
     private TwelveHourHomeViewModel mTwelveModel;
     private FiveDayHomeViewModel mFiveModel;
+    private TwelveHourViewModel mTwelveListModel;
+    private FiveDayViewModel mFiveListModel;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,9 +70,8 @@ public class WeatherFragment extends Fragment {
         mLocationModel = new ViewModelProvider(getActivity()).get(LocationViewModel.class);
         mTwelveModel = new ViewModelProvider(getActivity()).get(TwelveHourHomeViewModel.class);
         mFiveModel = new ViewModelProvider(getActivity()).get(FiveDayHomeViewModel.class);
-        //mGeoModel.connect("40.73","-74.00");
-        mZipModel.connect("98374");
-        mFiveModel.connect("41531_PC");
+        mTwelveListModel = new ViewModelProvider(getActivity()).get(TwelveHourViewModel.class);
+        mFiveListModel = new ViewModelProvider(getActivity()).get(FiveDayViewModel.class);
 
 
     }
@@ -89,8 +91,9 @@ public class WeatherFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         mModel.addResponseObserver(getViewLifecycleOwner(), this::observeResponse);
-        mZipModel.addResponseObserver(getViewLifecycleOwner(), this::observeZipResponse);
         mGeoModel.addResponseObserver(getViewLifecycleOwner(),this::observeGeoResponse);
+        mZipModel.addResponseObserver(getViewLifecycleOwner(), this::observeZipResponse);
+
         mTwelveModel.addResponseObserver(getViewLifecycleOwner(),this::observeTwelveHomeResponse);
         mFiveModel.addResponseObserver(getViewLifecycleOwner(),this::observeFiveHomeResponse);
         binding.layoutTwelvehourhome.setOnClickListener(v->{
@@ -105,7 +108,7 @@ public class WeatherFragment extends Fragment {
         binding.imageButtonChangeLocation.setOnClickListener(v -> {
             PopupMenu menu = new PopupMenu(getActivity().getApplicationContext(),v);
             menu.getMenuInflater().inflate(R.menu.weather_change_location_menu, menu.getMenu());
-           menu.setOnMenuItemClickListener(item -> {
+            menu.setOnMenuItemClickListener(item -> {
                 switch (item.getItemId()) {
                     case R.id.item_current_location:
                         mLocationModel.addLocationObserver(getViewLifecycleOwner(), location -> {
@@ -125,8 +128,8 @@ public class WeatherFragment extends Fragment {
                     case R.id.item_map_location:
                         Navigation.findNavController(getView()).navigate(
                                 R.id.action_navigation_weather_to_locationFragment);
-                            Log.d("SUBMENU","map location placeholder");
-                    return true;
+                        Log.d("SUBMENU","map location placeholder");
+                        return true;
 
                     default:
                         return false;
@@ -137,6 +140,8 @@ public class WeatherFragment extends Fragment {
 
 
     }
+
+
 
     private void observeFiveHomeResponse(JSONObject response) {
         Log.d("Five Response", response.toString());
@@ -185,8 +190,37 @@ public class WeatherFragment extends Fragment {
         }
     }
 
-    private void observeTwelveHomeResponse(JSONObject response) {
+    private void observeTwelveHomeResponse(JSONArray response) {
+        Log.d("Twelve Response", response.toString());
         //TODO:
+        try{
+            JSONObject data1 = response.getJSONObject(0);
+            binding.textViewHour1.setText("Hour1");
+            JSONObject temp = data1.getJSONObject("Temperature");
+            binding.textViewTemp1.setText(temp.getString("Value"));
+            binding.textViewCond1.setText(data1.getString("IconPhrase"));
+
+            JSONObject data2 = response.getJSONObject(1);
+            binding.textViewHour2.setText("Hour2");
+            JSONObject temp2 = data2.getJSONObject("Temperature");
+            binding.textViewTemp2.setText(temp2.getString("Value"));
+            binding.textViewCond2.setText(data2.getString("IconPhrase"));
+
+            JSONObject data3 = response.getJSONObject(2);
+            binding.textViewHour3.setText("Hour3");
+            JSONObject temp3 = data3.getJSONObject("Temperature");
+            binding.textViewTemp3.setText(temp3.getString("Value"));
+            binding.textViewCond3.setText(data3.getString("IconPhrase"));
+
+            JSONObject data4 = response.getJSONObject(3);
+            binding.textViewHour4.setText("Hour4");
+            JSONObject temp4 = data4.getJSONObject("Temperature");
+            binding.textViewTemp4.setText(temp4.getString("Value"));
+            binding.textViewCond4.setText(data4.getString("IconPhrase"));
+
+        } catch (JSONException e){
+            Log.e("JSON Parse Error",e.getMessage());
+        }
     }
 
     private void observeGeoResponse(JSONObject response) {
@@ -195,6 +229,8 @@ public class WeatherFragment extends Fragment {
             binding.textViewCity.setText(response.getString("LocalizedName"));
             mModel.connect(response.getString("Key"));
             mFiveModel.connect(response.getString("Key"));
+            mTwelveModel.connect(response.getString("Key"));
+
         }catch(JSONException e){
             Log.e("JSON Parse Error",e.getMessage());
 
@@ -226,6 +262,10 @@ public class WeatherFragment extends Fragment {
             binding.textViewCity.setText(response.getString("LocalizedName"));
             mModel.connect(response.getString("Key"));
             mFiveModel.connect(response.getString("Key"));
+            mTwelveModel.connect(response.getString("Key"));
+            mTwelveListModel.connect(response.getString("Key"));
+            mFiveListModel.connect(response.getString("Key"));
+
         } catch (JSONException e) {
 
             Log.e("JSON Parse Error",e.getMessage());

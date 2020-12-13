@@ -13,7 +13,8 @@
 
     <string name="keys_json_weather_unit">Unit</string>
 
-    <string name="keys_json_weather_date">DateTime</string>
+    <string name="keys_json_weather_date">Date</string>
+    <string name="keys_json_weather_dateTime">DateTime</string>
     <string name="keys_json_weather_condition">IconPhrase</string>
     <string name="keys_json_weather_temp">Temperature</string>
     <string name="keys_json_weather_value">Value</string>

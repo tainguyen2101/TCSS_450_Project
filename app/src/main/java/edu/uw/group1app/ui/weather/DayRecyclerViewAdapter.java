@@ -23,9 +23,11 @@ public class DayRecyclerViewAdapter extends RecyclerView.Adapter<DayRecyclerView
     @NonNull
     @Override
     public DayViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        //mDays.clear();
         return new DayViewHolder(LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.fragment_day_post, parent, false));
+
     }
 
     @Override
@@ -36,6 +38,10 @@ public class DayRecyclerViewAdapter extends RecyclerView.Adapter<DayRecyclerView
     @Override
     public int getItemCount() {
         return mDays.size();
+    }
+
+    public void removeAllContents(){
+        mDays.clear();
     }
 
     public class DayViewHolder extends RecyclerView.ViewHolder {

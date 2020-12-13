@@ -43,35 +43,33 @@ public class TwelveHourViewModel extends AndroidViewModel {
     private void handleError(final VolleyError error) {
         //you should add much better error handling in a production release.
         //i.e. YOUR PTOJECT
-        Log.e("CONNECTION ERROR", error.getLocalizedMessage());
+        Log.e("twelevehourviewmodel", error.getLocalizedMessage());
 
-        throw new IllegalStateException(error.getMessage());
+        //throw new IllegalStateException(error.getMessage());
     }
 
-    private void handleResult(final JSONObject result){
+    private void handleResult(final JSONArray result){
         IntFunction<String> getString =
                 getApplication().getResources()::getString;
-
-
+            Log.d("TwelveHourViewModel handleResult result", result.toString());
         try{
-            JSONArray array = new JSONArray(result);
-
-            //Log.d("12DATA", String.valueOf(root.length()) );
-
-            for(int i= 0; i < array.length(); i++) {
-                JSONObject jsonHour = array.getJSONObject(i);
+             for(int i= 0; i < result.length(); i++) {
+                JSONObject jsonHour = result.getJSONObject(i);
                 JSONObject temp = jsonHour.getJSONObject("Temperature");
                 HourPost post = new HourPost.Builder(
                         jsonHour.getString(
                                 getString.apply(
-                                        R.string.keys_json_weather_date)),
+                                        R.string.keys_json_weather_dateTime)),
                         temp.getString(
                                 getString.apply(
                                         R.string.keys_json_weather_value)),
                         jsonHour.getString(
                                 getString.apply(R.string.keys_json_weather_condition)))
                         .build();
-                mHourList.getValue().add(post);
+                if(!mHourList.getValue().contains(post)){
+                    mHourList.getValue().add(post);
+                }
+
             }
         } catch (JSONException e){
             Log.e("ERROR!", e.getMessage());
@@ -95,7 +93,7 @@ public class TwelveHourViewModel extends AndroidViewModel {
             e.printStackTrace();
         }
 
-        Request request = new JsonObjectRequest(
+        CustomJsonArrayRequest request = new CustomJsonArrayRequest(
                 Request.Method.POST,
                 url,
                 body,

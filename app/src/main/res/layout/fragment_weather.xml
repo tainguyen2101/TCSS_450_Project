@@ -60,9 +60,9 @@
         android:layout_width="402dp"
         android:layout_height="96dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="235dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_12hourforecast">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textView_hour1"
@@ -79,110 +79,114 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="9dp"
+            android:layout_marginTop="33dp"
             android:text="TextView"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_hour1" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView_cond1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="9dp"
+            android:layout_marginTop="62dp"
             android:text="TextView"
+            android:textSize="8sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_temp1" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView_hour2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="47dp"
+            android:layout_marginStart="121dp"
             android:layout_marginTop="4dp"
             android:text="TextView"
-            app:layout_constraintStart_toEndOf="@+id/textView_hour1"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView_temp2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="48dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="122dp"
+            android:layout_marginTop="34dp"
             android:text="TextView"
-            app:layout_constraintStart_toEndOf="@+id/textView_temp1"
-            app:layout_constraintTop_toBottomOf="@+id/textView_hour2" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView_cond2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="47dp"
-            android:layout_marginTop="9dp"
+            android:layout_marginStart="121dp"
+            android:layout_marginTop="61dp"
             android:text="TextView"
-            app:layout_constraintStart_toEndOf="@+id/textView_cond1"
-            app:layout_constraintTop_toBottomOf="@+id/textView_temp2" />
+            android:textSize="8sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView_hour3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="47dp"
+            android:layout_marginStart="226dp"
             android:layout_marginTop="4dp"
             android:text="TextView"
-            app:layout_constraintStart_toEndOf="@+id/textView_hour2"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView_temp3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="47dp"
-            android:layout_marginTop="9dp"
+            android:layout_marginStart="226dp"
+            android:layout_marginTop="33dp"
             android:text="TextView"
-            app:layout_constraintStart_toEndOf="@+id/textView_temp2"
-            app:layout_constraintTop_toBottomOf="@+id/textView_hour3" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView_cond3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="47dp"
-            android:layout_marginTop="9dp"
+            android:layout_marginStart="225dp"
+            android:layout_marginTop="61dp"
             android:text="TextView"
-            app:layout_constraintStart_toEndOf="@+id/textView_cond2"
-            app:layout_constraintTop_toBottomOf="@+id/textView_temp3" />
+            android:textSize="8sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView_hour4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="47dp"
+            android:layout_marginStart="330dp"
             android:layout_marginTop="4dp"
             android:text="TextView"
-            app:layout_constraintStart_toEndOf="@+id/textView_hour3"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView_temp4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="47dp"
-            android:layout_marginTop="9dp"
+            android:layout_marginStart="330dp"
+            android:layout_marginTop="33dp"
             android:text="TextView"
-            app:layout_constraintStart_toEndOf="@+id/textView_temp3"
-            app:layout_constraintTop_toBottomOf="@+id/textView_hour4" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView_cond4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="47dp"
-            android:layout_marginTop="9dp"
+            android:layout_marginStart="330dp"
+            android:layout_marginTop="61dp"
             android:text="TextView"
-            app:layout_constraintStart_toEndOf="@+id/textView_cond3"
-            app:layout_constraintTop_toBottomOf="@+id/textView_temp4" />
+            android:textSize="8sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
@@ -219,50 +223,50 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="9dp"
+            android:layout_marginTop="32dp"
             android:text="TextView"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_day1" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView_day_loTemp1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="9dp"
+            android:layout_marginTop="60dp"
             android:text="TextView"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_day_hiTemp1" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView_day2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="48dp"
+            android:layout_marginStart="117dp"
             android:layout_marginTop="4dp"
             android:text="TextView"
-            app:layout_constraintStart_toEndOf="@+id/textView_day1"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView_day_loTemp2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="48dp"
-            android:layout_marginTop="9dp"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="61dp"
             android:text="TextView"
-            app:layout_constraintStart_toEndOf="@+id/textView_day_loTemp1"
-            app:layout_constraintTop_toBottomOf="@+id/textView_day_hiTemp2" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView_day_hiTemp2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="48dp"
-            android:layout_marginTop="9dp"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="32dp"
             android:text="TextView"
-            app:layout_constraintStart_toEndOf="@+id/textView_day_hiTemp1"
-            app:layout_constraintTop_toBottomOf="@+id/textView_day2" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView_day3"
@@ -278,51 +282,51 @@
             android:id="@+id/textView_day_hiTemp3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="47dp"
-            android:layout_marginTop="9dp"
+            android:layout_marginStart="224dp"
+            android:layout_marginTop="33dp"
             android:text="TextView"
-            app:layout_constraintStart_toEndOf="@+id/textView_day_hiTemp2"
-            app:layout_constraintTop_toBottomOf="@+id/textView_day3" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView_day_loTemp3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="47dp"
-            android:layout_marginTop="9dp"
+            android:layout_marginStart="224dp"
+            android:layout_marginTop="62dp"
             android:text="TextView"
-            app:layout_constraintStart_toEndOf="@+id/textView_day_loTemp2"
-            app:layout_constraintTop_toBottomOf="@+id/textView_day_hiTemp3" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView_day4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="47dp"
+            android:layout_marginStart="325dp"
             android:layout_marginTop="4dp"
             android:text="TextView"
-            app:layout_constraintStart_toEndOf="@+id/textView_day3"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView_day_hiTemp4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="47dp"
-            android:layout_marginTop="9dp"
+            android:layout_marginStart="328dp"
+            android:layout_marginTop="33dp"
             android:text="TextView"
-            app:layout_constraintStart_toEndOf="@+id/textView_day_hiTemp3"
-            app:layout_constraintTop_toBottomOf="@+id/textView_day4" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView_day_loTemp4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="47dp"
-            android:layout_marginTop="9dp"
+            android:layout_marginStart="328dp"
+            android:layout_marginTop="62dp"
             android:text="TextView"
-            app:layout_constraintStart_toEndOf="@+id/textView_day_loTemp3"
-            app:layout_constraintTop_toBottomOf="@+id/textView_day_hiTemp4" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView

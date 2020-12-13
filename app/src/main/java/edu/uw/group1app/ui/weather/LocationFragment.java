@@ -37,6 +37,9 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
     private GeopositionViewModel mGeoModel;
     private CurrentWeatherViewModel mWeatherModel;
     private FiveDayHomeViewModel mFiveModel;
+    private TwelveHourHomeViewModel mTwelveModel;
+    private TwelveHourViewModel mTwelveListModel;
+    private FiveDayViewModel mFiveListModel;
 
     private GoogleMap mMap;
 
@@ -61,6 +64,9 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
                 .get(LocationViewModel.class);
         mGeoModel = new ViewModelProvider(getActivity()).get(GeopositionViewModel.class);
         mFiveModel = new ViewModelProvider(getActivity()).get(FiveDayHomeViewModel.class);
+        mTwelveModel = new ViewModelProvider(getActivity()).get(TwelveHourHomeViewModel.class);
+        mTwelveListModel = new ViewModelProvider(getActivity()).get(TwelveHourViewModel.class);
+        mFiveListModel = new ViewModelProvider(getActivity()).get(FiveDayViewModel.class);
         mModel.addLocationObserver(getViewLifecycleOwner(), location ->
                 binding.textLatLong.setText(location.toString()));
 
@@ -108,6 +114,9 @@ public class LocationFragment extends Fragment implements OnMapReadyCallback, Go
             mGeoModel.addResponseObserver(getViewLifecycleOwner(),response ->{
                 try {
                     mFiveModel.connect(response.getString("Key"));
+                    mTwelveModel.connect(response.getString("Key"));
+                    mTwelveListModel.connect(response.getString("Key"));
+                    mFiveListModel.connect(response.getString("Key"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

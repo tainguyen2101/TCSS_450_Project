@@ -43,9 +43,9 @@ public class FiveDayHomeViewModel extends AndroidViewModel {
     private void handleError(final VolleyError error) {
         //you should add much better error handling in a production release.
         //i.e. YOUR PTOJECT
-        Log.e("CONNECTION ERROR", error.getLocalizedMessage());
+        Log.e("fivedayhomeviewmodel", error.getLocalizedMessage());
 
-        throw new IllegalStateException(error.getMessage());
+       // throw new IllegalStateException(error.getMessage());
     }
 
     public void connect(final String locationKey){

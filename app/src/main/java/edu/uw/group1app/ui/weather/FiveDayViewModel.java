@@ -44,26 +44,28 @@ public class FiveDayViewModel extends AndroidViewModel {
     private void handleError(final VolleyError error) {
         //you should add much better error handling in a production release.
         //i.e. YOUR PTOJECT
-        Log.e("CONNECTION ERROR", error.getLocalizedMessage());
+        Log.e("fivedayviewmodel", error.getLocalizedMessage());
 
-        throw new IllegalStateException(error.getMessage());
+        //throw new IllegalStateException(error.getMessage());
     }
 
     private void handleResult(final JSONObject result){
         IntFunction<String> getString =
                 getApplication().getResources()::getString;
-
-
-
-        try{
+        Log.d("fivedayviewmodel handleResult result ", result.toString());
+         try{
             JSONArray data = result.getJSONArray("DailyForecasts");
+             Log.d("fivedayviewmodel handleResult dailyforecast ", data.toString());
+
             for(int i=0; i <data.length();i++){
                 JSONObject jsonDay = data.getJSONObject(i);
                 JSONObject temp = jsonDay.getJSONObject("Temperature");
                 JSONObject max = temp.getJSONObject("Maximum");
                 JSONObject min = temp.getJSONObject("Minimum");
-                JSONObject day = jsonDay.getJSONObject("IconPhrase");
-                JSONObject night = jsonDay.getJSONObject("IconPhrase");
+                JSONObject day = jsonDay.getJSONObject("Day");
+                JSONObject night = jsonDay.getJSONObject("Night");
+                Log.d("fivedayviewmodel handleResult data ", jsonDay.toString());
+
                 DayPost post = new DayPost.Builder(
                         //TODO:
                         jsonDay.getString(
@@ -74,7 +76,7 @@ public class FiveDayViewModel extends AndroidViewModel {
                                         R.string.keys_json_weather_value)),
                         min.getString(
                                 getString.apply(
-                                        R.string.keys_json_weather_min)),
+                                        R.string.keys_json_weather_value)),
                         day.getString(
                                 getString.apply(
                                         R.string.keys_json_weather_condition)),
@@ -82,12 +84,16 @@ public class FiveDayViewModel extends AndroidViewModel {
                                 getString.apply(
                                         R.string.keys_json_weather_condition)))
                                 .build();
-                        mDayList.getValue().add(post);
+                if(!mDayList.getValue().contains(post)){
+                    mDayList.getValue().add(post);
+                }
+
             }
         } catch(JSONException e){
             e.printStackTrace();
             Log.e("ERROR!", e.getMessage());
         }
+
 
         mDayList.setValue(mDayList.getValue());
     }

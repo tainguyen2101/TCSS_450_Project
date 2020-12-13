@@ -19,19 +19,19 @@
 
     <TextView
         android:id="@+id/textView_home_weather_city"
-        android:layout_width="85dp"
-        android:layout_height="18dp"
-        android:layout_marginStart="46dp"
-        android:layout_marginTop="82dp"
+        android:layout_width="87dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="62dp"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView_home_weather_temp"
-        android:layout_width="92dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="46dp"
+        android:layout_width="105dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="44dp"
         android:textSize="40sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_home_weather_city" />
@@ -39,8 +39,8 @@
     <TextView
         android:id="@+id/textView_home_weather_cond"
         android:layout_width="96dp"
-        android:layout_height="18dp"
-        android:layout_marginStart="46dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="44dp"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_home_weather_temp" />
@@ -49,7 +49,7 @@
         android:id="@+id/textView_home_weather_unit"
         android:layout_width="30dp"
         android:layout_height="22dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="81dp"
         android:textSize="18sp"
         app:layout_constraintStart_toEndOf="@+id/textView_home_weather_temp"
         app:layout_constraintTop_toTopOf="parent" />
