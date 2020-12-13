@@ -82,6 +82,7 @@
             app:argType="string" />
     </fragment>
     <fragment
+        android:id="@+id/navigation_user_setting"
         android:name="edu.uw.group1app.ui.userSetting.UserSettingFragment"
         android:label="User Setting"
         tools:layout="@layout/fragment_user_setting">
