@@ -19,7 +19,6 @@ Password: Test1234@
 Username: fordtest1234@test.com  
 Password: Kello1234@
 
-This auto deploy over to Heroku.
 ## Components:
 ### Contact (Ford Nguyen)
 #### What has been implemented:
