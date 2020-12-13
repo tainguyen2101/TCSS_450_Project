@@ -7,18 +7,27 @@
 ## Description:
 This is our group's project at UW Tacoma TCSS 450 in effort to learn Mobile Application Development. This app consists of a Login/Register System, Messaging, Contact and Weather Forecast. All these system above is supported by a Heroku back-end which will be link below. After the user register an account (there are verification steps), they will be to login and use other functionalities mentioned above and will be discuss in detail below.
 ## Links:
-[Back-end](https://github.com/gyubeomK/mobileapp-group-backend)
+[Project](https://github.com/tainguyen2101/Team-1-TCSS-450)  
+[Back-end](https://github.com/gyubeomK/mobileapp-group-backend)  
+[Meeting Notes](https://drive.google.com/drive/folders/1vBoKj9sO7CnwNE1Vhs3ifGz9QgwD-oiq?usp=sharing)
 
-This auto deploy over to Heroku.
+## Test Account:
+This one is the default username and password for those who want to try out our project quick  
+Username: test12345@uw.edu  
+Password: Test1234@  
+
+Username: fordtest1234@test.com  
+Password: Kello1234@
+
 ## Components:
 ### Contact (Ford Nguyen)
-#### What have been implemented:
+#### What has been implemented:
 * Send friend request to another using their username
 * Accept/Decline contact request
 * Remove an existing contact
 * New contact request notification (Foreground and Background)
 * Remove contact from list remove it from chat room
-#### What have not been implemented:
+#### What has not been implemented:
 * Search for contact
 #### Extra Features:
 * Floating Add Button
@@ -27,7 +36,7 @@ This auto deploy over to Heroku.
 * When deleting a contact from the list, the contact (if they are in favorite) still persists until the user re-login.
 
 ## Chat, User Setting(Look and Feel and Password Finding) (Gyubeom Kim)
-#### What have been implemented:
+#### What has been implemented:
 *	Add a member into chat room from contact list 
 *   Add new chat room with user-typed title
 *	Remove an existing chat room
@@ -36,7 +45,7 @@ This auto deploy over to Heroku.
 *	Send and receive messages
 *	A user is able to change his/her password
 *	Color scheme is able to be dynamically switched 
-#### What have not been implemented:
+#### What has not been implemented:
 *	Notification for new chat room created
 *	Recent Chat Room connects to home/landing page
 #### Extra Features:
@@ -48,3 +57,21 @@ This auto deploy over to Heroku.
 #### Bugs:
 *    When a user is added to chat, there is no live update. (should click refresh button)
 *    The Toast message and dialog that I created for password finding and chat keep the previous status
+
+## Weather (Ivan Mendez)
+#### What have been implemented:
+*	Current weather conditions for an area
+*   12 hour forecast for an area
+*   5 day forecast for an area
+*   Able to search weather by current location, by zip code, or by selecting an area on a map
+#### What have not been implemented:
+*	Ability to save locations
+*   No images for weather conditions
+#### Extra Features:
+*	Preview of 4 upcoming hour conditions on weather home page (click for 12 hours)
+*   Preview of 4 upcoming day conditions on weather home page   (click for 5 days)
+#### Bugs:
+*   Day and Hour still in ISO8601 format
+*   Weather home fragment duplicates data causing the recycler view to add double the cards
+*   Weather home page reverts to first area search location
+
