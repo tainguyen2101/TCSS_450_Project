@@ -12,13 +12,13 @@ This is our group's project at UW Tacoma TCSS 450 in effort to learn Mobile Appl
 This auto deploy over to Heroku.
 ## Components:
 ### Contact (Ford Nguyen)
-#### What have been implemented:
+#### What has been implemented:
 * Send friend request to another using their username
 * Accept/Decline contact request
 * Remove an existing contact
 * New contact request notification (Foreground and Background)
 * Remove contact from list remove it from chat room
-#### What have not been implemented:
+#### What has not been implemented:
 * Search for contact
 #### Extra Features:
 * Floating Add Button
@@ -27,7 +27,7 @@ This auto deploy over to Heroku.
 * When deleting a contact from the list, the contact (if they are in favorite) still persists until the user re-login.
 
 ## Chat, User Setting(Look and Feel and Password Finding) (Gyubeom Kim)
-#### What have been implemented:
+#### What has been implemented:
 *	Add a member into chat room from contact list 
 *   Add new chat room with user-typed title
 *	Remove an existing chat room
@@ -36,7 +36,7 @@ This auto deploy over to Heroku.
 *	Send and receive messages
 *	A user is able to change his/her password
 *	Color scheme is able to be dynamically switched 
-#### What have not been implemented:
+#### What has not been implemented:
 *	Notification for new chat room created
 *	Recent Chat Room connects to home/landing page
 #### Extra Features:
@@ -51,11 +51,18 @@ This auto deploy over to Heroku.
 
 ## Weather (Ivan Mendez)
 #### What have been implemented:
-*	
+*	Current weather conditions for an area
+*   12 hour forecast for an area
+*   5 day forecast for an area
+*   Able to search weather by current location, by zip code, or by selecting an area on a map
 #### What have not been implemented:
-*	
+*	Ability to save locations
+*   No images for weather conditions
 #### Extra Features:
-*	
+*	Preview of 4 upcoming hour conditions on weather home page (click for 12 hours)
+*   Preview of 4 upcoming day conditions on weather home page   (click for 5 days)
 #### Bugs:
-*    
+*   Day and Hour still in ISO8601 format
+*   Weather home fragment duplicates data causing the recycler view to add double the cards
+*   Weather home page reverts to first area search location
 
