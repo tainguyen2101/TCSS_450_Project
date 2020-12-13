@@ -48,3 +48,14 @@ This auto deploy over to Heroku.
 #### Bugs:
 *    When a user is added to chat, there is no live update. (should click refresh button)
 *    The Toast message and dialog that I created for password finding and chat keep the previous status
+
+## Weather (Ivan Mendez)
+#### What have been implemented:
+*	
+#### What have not been implemented:
+*	
+#### Extra Features:
+*	
+#### Bugs:
+*    
+
