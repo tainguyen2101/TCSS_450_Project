@@ -17,14 +17,36 @@ import edu.uw.group1app.databinding.FragmentChatBinding;
 import edu.uw.group1app.model.UserInfoViewModel;
 
 /**
- * A simple {@link Fragment} subclass.
+ * this class provides a function that a user can chat
+ *
+ * @author Gyubeom Kim
+ * @version 2.0
  */
-public class ChatFragment extends Fragment {
 
+public class ChatFragment extends Fragment {
+    /**
+     * a chat id
+     */
     private int mChatID;
+
+    /**
+     * title of chat
+     */
     private String mChatTitle;
+
+    /*
+     * chat send view model
+     */
     private ChatSendViewModel mSendModel;
+
+    /**
+     * chat view model
+     */
     private ChatViewModel mChatModel;
+
+    /**
+     * user info view model containing user information
+     */
     private UserInfoViewModel mUserModel;
 
     public ChatFragment() {
@@ -110,6 +132,11 @@ public class ChatFragment extends Fragment {
 
     }
 
+    /**
+     * returns chat id
+     *
+     * @return chat id representing chat id
+     */
     public int getmChatID() {
         return mChatID;
     }

@@ -18,15 +18,39 @@ import edu.uw.group1app.databinding.FragmentChatListBinding;
 import edu.uw.group1app.model.UserInfoViewModel;
 
 /**
- * A simple {@link Fragment} subclass.
+ * this class provides a function that a user can chat
+ * , add chats room, deletes chat room, and navigates to the contact
+ *
+ * @author Gyubeom Kim
+ * @version 2.0
  */
 public class ChatListFragment extends Fragment {
 
+    /**
+     * Chat list view model
+     */
     private ChatListViewModel mChatListModel;
+
+    /**
+     *
+     */
     private UserInfoViewModel mUserInfoViewmodel;
+
+    /**
+     * user info view model containing user information
+     */
     private FragmentChatListBinding binding;
+
+    /**
+     * ChatListRecyclerViewAdapter
+     */
     private ChatListRecyclerViewAdapter chatListRecyclerViewAdapter;
 
+    /**
+     * this is constructor.
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,16 +70,25 @@ public class ChatListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentChatListBinding.bind(getView());
+
+        //add chat room
         binding.buttonAddChat.setOnClickListener(button -> createChatRoom());
+
+        //refresh chat room
         binding.buttonRefresh.setOnClickListener(button -> mChatListModel.connectGet(mUserInfoViewmodel.getmJwt()));
         chatListRecyclerViewAdapter = new ChatListRecyclerViewAdapter(new ArrayList<>(), this);
+
+        //add chat room to the list
         binding.listChatRoot.setAdapter(chatListRecyclerViewAdapter);
         mChatListModel.addChatListObserver(getViewLifecycleOwner(), chatRoomList -> {
             chatListRecyclerViewAdapter.setChatRooms(chatRoomList);
         });
     }
 
-    private void createChatRoom(){
+    /**
+     * creating chat room with title that user typed
+     */
+    private void createChatRoom() {
         String title = binding.textChatTitle.getText().toString().trim();
         if(title.length() < 2){
             binding.textChatTitle.setError("Please enter a valid chat room name");
@@ -64,6 +97,11 @@ public class ChatListFragment extends Fragment {
         }
     }
 
+    /**
+     * delete chat corresponding to the chat id
+     *
+     * @param chatId representing chat id
+     */
     public void deleteChat(final int chatId) {
         mChatListModel.deleteChat(chatId);
     }

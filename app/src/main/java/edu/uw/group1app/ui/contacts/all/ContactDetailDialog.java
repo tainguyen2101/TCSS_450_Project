@@ -9,26 +9,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.ViewModelProvider;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import edu.uw.group1app.MainActivity;
 import edu.uw.group1app.R;
-import edu.uw.group1app.databinding.FragmentPasswordChangingBinding;
 import edu.uw.group1app.model.UserInfoViewModel;
-import edu.uw.group1app.ui.contacts.favorite.ContactFavoriteRecyclerViewAdapter;
-import edu.uw.group1app.ui.password.PasswordChangingViewModel;
-import edu.uw.group1app.ui.password.PasswordDialog;
 
 /**
  * Contact Detail Dialog to show user more detail of a contact when they click on a contact card

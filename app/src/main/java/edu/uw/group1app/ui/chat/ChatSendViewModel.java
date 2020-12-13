@@ -25,6 +25,12 @@ import java.util.Objects;
 import edu.uw.group1app.R;
 import edu.uw.group1app.io.RequestQueueSingleton;
 
+/**
+ * This is chat send view model.
+ *
+ * @author Gyubeom Kim
+ * @version 2.0
+ */
 public class ChatSendViewModel extends AndroidViewModel {
 
     private final MutableLiveData<JSONObject> mResponse;

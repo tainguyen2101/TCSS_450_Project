@@ -15,16 +15,44 @@ import org.json.JSONObject;
 import java.io.Serializable;
 
 import edu.uw.group1app.R;
+
 /**
- * Encapsulate chat message details.
+ * It provides message information.
+ *
+ * @author Gyubeom Kim
+ * @version 2.0
  */
 public final class ChatMessage implements Serializable {
 
+    /**
+     * message id
+     */
     private final int mMessageId;
+
+    /**
+     * message
+     */
     private final String mMessage;
+
+    /**
+     * sender of message
+     */
     private final String mSender;
+
+    /***
+     * time stamp of message
+     */
     private final String mTimeStamp;
 
+
+    /**
+     * it is constructor.
+     *
+     * @param messageId representing message id
+     * @param message representing message
+     * @param sender representing sender of message
+     * @param timeStamp representing timestamp of message
+     */
     public ChatMessage(int messageId, String message, String sender, String timeStamp) {
         mMessageId = messageId;
         mMessage = message;
@@ -35,6 +63,7 @@ public final class ChatMessage implements Serializable {
     /**
      * Static factory method to turn a properly formatted JSON String into a
      * ChatMessage object.
+     *
      * @param cmAsJson the String to be parsed into a ChatMessage Object.
      * @return a ChatMessage Object with the details contained in the JSON String.
      * @throws JSONException when cmAsString cannot be parsed into a ChatMessage.
@@ -47,24 +76,45 @@ public final class ChatMessage implements Serializable {
                 msg.getString("timestamp"));
     }
 
+    /**
+     * it returns message
+     *
+     * @return message representing message
+     */
     public String getMessage() {
         return mMessage;
     }
 
+    /**
+     * it return sender of message
+     *
+     * @return sender representing sender of message
+     */
     public String getSender() {
         return mSender;
     }
 
+    /**
+     * it returns timestamp of message
+     *
+     * @return timeStamp representing timestamp of message
+     */
     public String getTimeStamp() {
         return mTimeStamp;
     }
 
+    /**
+     * it returns message id
+     *
+     * @return messageId representing message id
+     */
     public int getMessageId() {
         return mMessageId;
     }
 
     /**
      * Provides equality solely based on MessageId.
+     *
      * @param other the other object to check for equality
      * @return true if other message ID matches this message ID, false otherwise
      */

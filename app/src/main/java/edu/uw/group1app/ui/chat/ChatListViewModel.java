@@ -28,12 +28,23 @@ import edu.uw.group1app.R;
 import edu.uw.group1app.io.RequestQueueSingleton;
 import edu.uw.group1app.model.UserInfoViewModel;
 
+/**
+ * ChatListViewModel that connects to the back-end for chat
+ *
+ * @author Gyubeom Kim
+ * @version 2.0
+ */
 public class ChatListViewModel extends AndroidViewModel {
 
     private MutableLiveData<List<ChatRoom>> mChatRoomList;
     private final MutableLiveData<JSONObject> mResponse;
     private UserInfoViewModel userInfoViewModel;
 
+    /**
+     * Constructor for Chat List View Model
+     *
+     * @param application the application
+     */
     public ChatListViewModel(@NonNull Application application) {
         super(application);
         mChatRoomList = new MutableLiveData<>(new ArrayList<>());
@@ -41,6 +52,11 @@ public class ChatListViewModel extends AndroidViewModel {
         mResponse.setValue(new JSONObject());
     }
 
+    /**
+     * set userinfoviewmodel
+     *
+     * @param theUserInfoViewModel
+     */
     public void setUserInfoViewModel(UserInfoViewModel theUserInfoViewModel) {
         userInfoViewModel = theUserInfoViewModel;
     }
@@ -55,6 +71,11 @@ public class ChatListViewModel extends AndroidViewModel {
         mChatRoomList.observe(owner, observer);
     }
 
+    /**
+     * connect to backend server to get current chat list of the user
+     *
+     * @param jwt JWT Authorization Token
+     */
     public void connectGet(String jwt) {
         String url = "https://mobileapp-group-backend.herokuapp.com/chatrooms";
         Request request = new JsonObjectRequest(
@@ -80,6 +101,11 @@ public class ChatListViewModel extends AndroidViewModel {
                 .add(request);
     }
 
+    /**
+     * handle a success connection to the back-end
+     *
+     * @param result result
+     */
     private void handleSuccess(final JSONObject result) {
         ArrayList<ChatRoom> temp = new ArrayList<>();
         try {
@@ -99,7 +125,9 @@ public class ChatListViewModel extends AndroidViewModel {
     }
 
     /**
-     * connect to the webservice and request for a chat deletion
+     * connect to the backend for a chat deletion
+     *
+     * @param chatId representing chat id
      */
     public void deleteChat(final int chatId) {
         String url = "https://mobileapp-group-backend.herokuapp.com/chats/"
@@ -126,6 +154,12 @@ public class ChatListViewModel extends AndroidViewModel {
         Volley.newRequestQueue(getApplication().getApplicationContext()).add(request);
     }
 
+    /***
+     * connect to the backend for a chat addition
+     *
+     * @param jwt JWT Authorization Token
+     * @param name representing user name
+     */
     public void addChat(final String jwt, final String name) {
         String url = getApplication().getResources().getString(R.string.base_url) + "chats";
 
@@ -139,7 +173,6 @@ public class ChatListViewModel extends AndroidViewModel {
                 Request.Method.POST,
                 url,
                 body, //push token found in the JSONObject body
-                //mResponse::setValue,
                 response -> handleAddChat(jwt, response),
                 this::handleError) {
             @Override
@@ -158,6 +191,12 @@ public class ChatListViewModel extends AndroidViewModel {
         Volley.newRequestQueue(getApplication().getApplicationContext()).add(request);
     }
 
+    /**
+     * handle error add chat and updates chat list
+     *
+     * @param jwt JWT Authorization Token
+     * @param response json response
+     */
     private void handleAddChat(final String jwt, final JSONObject response) {
         try {
             int chatID = response.getInt("chatID");
@@ -169,8 +208,13 @@ public class ChatListViewModel extends AndroidViewModel {
         }
     }
 
-
-    public void putMembers(final String jwt, int chatID) throws JSONException {
+    /**
+     * connect to the backend for a putting member to chat
+     *
+     * @param jwt JWT Authorization Token
+     * @param chatID representing chat id
+     */
+    public void putMembers(final String jwt, int chatID) {
         String url = "https://mobileapp-group-backend.herokuapp.com/chats/" + chatID;
         System.out.println("Adding Members");
         JSONObject body = new JSONObject();
@@ -201,7 +245,6 @@ public class ChatListViewModel extends AndroidViewModel {
                 10_000,
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        //Instantiate the RequestQueue and add the request to the queue
         RequestQueueSingleton.getInstance(getApplication().getApplicationContext())
                 .addToRequestQueue(request);
     }
@@ -209,6 +252,7 @@ public class ChatListViewModel extends AndroidViewModel {
 
     /**
      * handle a failure connection to the back-end
+     *
      * @param error the error.
      */
     private void handleError(final VolleyError error) {

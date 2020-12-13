@@ -23,21 +23,48 @@ import java.util.Objects;
 
 import edu.uw.group1app.R;
 
+/**
+ * PasswordChangingViewModel that connects to the back-end for changing a user
+ * password.
+ *
+ * @author Gyubeom Kim
+ * @version 2.0
+ */
 public class PasswordChangingViewModel extends AndroidViewModel {
 
+    /**
+     * response
+     */
     private MutableLiveData<JSONObject> mResponse;
 
+    /**
+     * Constructor for PasswordChangingViewModel
+     *
+     * @param application the application
+     */
     public PasswordChangingViewModel(@NonNull Application application) {
         super(application);
         mResponse = new MutableLiveData<>();
         mResponse.setValue(new JSONObject());
     }
-
+    /**
+     * PasswordChangingViewModel observer.
+     *
+     * @param owner    life cycle owner
+     * @param observer observer
+     */
     public void addResponseObserver(@NonNull LifecycleOwner owner,
                                     @NonNull Observer<? super JSONObject> observer) {
         mResponse.observe(owner, observer);
     }
 
+    /**
+     * sending email, old password, new password as body to server
+     *
+     * @param email representing a user email
+     * @param oldPass representing a user old password
+     * @param newPass representing a user's new password
+     */
     public void changePassword(final String email,
                                final String oldPass,
                                final String newPass) {
@@ -67,6 +94,11 @@ public class PasswordChangingViewModel extends AndroidViewModel {
                 .add(request);
     }
 
+    /**
+     * handle a failure connection to the back-end
+     *
+     * @param error the error.
+     */
     private void handleError(final VolleyError error) {
         if (Objects.isNull(error.networkResponse)) {
             try {

@@ -20,12 +20,18 @@ import edu.uw.group1app.R;
 import edu.uw.group1app.databinding.FragmentChatListCardBinding;
 
 
+/**
+ * this class provides a function that a user can chat
+ * , add chats room, deletes chat room, and navigates to the contact
+ * (add chatroom and delete chatroom)
+ *
+ * @author Gyubeom Kim
+ * @version 2.0
+ */
 public class ChatListRecyclerViewAdapter extends RecyclerView.Adapter<ChatListRecyclerViewAdapter.ChatListViewHolder> {
 
     private List<ChatRoom> mChatRooms;
     private final ChatListFragment mParent;
-    //private final FragmentManager mFragMan;
-    //private final ChatListFragment mParent;
 
     /**
      * Constructor that builds the recycler view adapter from
@@ -33,7 +39,6 @@ public class ChatListRecyclerViewAdapter extends RecyclerView.Adapter<ChatListRe
     public ChatListRecyclerViewAdapter(List<ChatRoom> chats, ChatListFragment parent) {
         this.mChatRooms = chats;
         this.mParent = parent;
-        //this.mFragMan = fm;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.Q)
@@ -53,6 +58,11 @@ public class ChatListRecyclerViewAdapter extends RecyclerView.Adapter<ChatListRe
         }
     }
 
+    /**
+     * it returns size of chat lis
+     *
+     * @return size of chat list
+     */
     @Override
     public int getItemCount() {
         return mChatRooms.size();
@@ -73,9 +83,10 @@ public class ChatListRecyclerViewAdapter extends RecyclerView.Adapter<ChatListRe
             binding = FragmentChatListCardBinding.bind(mView);
         }
 
+        //create chat
         void setChatRoom(final ChatRoom chatRoom) throws JSONException {
             mChatRoom = chatRoom;
-            nameTextView.setText(mChatRoom.getmChatRoomName() + " " + mChatRoom.getmChatId());
+            nameTextView.setText(mChatRoom.getmChatRoomName());
             binding.buttonDelete.setOnClickListener(button -> deletChat());
             binding.buttonEnter.setOnClickListener(view ->
                     Navigation.findNavController(mView)
@@ -83,6 +94,7 @@ public class ChatListRecyclerViewAdapter extends RecyclerView.Adapter<ChatListRe
                                     .actionNavigationChatToChatFragment(mChatRoom.getmChatId(), mChatRoom.getmChatRoomName())));
         }
 
+        //delete
         void deletChat() {
             mChatRooms.remove(mChatRoom);
             mParent.deleteChat(mChatRoom.getmChatId());
@@ -90,6 +102,11 @@ public class ChatListRecyclerViewAdapter extends RecyclerView.Adapter<ChatListRe
         }
     }
 
+    /**
+     * set changes
+     *
+     * @param rooms representing list of chat rooms
+     */
     public void setChatRooms(List<ChatRoom> rooms){
         mChatRooms = rooms;
         notifyDataSetChanged();

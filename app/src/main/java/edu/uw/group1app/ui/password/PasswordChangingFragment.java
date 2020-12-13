@@ -33,23 +33,48 @@ import static edu.uw.group1app.ui.utils.PasswordValidator.checkPwdSpecialChar;
 import static edu.uw.group1app.ui.utils.PasswordValidator.checkPwdUpperCase;
 
 /**
- * A simple {@link Fragment} subclass.
+ * this class provides a function that a user can change his/her password
+ *
+ * @author Gyubeom Kim
+ * @version 2.0
  */
+
 public class PasswordChangingFragment extends Fragment {
 
+    /**
+     * binding for the class
+     */
     private FragmentPasswordChangingBinding binding;
 
+    /**
+     * view model for the class
+     */
     private PasswordChangingViewModel mPasswordModel;
 
+    /**
+     * a user's email
+     */
     private String mEmail;
 
+    /**
+     * builder for creating dialog
+     */
     private AlertDialog.Builder builder;
 
+    /**
+     * map for saving responses
+     */
     private Map<Boolean, String> map;
 
+    // a user should use the email that s/he logged in
     private PasswordValidator mEmailValidator =
             checkClientPredicate(email -> email.equals(binding.textChangeEmail.getText().toString()));
 
+    // new password should not same as old one
+    // more than 7 characters
+    // at least 1 special character
+    // at least 1 digit
+    // at least 1 upper and lower case letter
     private PasswordValidator mPassWordValidator =
             checkClientPredicate(pwd -> !pwd.equals(binding.textChangeOldPass.getText().toString()))
                     .and(checkPwdLength(7))
@@ -58,8 +83,11 @@ public class PasswordChangingFragment extends Fragment {
                     .and(checkPwdDigit())
                     .and(checkPwdLowerCase().or(checkPwdUpperCase()));
 
+    /**
+     * Required empty public constructor
+     */
     public PasswordChangingFragment() {
-        // Required empty public constructor
+
     }
 
 
@@ -85,24 +113,38 @@ public class PasswordChangingFragment extends Fragment {
 
         mEmail = args.getEmail();
 
+        //the email is filled with the email you typed
         binding.textChangeEmail.setText(mEmail);
 
+        //the cancel button
         binding.buttonCancel.setOnClickListener(button ->
                 Navigation.findNavController(getView()).navigate(
                         PasswordChangingFragmentDirections.actionNavigationPasswordChageToNavigationUserSetting()));
 
+        //send button
         binding.buttonSend.setOnClickListener(this::attemptChangePassword);
 
+        //add response observer
         mPasswordModel.addResponseObserver(
                 getViewLifecycleOwner(),
                 this::observeChangingPasswordResponse
         );
     }
 
+    /**
+     * it validates all the restriction for email and password.
+     * Once, a user types correct inputs. it it will send request to
+     * the server and changes the password.
+     *
+     * @param button representing button for send
+     */
     private void attemptChangePassword(final View button) {
         validateEmail();
     }
 
+    /*
+     * a user should use the email that s/he logged in
+     */
     private void validateEmail() {
         mEmailValidator.processResult(
                 mEmailValidator.apply(mEmail.trim()),
@@ -110,6 +152,13 @@ public class PasswordChangingFragment extends Fragment {
                 result -> binding.textChangeEmail.setError("Please enter your own email."));
     }
 
+    /**
+     *  new password should not same as old one
+     *  more than 7 characters
+     *  at least 1 special character
+     *  at least 1 digit
+     *  at least 1 upper and lower case lette
+     */
     private void validatePassword() {
         mPassWordValidator.processResult(
                 mPassWordValidator.apply(binding.textChageNewPass.getText().toString()),
@@ -122,6 +171,11 @@ public class PasswordChangingFragment extends Fragment {
                         "6) At least one uppercase letter"));
     }
 
+    /**
+     * getting respons from server
+     *
+     * @param response representing the response for the server side
+     */
     private void observeChangingPasswordResponse(final JSONObject response) {
         if (response.length() > 0) {
             try {
@@ -149,7 +203,12 @@ public class PasswordChangingFragment extends Fragment {
                 binding.textChageNewPass.getText().toString());
     }
 
-
+    /***
+     * it creates a dialog corresponding to the status of password changing
+     *
+     * @param isSuccess representing whether the password is changed or not
+     * @param theMessage representing message tha tells whether the password is changed or not
+     */
     private void openDialog(boolean isSuccess, String theMessage) {
         builder = new AlertDialog.Builder(getActivity());
         String theTitle = "";
