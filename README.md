@@ -13,10 +13,10 @@ This is our group's project at UW Tacoma TCSS 450 in effort to learn Mobile Appl
 
 ## Test Account:
 This one is the default username and password for those who want to try out our project quick
-Username: test12345@uw.edu
+Username: test12345@uw.edu  
 Password: Test1234@
 
-Username: fordtest1234@test.com
+Username: fordtest1234@test.com  
 Password: Kello1234@
 
 This auto deploy over to Heroku.
