@@ -272,10 +272,10 @@
             android:id="@+id/textView_day3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="47dp"
+            android:layout_marginStart="224dp"
             android:layout_marginTop="4dp"
             android:text="TextView"
-            app:layout_constraintStart_toEndOf="@+id/textView_day2"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -338,5 +338,15 @@
         android:text="5 Day Forecast"
         app:layout_constraintBottom_toTopOf="@+id/layout_fivedayhome"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="98dp"
+        android:layout_height="91dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="90dp"
+        android:src="@android:drawable/ic_dialog_alert"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
