@@ -122,7 +122,7 @@ public class ContactDetailDialog extends DialogFragment {
     private void observeAddingContactToChat(final JSONObject response) {
         if (response.length() > 0) {
             try {
-                openDialog(response.getBoolean("success"), response.getString("message"));
+                openDialog(throughChat, response.getString("message"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -140,22 +140,9 @@ public class ContactDetailDialog extends DialogFragment {
     }
 
     private void openDialog(boolean isSuccess, String theMessage) {
-        Toast.makeText(activity, theMessage, Toast.LENGTH_SHORT).show();
-        /*AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        String theTitle = "";
         if(isSuccess) {
-            theTitle = "Success!";
-        } else {
-            theTitle = "Failed!";
+            Toast.makeText(activity, theMessage, Toast.LENGTH_SHORT).show();
         }
-        builder.setTitle(theTitle);
-        builder.setMessage(theMessage);
-        builder.setPositiveButton("OK", (dialog, which) -> {
-            dialog.dismiss();
-        });
-        builder.create();
-        builder.show();
-        */
     }
 
     private void putMemberIntoTheRoom(){

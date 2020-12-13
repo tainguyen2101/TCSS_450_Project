@@ -82,10 +82,9 @@
             app:argType="string" />
     </fragment>
     <fragment
-        android:id="@+id/navigation_user_setting"
         android:name="edu.uw.group1app.ui.userSetting.UserSettingFragment"
-        android:label="fragment_user_setting"
-        tools:layout="@layout/fragment_user_setting" >
+        android:label="User Setting"
+        tools:layout="@layout/fragment_user_setting">
         <action
             android:id="@+id/action_navigation_user_setting_to_navigation_password_chage"
             app:destination="@id/navigation_password_chage" />

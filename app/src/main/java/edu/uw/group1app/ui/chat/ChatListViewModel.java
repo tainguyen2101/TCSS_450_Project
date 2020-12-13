@@ -8,7 +8,6 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
