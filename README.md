@@ -75,6 +75,27 @@ Password: Kello1234@
 *   Weather home fragment duplicates data causing the recycler view to add double the cards
 *   Weather home page reverts to first area search location
 
+## Email services (D. Jared Idler)
+#### What was implemented:
+* Functional validation / registration with real emails
+* Sends a single use validation url one time
+* Waits on screen to register
+* Registers unique emails
+
+#### What was not implemented
+* Usage of username
+* Security measures to prevent intentional denial of service (timeout between requests, etc.)
+#### Extra features:
+* Sends email to change password to a temporary password if password forgotten
+* Password is changeable in the app upon login
+#### Bugs:
+* Back button not safe to use with connection to backend
+* Registering multiple emails in one go may be inconsistent
+* UI for some screens may be inconsistently spaced or sized depending on device
+* Password post-change may be inconsistent to reach because of hashing process
+
 ## For Reviewer
 - To register for an account, please use an actual email address for the verification steps
 - If you guys have any questions, please email me at tng2101@uw.edu
+- Do NOT hit the back arrows when registering an email
+- Don't lose the validation email either
