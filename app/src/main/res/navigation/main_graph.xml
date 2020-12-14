@@ -72,7 +72,7 @@
     <fragment
         android:id="@+id/navigation_password_chage"
         android:name="edu.uw.group1app.ui.password.PasswordChangingFragment"
-        android:label="Chang Your Password"
+        android:label="Change Your Password"
         tools:layout="@layout/fragment_password_changing">
         <action
             android:id="@+id/action_navigation_password_chage_to_navigation_user_setting"
@@ -102,6 +102,6 @@
     <fragment
         android:id="@+id/fiveDayListFragment"
         android:name="edu.uw.group1app.ui.weather.FiveDayListFragment"
-        android:label="fragment_five_day_list"
+        android:label="5 Days Forecast"
         tools:layout="@layout/fragment_five_day_list" />
 </navigation>

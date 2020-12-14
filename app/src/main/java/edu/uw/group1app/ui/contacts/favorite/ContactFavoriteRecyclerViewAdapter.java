@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.uw.group1app.R;
@@ -101,6 +102,11 @@ public class ContactFavoriteRecyclerViewAdapter extends
                 mContacts.remove(mContact);
                 notifyDataSetChanged();
             });
+        }
+
+        public void removeContact(final Contact contact) {
+            mContacts.remove(contact);
+            notifyDataSetChanged();
         }
     }
 }

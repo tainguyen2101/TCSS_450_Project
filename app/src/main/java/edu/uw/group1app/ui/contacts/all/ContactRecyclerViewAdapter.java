@@ -29,6 +29,7 @@ public class ContactRecyclerViewAdapter extends
         RecyclerView.Adapter<ContactRecyclerViewAdapter.ContactViewHolder> {
 
     private List<Contact> mContacts;
+    private List<Contact> mFavorite;
     private Context mContext;
     private final FragmentManager mFragMan;
     private UserInfoViewModel mUserModel;
@@ -49,6 +50,7 @@ public class ContactRecyclerViewAdapter extends
         this.mViewModel = viewModel;
         this.mChatID = chatID;
         this.mThroughChat = throughChat;
+        this.mFavorite = new ArrayList<>();
     }
 
     @NonNull
@@ -119,6 +121,7 @@ public class ContactRecyclerViewAdapter extends
                     switch (item.getItemId()) {
                         case R.id.favorite_pop_menu:
                             mViewModel.addFavorite(mUserModel.getmJwt(), mContact.getMemberID());
+                            notifyDataSetChanged();
                             return true;
                         default:
                             return false;
