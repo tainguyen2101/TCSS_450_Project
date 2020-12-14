@@ -72,8 +72,8 @@
     <fragment
         android:id="@+id/navigation_password_chage"
         android:name="edu.uw.group1app.ui.password.PasswordChangingFragment"
-        android:label="fragment_password_finding"
-        tools:layout="@layout/fragment_password_changing" >
+        android:label="Chang Your Password"
+        tools:layout="@layout/fragment_password_changing">
         <action
             android:id="@+id/action_navigation_password_chage_to_navigation_user_setting"
             app:destination="@id/navigation_user_setting" />
