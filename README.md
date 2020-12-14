@@ -76,4 +76,5 @@ Password: Kello1234@
 *   Weather home page reverts to first area search location
 
 ## For Reviewer
-If you guys have any questions, please email me at tng2101@uw.edu
+- To register for an account, please use an actual email address for the verification steps
+- If you guys have any questions, please email me at tng2101@uw.edu
