@@ -28,8 +28,6 @@ import edu.uw.group1app.ui.contacts.all.ContactListViewModel;
 public class SearchFragment extends Fragment {
     private ContactListViewModel mModel;
     private UserInfoViewModel mUser;
-    private List<Contact> list = new ArrayList<>();
-    private SearchRecyclerViewAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,8 +37,6 @@ public class SearchFragment extends Fragment {
         mUser = new ViewModelProvider(getActivity()).get(UserInfoViewModel.class);
 
         mModel.connectGetAll(mUser.getmJwt());
-        list = mModel.getList();
-        adapter = new SearchRecyclerViewAdapter(list);
 
     }
 
@@ -56,21 +52,24 @@ public class SearchFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         FragmentSearchBinding binding = FragmentSearchBinding.bind(getView());
-        mModel.addContactListObserver(getViewLifecycleOwner(), contactList ->
-                binding.listRoot.setAdapter(adapter)
-        );
-        binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
+        mModel.addContactListAllObserver(getViewLifecycleOwner(), contactList -> {
+            SearchRecyclerViewAdapter adapter = new SearchRecyclerViewAdapter(contactList);
+            binding.listRoot.setAdapter(adapter);
+            binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    adapter.getFilter().filter(newText);
+                    return false;
+                }
+            });
             }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
-                return false;
-            }
-        });
+        );
     }
 
 }
