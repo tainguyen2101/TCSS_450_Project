@@ -19,7 +19,7 @@ Password: Test1234@
 Username: fordtest1234@test.com  
 Password: Kello1234@
 
-## Components:
+### Components:
 ## Contact (Ford Nguyen)
 #### What has been implemented:
 * Send friend request to another using their username
