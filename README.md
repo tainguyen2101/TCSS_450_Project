@@ -28,14 +28,11 @@ Password: Kello1234@
 * New contact request notification (Foreground and Background)
 * Remove contact from list remove it from chat room
 * Search for contact
-    - When first load Search, click to another tab then back, contact will show up
 #### Extra Features:
 * Floating Add Button
     - When trying to add with username, it will tell the user whether the contact with that username exists, already friend or request pending (works either side)
 #### Bugs:
-* When deleting a contact from the list, the contact (if they are in favorite) still persists until the user re-login.
-* Contact in Search won't show up initially, change to another tab and back fixes it.
-
+* When deleting a contact from the list, the contact (if they are in favorite) still persists until the user re-login
 ## Chat, User Setting(Look and Feel and Password Finding) (Gyubeom Kim)
 #### What has been implemented:
 *	Add a member into chat room from contact list 
