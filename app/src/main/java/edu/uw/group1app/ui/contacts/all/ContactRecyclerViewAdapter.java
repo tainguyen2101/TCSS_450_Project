@@ -1,5 +1,6 @@
 package edu.uw.group1app.ui.contacts.all;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.view.LayoutInflater;
@@ -28,14 +29,13 @@ import edu.uw.group1app.model.UserInfoViewModel;
 public class ContactRecyclerViewAdapter extends
         RecyclerView.Adapter<ContactRecyclerViewAdapter.ContactViewHolder> {
 
-    private List<Contact> mContacts;
-    private List<Contact> mFavorite;
-    private Context mContext;
+    private final List<Contact> mContacts;
+    private final Context mContext;
     private final FragmentManager mFragMan;
-    private UserInfoViewModel mUserModel;
-    private ContactListViewModel mViewModel;
-    private int mChatID;
-    private boolean mThroughChat;
+    private final UserInfoViewModel mUserModel;
+    private final ContactListViewModel mViewModel;
+    private final int mChatID;
+    private final boolean mThroughChat;
 
 
     public ContactRecyclerViewAdapter(List<Contact> contacts, Context context, FragmentManager fm,
@@ -50,7 +50,6 @@ public class ContactRecyclerViewAdapter extends
         this.mViewModel = viewModel;
         this.mChatID = chatID;
         this.mThroughChat = throughChat;
-        this.mFavorite = new ArrayList<>();
     }
 
     @NonNull
@@ -77,20 +76,18 @@ public class ContactRecyclerViewAdapter extends
     }
 
     public class ContactViewHolder extends RecyclerView.ViewHolder  {
-        private TextView nameTextView;
-        private TextView usernameTextView;
-        private ImageButton moreButtonView;
+        private final TextView nameTextView;
+        private final TextView usernameTextView;
+        private final ImageButton moreButtonView;
         private Contact mContact;
-        private final View mView;
 
         public ContactViewHolder(View v) {
             super(v);
-            mView = v;
             nameTextView = v.findViewById(R.id.contact_name);
             usernameTextView = v.findViewById(R.id.contact_username);
             moreButtonView = v.findViewById(R.id.contact_more_button);
 
-            mView.setOnClickListener(view -> {
+            v.setOnClickListener(view -> {
                 ContactDetailDialog dialog = new ContactDetailDialog(mContact, mViewModel,
                         mUserModel, mChatID, mThroughChat, this);
                 dialog.show(mFragMan, "detail");
@@ -107,6 +104,7 @@ public class ContactRecyclerViewAdapter extends
          * Sets the More Button Popup Menu with its behavior
          * @param contact the contact
          */
+        @SuppressLint("NonConstantResourceId")
         @RequiresApi(api = Build.VERSION_CODES.Q)
         private void setContact(final Contact contact) {
             mContact = contact;
@@ -118,14 +116,12 @@ public class ContactRecyclerViewAdapter extends
                 popupMenu.getMenuInflater().inflate(R.menu.pop_up_menu, popupMenu.getMenu());
                 popupMenu.setForceShowIcon(true);
                 popupMenu.setOnMenuItemClickListener(item -> {
-                    switch (item.getItemId()) {
-                        case R.id.favorite_pop_menu:
-                            mViewModel.addFavorite(mUserModel.getmJwt(), mContact.getMemberID());
-                            notifyDataSetChanged();
-                            return true;
-                        default:
-                            return false;
+                    if (item.getItemId() == R.id.favorite_pop_menu) {
+                        mViewModel.addFavorite(mUserModel.getmJwt(), mContact.getMemberID());
+                        notifyDataSetChanged();
+                        return true;
                     }
+                    return false;
                 });
                 popupMenu.show();
             });

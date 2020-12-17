@@ -46,6 +46,7 @@ import edu.uw.group1app.io.RequestQueueSingleton;
 public class ContactListViewModel extends AndroidViewModel {
 
     private MutableLiveData<List<Contact>> mContactList;
+    private MutableLiveData<List<Contact>> mContactListFull;
     private MutableLiveData<List<Contact>> mFavoriteList;
     private final MutableLiveData<JSONObject> mResponse;
 
@@ -59,6 +60,7 @@ public class ContactListViewModel extends AndroidViewModel {
         super(application);
         mContactList = new MutableLiveData<>(new ArrayList<>());
         mFavoriteList = new MutableLiveData<>(new ArrayList<>());
+        mContactListFull = new MutableLiveData<>(new ArrayList<>());
         mResponse = new MutableLiveData<>();
         mResponse.setValue(new JSONObject());
     }
@@ -77,6 +79,11 @@ public class ContactListViewModel extends AndroidViewModel {
     public void addFavoriteListObserver(@NonNull LifecycleOwner owner,
                                         @NonNull Observer<? super List<Contact>> observer) {
         mFavoriteList.observe(owner, observer);
+    }
+
+    public void addContactListAllObserver(@NonNull LifecycleOwner owner,
+                                          @NonNull Observer<? super List<Contact>> observer) {
+        mContactListFull.observe(owner, observer);
     }
 
 
@@ -388,6 +395,58 @@ public class ContactListViewModel extends AndroidViewModel {
     }
 
     /**
+     * connect to the webservice and get contact list
+     *
+     * @param jwt authorization token
+     */
+    public void connectGetAll(String jwt) {
+        String url = "https://mobileapp-group-backend.herokuapp.com/contact/all";
+        Request request = new JsonObjectRequest(
+                Request.Method.GET,
+                url,
+                null, // no body
+                this::handleSuccessAll,
+                this::handleError
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", jwt);
+                return headers;
+            }
+        };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                10_000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        //Instantiate the RequestQueue and add the request to the queue
+        Volley.newRequestQueue(getApplication().getApplicationContext())
+                .add(request);
+    }
+
+    private void handleSuccessAll(JSONObject jsonObject) {
+        ArrayList<Contact> temp = new ArrayList<>();
+        try {
+            JSONArray contacts = jsonObject.getJSONArray("contacts");
+            for (int i = 0; i < contacts.length(); i++) {
+                JSONObject contact = contacts.getJSONObject(i);
+                String email = contact.getString("email");
+                String firstName = contact.getString("firstName");
+                String lastName = contact.getString("lastName");
+                String username = contact.getString("userName");
+                int memberID = contact.getInt("memberId");
+                Contact entry = new Contact(email, firstName, lastName, username, memberID);
+                temp.add(entry);
+            }
+        } catch (JSONException e) {
+            Log.e("JSON PARSE ERROR", "Found in handle Success ContactViewModel");
+            Log.e("JSON PARSE ERROR", "Error: " + e.getMessage());
+        }
+        mContactListFull.setValue(temp);
+    }
+
+
+    /**
      * handle a success connection to the back-end
      *
      * @param result result
@@ -516,5 +575,9 @@ public class ContactListViewModel extends AndroidViewModel {
                 Log.e("JSON PARSE", "JSON Parse Error in handleError");
             }
         }
+    }
+
+    public List<Contact> getList() {
+        return this.mContactListFull.getValue();
     }
 }

@@ -9,8 +9,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,6 +39,7 @@ import edu.uw.group1app.R;
 import edu.uw.group1app.ui.contacts.all.ContactListFragment;
 import edu.uw.group1app.ui.contacts.favorite.ContactFavoriteListFragment;
 import edu.uw.group1app.ui.contacts.request.ContactRequestListFragment;
+import edu.uw.group1app.ui.contacts.search.SearchFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -78,6 +84,7 @@ public class ContactsFragment extends Fragment {
         adapter.addFrag(new ContactRequestListFragment(), "Request");
         adapter.addFrag(new ContactListFragment(), "All");
         adapter.addFrag(new ContactFavoriteListFragment(), "Favorite");
+        adapter.addFrag(new SearchFragment(), "Search");
 
         viewPager.setAdapter(adapter);
         //Set homepage to ALL
@@ -90,7 +97,6 @@ public class ContactsFragment extends Fragment {
                 viewPager.getAdapter().notifyDataSetChanged();
             }
         });
-
     }
 }
 class ViewPagerAdapter extends FragmentStatePagerAdapter {
