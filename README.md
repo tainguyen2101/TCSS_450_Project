@@ -20,7 +20,7 @@ Username: fordtest1234@test.com
 Password: Kello1234@
 
 ## Components:
-### Contact (Ford Nguyen)
+## Contact (Ford Nguyen)
 #### What has been implemented:
 * Send friend request to another using their username
 * Accept/Decline contact request
