@@ -53,7 +53,7 @@ public class SearchFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         FragmentSearchBinding binding = FragmentSearchBinding.bind(getView());
         mModel.addContactListAllObserver(getViewLifecycleOwner(), contactList -> {
-            SearchRecyclerViewAdapter adapter = new SearchRecyclerViewAdapter(contactList);
+            SearchRecyclerViewAdapter adapter = new SearchRecyclerViewAdapter(contactList, mUser, mModel);
             binding.listRoot.setAdapter(adapter);
             binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override

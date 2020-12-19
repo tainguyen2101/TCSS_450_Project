@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageButton;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -26,11 +27,16 @@ public class SearchRecyclerViewAdapter  extends
 
     private List<Contact> mContacts;
     private List<Contact> mContactsFull;
+    private UserInfoViewModel mUserModel;
+    private ContactListViewModel mViewModel;
 
 
-    public SearchRecyclerViewAdapter(List<Contact> contacts) {
+    public SearchRecyclerViewAdapter(List<Contact> contacts, UserInfoViewModel userModel,
+                                     ContactListViewModel viewModel) {
         this.mContacts = contacts;
         this.mContactsFull = new ArrayList<>(contacts);
+        this.mUserModel = userModel;
+        this.mViewModel = viewModel;
     }
 
 
@@ -50,6 +56,11 @@ public class SearchRecyclerViewAdapter  extends
         Contact currentItem = mContacts.get(position);
         holder.usernameTextView.setText(currentItem.getEmail());
         holder.nameTextView.setText(currentItem.getFirstName() + " " + currentItem.getLastName());
+        holder.addButton.setOnClickListener(v -> {
+            holder.addButton.setVisibility(View.GONE);
+            holder.addButton.setClickable(false);
+            mViewModel.addFriend(mUserModel.getmJwt(), mContacts.get(position).getUsername());
+        });
     }
 
     @Override
@@ -63,12 +74,14 @@ public class SearchRecyclerViewAdapter  extends
     public class SearchViewHolder extends RecyclerView.ViewHolder {
         private final TextView nameTextView;
         private final TextView usernameTextView;
+        private final ImageButton addButton;
         private Contact mContact;
 
         public SearchViewHolder(View view) {
             super(view);
             nameTextView = view.findViewById(R.id.contact_name);
             usernameTextView = view.findViewById(R.id.contact_username);
+            addButton = view.findViewById(R.id.contact_search_button);
         }
     }
 
