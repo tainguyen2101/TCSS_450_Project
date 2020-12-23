@@ -58,7 +58,7 @@ public class SearchRecyclerViewAdapter  extends
         holder.nameTextView.setText(currentItem.getFirstName() + " " + currentItem.getLastName());
         holder.addButton.setOnClickListener(v -> {
             holder.addButton.setVisibility(View.GONE);
-            holder.addButton.setClickable(false);
+            //holder.addButton.setClickable(false);
             mViewModel.addFriend(mUserModel.getmJwt(), mContacts.get(position).getUsername());
         });
     }
@@ -100,9 +100,9 @@ public class SearchRecyclerViewAdapter  extends
                 filteredList.addAll(mContactsFull);
             } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
-
                 for (Contact contact : mContactsFull) {
-                    if (contact.getFirstName().toLowerCase().contains(filterPattern)) {
+                    if (contact.getFirstName().toLowerCase().contains(filterPattern) ||
+                    contact.getLastName().toLowerCase().contains(filterPattern)) {
                         filteredList.add(contact);
                     }
                 }

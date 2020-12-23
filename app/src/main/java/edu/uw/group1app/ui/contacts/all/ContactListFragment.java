@@ -81,13 +81,15 @@ public class ContactListFragment extends Fragment  {
 
         FloatingActionButton fab = view.findViewById(R.id.contact_add_float_button);
 
-        fab.setOnClickListener(v -> {
-            ContactAddDialog dialog = new ContactAddDialog(mInfoModel, mModel);
-            dialog.show(getChildFragmentManager(), "add");
-        });
-        mModel.addContactListObserver(getViewLifecycleOwner(), contactList ->
+        mModel.addContactListObserver(getViewLifecycleOwner(), contactList -> {
                 binding.listRoot.setAdapter(
                 new ContactRecyclerViewAdapter(contactList, this.getContext(),
-                        getChildFragmentManager(), mInfoModel, mModel, mChatID, mThroughChat)));
+                        getChildFragmentManager(), mInfoModel, mModel, mChatID, mThroughChat));
+                fab.setOnClickListener(v -> {
+                    ContactAddDialog dialog = new ContactAddDialog(mInfoModel, mModel);
+                    dialog.show(getChildFragmentManager(), "add");
+                });
+
+        });
     }
 }
